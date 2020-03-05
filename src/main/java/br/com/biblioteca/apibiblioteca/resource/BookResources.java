@@ -20,20 +20,21 @@ public class BookResources {
     @Autowired
     private BookService service;
 
+
+    @RequestMapping(method = RequestMethod.GET) //lista todos os livros
+    public ResponseEntity<List<Book>> findAll() {
+        List<Book> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
+
     @RequestMapping(value="/{id}", method = RequestMethod.GET) //lista livros por id
     public ResponseEntity<Book> find(@PathVariable Long id){
         Book obj = service.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(method = RequestMethod.GET) //lista todos os usuário
-    public ResponseEntity<List<Book>> findPage() {
-        List<Book> list = service.findAll();
-        return ResponseEntity.ok().body(list);
-    }
-
-    @RequestMapping(value = "/page", method = RequestMethod.GET) //lista todas os usuários
-    public ResponseEntity<Page<Book>> findAll(
+    @RequestMapping(value = "/page", method = RequestMethod.GET) //lista todas os livros com paginação
+    public ResponseEntity<Page<Book>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue="nome") String orderBy,
