@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -31,8 +32,8 @@ public class Book implements Serializable {
     @NotEmpty(message = "Preenchimento obrigatório")
     private String author; //autor
 
-    @NotEmpty(message = "Preenchimento obrigatório")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Preenchimento obrigatório")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date year_book; //ano
 
     public  Book () {}
