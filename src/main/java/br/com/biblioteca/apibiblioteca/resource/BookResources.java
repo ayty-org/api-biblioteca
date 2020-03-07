@@ -43,7 +43,7 @@ public class BookResources {
         return ResponseEntity.ok().body(list);
     }
 
-    @RequestMapping(method=RequestMethod.POST) //adiciona um novo Book
+    @PostMapping() //adiciona um novo Book
     public ResponseEntity<Void> insert(@Valid @RequestBody Book obj){
         service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
@@ -51,14 +51,14 @@ public class BookResources {
         return ResponseEntity.created(uri).build();
     }
 
-    @RequestMapping(value="/{id}",method=RequestMethod.PUT) //atualizar uma Book
+    @PutMapping(value="/{id}") //atualizar uma Book
     public ResponseEntity<Void> update(@Valid @RequestBody Book obj, @PathVariable Long id) throws ObjectNotFoundException{
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.DELETE) //Deleta Book
+    @DeleteMapping(value="/{id}") //Deleta Book
     public ResponseEntity<Void> delete(@PathVariable Long id) throws ObjectNotFoundException {
         service.delete(id);
         return ResponseEntity.noContent().build();
