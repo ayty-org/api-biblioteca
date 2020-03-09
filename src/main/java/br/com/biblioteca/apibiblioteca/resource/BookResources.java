@@ -20,29 +20,30 @@ public class BookResources {
     @Autowired
     private BookService service;
 
+
+    @RequestMapping(method = RequestMethod.GET) //lista todos os livros
+    public ResponseEntity<List<Book>> findAll() {
+        List<Book> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
+
     @RequestMapping(value="/{id}", method = RequestMethod.GET) //lista livros por id
     public ResponseEntity<Book> find(@PathVariable Long id){
         Book obj = service.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(method = RequestMethod.GET) //lista todos os usuário
-    public ResponseEntity<List<Book>> findPage() {
-        List<Book> list = service.findAll();
-        return ResponseEntity.ok().body(list);
-    }
-
-    @RequestMapping(value = "/page", method = RequestMethod.GET) //lista todas os usuários
-    public ResponseEntity<Page<Book>> findAll(
+    @RequestMapping(value = "/page", method = RequestMethod.GET) //lista todas os livros com paginação
+    public ResponseEntity<Page<Book>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
-            @RequestParam(value="orderBy", defaultValue="nome") String orderBy,
+            @RequestParam(value="orderBy", defaultValue="title") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<Book> list = service.findPage(page, linesPerPage, orderBy, direction);
         return ResponseEntity.ok().body(list);
     }
 
-    @RequestMapping(method=RequestMethod.POST) //adiciona um novo usuário
+    @PostMapping() //adiciona um novo Book
     public ResponseEntity<Void> insert(@Valid @RequestBody Book obj){
         service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
@@ -50,13 +51,14 @@ public class BookResources {
         return ResponseEntity.created(uri).build();
     }
 
-    @RequestMapping(value="/{id}",method=RequestMethod.PUT) //atualizar uma usuário
-    public ResponseEntity<Void> update(@Valid @RequestBody Book obj, @PathVariable Integer id) throws ObjectNotFoundException{
+    @PutMapping(value="/{id}") //atualizar uma Book
+    public ResponseEntity<Void> update(@Valid @RequestBody Book obj, @PathVariable Long id) throws ObjectNotFoundException{
+        obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.DELETE) //Deleta usuário
+    @DeleteMapping(value="/{id}") //Deleta Book
     public ResponseEntity<Void> delete(@PathVariable Long id) throws ObjectNotFoundException {
         service.delete(id);
         return ResponseEntity.noContent().build();
