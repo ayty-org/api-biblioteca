@@ -32,13 +32,8 @@ public class BookService {
 
     public Book update (Book obj){
         Book newObj = find(obj.getId());
-        //updateData(newObj,obj);
         return repo.save(obj);
     }
-
-    //private void updateData(Book newObj, Book obj) {
-    //    newObj.setNome(obj.getNome());
-    //}
 
     public void delete(Long id){
         find(id);
