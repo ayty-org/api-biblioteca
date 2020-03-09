@@ -1,6 +1,7 @@
 package br.com.biblioteca.apibiblioteca.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -35,6 +36,11 @@ public class Book implements Serializable {
     @NotNull(message = "Preenchimento obrigatório")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date year_book; //ano
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="emprestimo_id")
+    private Loan loan;
 
     public  Book () {}
 
