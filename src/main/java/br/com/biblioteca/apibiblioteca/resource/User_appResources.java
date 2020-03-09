@@ -19,19 +19,22 @@ public class User_appResources {
     public List<User_app> listUser(){
         return service.findAll();
     }
+
     @GetMapping("/{id}")
-    //@RequestMapping(value="/{id}", method = RequestMethod.GET)
     public User_app getUser(@PathVariable(value="id") long id){
         return service.findUser(id);
     }
+
     @PostMapping
     public User_app postNewUser(@RequestBody User_app newUser){
         return service.insertUser(newUser);
     }
+
     @PutMapping
     public User_app updateUser(@RequestBody User_app userAtt){
         return service.updateUser(userAtt);
     }
+
     @DeleteMapping
     public void deleteUser(@RequestBody User_app userDel){
         service.deleteUser(userDel);

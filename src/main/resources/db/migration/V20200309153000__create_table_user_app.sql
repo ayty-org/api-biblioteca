@@ -5,4 +5,4 @@ CREATE TABLE public.user_app(
     fone VARCHAR(255) NOT NULL,
 
     CONSTRAINT user_app_pkey PRIMARY KEY (id)
-)
+);

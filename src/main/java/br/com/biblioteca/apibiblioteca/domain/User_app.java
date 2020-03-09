@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data()
@@ -15,7 +16,6 @@ import java.io.Serializable;
 public class User_app implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Column
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
     private int id;
@@ -23,7 +23,7 @@ public class User_app implements Serializable {
     @NotEmpty(message = "Preenchimento obrigatório")
     private String name;
 
-    @NotEmpty(message = "Preenchimento obrigatório")
+    @NotNull(message = "Preenchimento obrigatório")
     private int age;
 
     @NotEmpty(message = "Preenchimento obrigatório")
