@@ -30,7 +30,7 @@ public class LoanService {
     }
 
     public Loan update (Loan obj){
-        Book newObj = find(obj.getId());
+        Loan newObj = find(obj.getId());
         return repo.save(obj);
     }
 
