@@ -39,7 +39,7 @@ public class Book implements Serializable {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="emprestimo_id")
+    @JoinColumn(name="loan_id")
     private Loan loan;
 
     public  Book () {}

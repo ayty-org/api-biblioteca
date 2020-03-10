@@ -40,12 +40,16 @@ public class LoanService {
             repo.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir uma User que possui dependências");
+            throw new DataIntegrityException("Não é possivevel excluir uma emprestimo que possui dependências");
         }
     }
 
     public List<Loan> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        }catch (NullPointerException n){
+            throw new DataIntegrityException("Não existe emprestimos");
+        }
     }
 
     public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
