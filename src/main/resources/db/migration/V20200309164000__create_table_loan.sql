@@ -3,3 +3,5 @@ CREATE TABLE public.loan (
 	loan_time varchar(255) NULL,
   CONSTRAINT loan_pkey PRIMARY KEY (id)
 );
+
+--ALTER TABLE public.book add loan_id int8;
