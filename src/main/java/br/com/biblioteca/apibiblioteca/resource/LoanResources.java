@@ -20,19 +20,19 @@ public class LoanResources {
     @Autowired
     private LoanService service;
 
-    @RequestMapping(method = RequestMethod.GET) //lista todos os emprestimos
+    @GetMapping //lista todos os emprestimos
     public ResponseEntity<List<Loan>> findAll() {
         List<Loan> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET) //lista emprestimos por id
+    @GetMapping(value="/{id}") //lista emprestimos por id
     public ResponseEntity<Loan> find(@PathVariable Long id){
         Loan obj = service.find(id);
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET) //lista todas os emprestimos com paginação
+    @GetMapping(value = "/page") //lista todas os emprestimos com paginação
     public ResponseEntity<Page<Loan>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,

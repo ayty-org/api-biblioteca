@@ -1,5 +1,6 @@
 package br.com.biblioteca.apibiblioteca.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,10 +20,11 @@ public class Loan implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //private User user;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "loan")
+    private  List<User_app> ser_app = new ArrayList<>();
 
-    @NotEmpty(message = "Preenchimento obrigatório")
-    @OneToMany(mappedBy="loan", cascade= CascadeType.ALL)
+    @OneToMany(mappedBy="loan")
     private List<Book> books = new ArrayList<>();
 
     @NotEmpty(message = "Preenchimento obrigatório")

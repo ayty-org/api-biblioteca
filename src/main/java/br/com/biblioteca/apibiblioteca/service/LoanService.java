@@ -2,22 +2,28 @@ package br.com.biblioteca.apibiblioteca.service;
 
 import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.domain.Loan;
+import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
 import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class LoanService {
 
+    @Autowired
     private LoanRepository repo;
+
+    private BookRepository bookRepo;
 
     public Loan find (Long id) throws ObjectNotFoundException {
         Optional<Loan> obj = repo.findById(id);
@@ -25,8 +31,12 @@ public class LoanService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
     }
 
-    public Loan insert(Loan obj){ //Insere um livro no banco
-        return repo.save(obj);
+    public Loan insert(Loan obj){
+        obj = repo.save(obj);
+        bookRepo.findById(obj.getId());
+
+        //bookRepo.saveAll(obj.getBooks());
+        return  obj;
     }
 
     public Loan update (Loan obj){
@@ -40,16 +50,12 @@ public class LoanService {
             repo.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir uma emprestimo que possui dependências");
+            throw new DataIntegrityException("Não é possivevel excluir um emprestimo que possui dependências");
         }
     }
 
     public List<Loan> findAll() {
-        try {
-            return repo.findAll();
-        }catch (NullPointerException n){
-            throw new DataIntegrityException("Não existe emprestimos");
-        }
+        return repo.findAll();
     }
 
     public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
