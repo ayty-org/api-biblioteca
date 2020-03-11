@@ -1,11 +1,18 @@
 package br.com.biblioteca.apibiblioteca.resource;
 
 
+import br.com.biblioteca.apibiblioteca.domain.Loan;
 import br.com.biblioteca.apibiblioteca.domain.User_app;
 import br.com.biblioteca.apibiblioteca.service.User_appService;
+import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -15,29 +22,47 @@ public class User_appResources {
     @Autowired
     private User_appService service;
 
-    @GetMapping
-    public List<User_app> listUser(){
-        return service.findAll();
+    @GetMapping //lista todos os usuários
+    public ResponseEntity<List<User_app>> findAll() {
+        List<User_app> list = service.findAll();
+        return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/{id}")
-    public User_app getUser(@PathVariable(value="id") long id){
-        return service.findUser(id);
+    @GetMapping(value="/{id}") //lista usuário por id
+    public ResponseEntity<User_app> find(@PathVariable Long id){
+        User_app obj = service.find(id);
+        return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping
-    public User_app postNewUser(@RequestBody User_app newUser){
-        return service.insertUser(newUser);
+    @GetMapping(value = "/page") //lista todas os usuários com paginação
+    public ResponseEntity<Page<User_app>> findPage(
+            @RequestParam(value="page", defaultValue="0") Integer page,
+            @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
+            @RequestParam(value="orderBy", defaultValue="name") String orderBy,
+            @RequestParam(value="direction", defaultValue="ASC") String direction){
+        Page<User_app> list = service.findPage(page, linesPerPage, orderBy, direction);
+        return ResponseEntity.ok().body(list);
     }
 
-    @PutMapping
-    public User_app updateUser(@RequestBody User_app userAtt){
-        return service.updateUser(userAtt);
+    @PostMapping() //adiciona um usuário Book
+    public ResponseEntity<Void> insert(@Valid @RequestBody User_app obj){
+        service.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
+                buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
-    @DeleteMapping
-    public void deleteUser(@RequestBody User_app userDel){
-        service.deleteUser(userDel);
+    @PutMapping(value="/{id}")
+    public ResponseEntity<Void> update(@Valid @RequestBody User_app obj, @PathVariable Long id) throws ObjectNotFoundException {
+        obj.setId(id);
+        obj = service.update(obj);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping(value="/{id}") //Deleta usuário
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws ObjectNotFoundException {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 
