@@ -4,4 +4,5 @@ CREATE TABLE public.loan (
   CONSTRAINT loan_pkey PRIMARY KEY (id)
 );
 
---ALTER TABLE public.book add loan_id int8;
+ALTER TABLE public.book ADD loan_id int8;
+ALTER TABLE public.book ADD FOREIGN KEY (loan_id) REFERENCES loan(id);
