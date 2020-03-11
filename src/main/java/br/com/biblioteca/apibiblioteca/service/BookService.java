@@ -31,8 +31,15 @@ public class BookService {
     }
 
     public Book update (Book obj){ //atualiza um book
-        //Book newObj = find(obj.getId());
-        return repo.save(obj);
+        Book newObj = find(obj.getId());
+        newObj.setId(obj.getId());
+        newObj.setTitle(obj.getTitle());
+        newObj.setResume(obj.getResume());
+        newObj.setIsbn(obj.getIsbn());
+        newObj.setAuthor(obj.getAuthor());
+        newObj.setYear_book(obj.getYear_book());
+        newObj.setLoan(obj.getLoan());
+        return repo.save(newObj);
     }
 
     public void delete(Long id){
