@@ -34,7 +34,10 @@ public class User_app implements Serializable {
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "USER_LOAN",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "loan_id"))
+    @JoinTable(name = "User_Loan",
+            joinColumns = @JoinColumn(name = "user_app_id"),
+            inverseJoinColumns = @JoinColumn(name = "loan_id")
+    )
     private List<Loan> loans = new ArrayList<>();
 
     public User_app () {

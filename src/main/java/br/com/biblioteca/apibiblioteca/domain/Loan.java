@@ -20,11 +20,10 @@ public class Loan implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "loan")
-    private  List<User_app> ser_app = new ArrayList<>();
+    @ManyToMany(mappedBy = "loans")
+    private  List<User_app> user_app = new ArrayList<>();
 
-    @OneToMany(mappedBy="loan")
+    @OneToMany(mappedBy="loan", cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 
     @NotEmpty(message = "Preenchimento obrigatório")
