@@ -36,7 +36,7 @@ public class LoanResources {
     public ResponseEntity<Page<Loan>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
-            @RequestParam(value="orderBy", defaultValue="loan_time") String orderBy,
+            @RequestParam(value="orderBy", defaultValue="id") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<Loan> list = service.findPage(page, linesPerPage, orderBy, direction);
         return ResponseEntity.ok().body(list);
