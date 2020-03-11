@@ -21,7 +21,7 @@ public class User_app implements Serializable {
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    private int id;
+    private Long id;
 
     @NotEmpty(message = "Preenchimento obrigatório")
     private String name;
