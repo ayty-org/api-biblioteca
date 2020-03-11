@@ -1,0 +1,1 @@
+UPDATE loan SET user_app_id=1 WHERE id = 1;
