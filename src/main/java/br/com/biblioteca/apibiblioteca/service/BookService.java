@@ -30,9 +30,9 @@ public class BookService {
         return repo.save(obj);
     }
 
-    public Book update (Book obj){
-        Book newObj = find(obj.getId());
-        return repo.save(obj); //aqui deveria ser a váriavel newObj
+    public Book update (Book obj){ //atualiza um book
+        //Book newObj = find(obj.getId());
+        return repo.save(obj);
     }
 
     public void delete(Long id){

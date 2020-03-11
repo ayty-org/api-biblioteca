@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/loan")
+@RequestMapping(value="/v1/api/loan")
 public class LoanResources {
 
     @Autowired

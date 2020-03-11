@@ -27,15 +27,12 @@ public class LoanService {
 
     public Loan find (Long id) throws ObjectNotFoundException {
         Optional<Loan> obj = repo.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(      //estudar como funciona esse retorno
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
     }
 
     public Loan insert(Loan obj){
         obj = repo.save(obj);
-        bookRepo.findById(obj.getId());
-
-        //bookRepo.saveAll(obj.getBooks());
         return  obj;
     }
 
@@ -50,7 +47,7 @@ public class LoanService {
             repo.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir um emprestimo que possui dependências");
+            throw new DataIntegrityException("Não é possivevel excluir um Loan que possui dependências");
         }
     }
 
