@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,10 +40,11 @@ public class LoanService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
     }
 
+    @Transactional
     public Loan insert(Loan obj){
         System.out.println(obj.toString());
-        userRepo.save(obj.getUser_app());
-        bookRepo.saveAll(obj.getBooks());
+        //userRepo.save(obj.getUser_app());
+        //bookRepo.saveAll(obj.getBooks());
         obj = loanRepo.save(obj);
         //userRepo.save(obj.getUser_app());
         //List<User_app> users = obj.getUser_app();

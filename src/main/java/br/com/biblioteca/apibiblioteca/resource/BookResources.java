@@ -20,7 +20,6 @@ public class BookResources {
     @Autowired
     private BookService service;
 
-
     @RequestMapping(method = RequestMethod.GET) //lista todos os livros
     public ResponseEntity<List<Book>> findAll() {
         List<Book> list = service.findAll();
