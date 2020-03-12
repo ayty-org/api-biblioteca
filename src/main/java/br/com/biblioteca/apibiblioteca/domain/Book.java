@@ -38,8 +38,8 @@ public class Book implements Serializable {
     private Date year_book; //ano
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({@JoinColumn(name = "loan_id")})
+    @ManyToOne
+    @JoinColumn(name = "loan_id")
     private Loan loan;
 
     public  Book () {}

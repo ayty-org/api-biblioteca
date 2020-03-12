@@ -20,10 +20,11 @@ public class Loan implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "loans")
-    private  List<User_app> user_app = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_app_id")
+    private  User_app user_app;
 
-    @OneToMany(mappedBy="loan", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="loan")
     private List<Book> books = new ArrayList<>();
 
     @NotEmpty(message = "Preenchimento obrigatório")
@@ -31,4 +32,35 @@ public class Loan implements Serializable {
 
     public Loan (){}
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User_app getUser_app() {
+        return user_app;
+    }
+
+    public void setUser_app(User_app user_app) {
+        this.user_app = user_app;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public String getLoan_time() {
+        return loan_time;
+    }
+
+    public void setLoan_time(String loan_time) {
+        this.loan_time = loan_time;
+    }
 }
