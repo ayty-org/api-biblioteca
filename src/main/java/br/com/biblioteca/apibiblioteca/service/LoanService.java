@@ -2,8 +2,10 @@ package br.com.biblioteca.apibiblioteca.service;
 
 import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.domain.Loan;
+import br.com.biblioteca.apibiblioteca.domain.User_app;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
+import br.com.biblioteca.apibiblioteca.repository.User_appRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
 import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,30 +25,40 @@ import java.util.Optional;
 public class LoanService {
 
     @Autowired
-    private LoanRepository repo;
+    private LoanRepository loanRepo;
 
+    @Autowired
     private BookRepository bookRepo;
 
+    @Autowired
+    private User_appRepository userRepo;
+
     public Loan find (Long id) throws ObjectNotFoundException {
-        Optional<Loan> obj = repo.findById(id);
+        Optional<Loan> obj = loanRepo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
     }
 
     public Loan insert(Loan obj){
-        obj = repo.save(obj);
+        System.out.println(obj.toString());
+        userRepo.save(obj.getUser_app());
+        bookRepo.saveAll(obj.getBooks());
+        obj = loanRepo.save(obj);
+        //userRepo.save(obj.getUser_app());
+        //List<User_app> users = obj.getUser_app();
+        //List<Book> books = obj.getBooks();
         return  obj;
     }
 
     public Loan update (Loan obj){
         Loan newObj = find(obj.getId());
-        return repo.save(obj);
+        return loanRepo.save(obj);
     }
 
     public void delete(Long id){
         find(id);
         try {
-            repo.deleteById(id);
+            loanRepo.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possivevel excluir um Loan que possui dependências");
@@ -52,12 +66,12 @@ public class LoanService {
     }
 
     public List<Loan> findAll() {
-        return repo.findAll();
+        return loanRepo.findAll();
     }
 
     public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage , Sort.Direction.valueOf(direction), orderBy);
-        return repo.findAll(pageRequest);
+        return loanRepo.findAll(pageRequest);
     }
 
 }
