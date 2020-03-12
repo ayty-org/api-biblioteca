@@ -24,7 +24,7 @@ public class Loan implements Serializable {
     @JoinColumn(name = "user_app_id")
     private  User_app user_app;
 
-    @OneToMany(mappedBy="loan")
+    @ManyToMany(mappedBy="loan")
     private List<Book> books = new ArrayList<>();
 
     @NotEmpty(message = "Preenchimento obrigatório")

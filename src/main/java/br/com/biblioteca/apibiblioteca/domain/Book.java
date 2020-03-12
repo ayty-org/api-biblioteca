@@ -9,7 +9,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data()
 @EqualsAndHashCode(exclude = {"title", "resume", "isbn", "author", "year_book"})
@@ -38,9 +40,12 @@ public class Book implements Serializable {
     private Date year_book; //ano
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "loan_id")
-    private Loan loan;
+    @ManyToMany
+    @JoinTable(name = "BOOK_LOAN",
+            joinColumns = @JoinColumn(name = "loan_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private List<Loan> loan = new ArrayList<>();
 
     public  Book () {}
 
