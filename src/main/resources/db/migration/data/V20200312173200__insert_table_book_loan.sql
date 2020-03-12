@@ -1,0 +1,1 @@
+INSERT INTO book_loan(loan_id, book_id) VALUES(1, 1);
