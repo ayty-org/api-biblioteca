@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,15 +33,8 @@ public class BookService {
     }
 
     public Book update (Book obj){ //atualiza um book
-        Book newObj = find(obj.getId());
-        newObj.setId(obj.getId());
-        newObj.setTitle(obj.getTitle());
-        newObj.setResume(obj.getResume());
-        newObj.setIsbn(obj.getIsbn());
-        newObj.setAuthor(obj.getAuthor());
-        newObj.setYear_book(obj.getYear_book());
-        newObj.setLoan(obj.getLoan());
-        return repo.save(newObj);
+
+        return repo.save(obj);
     }
 
     public void delete(Long id){
