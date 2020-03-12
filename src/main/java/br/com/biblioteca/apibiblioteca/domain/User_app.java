@@ -33,11 +33,7 @@ public class User_app implements Serializable {
     private String fone;
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "User_Loan",
-            joinColumns = @JoinColumn(name = "user_app_id"),
-            inverseJoinColumns = @JoinColumn(name = "loan_id")
-    )
+    @OneToMany(mappedBy = "user_app")
     private List<Loan> loans = new ArrayList<>();
 
     public User_app () {
