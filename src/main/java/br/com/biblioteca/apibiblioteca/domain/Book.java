@@ -40,11 +40,7 @@ public class Book implements Serializable {
     private Date year_book; //ano
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "BOOK_LOAN",
-            joinColumns = @JoinColumn(name = "loan_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
+    @ManyToMany(mappedBy="books")
     private List<Loan> loan = new ArrayList<>();
 
     public  Book () {}
