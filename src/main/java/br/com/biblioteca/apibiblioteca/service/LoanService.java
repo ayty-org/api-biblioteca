@@ -42,13 +42,13 @@ public class LoanService {
 
     @Transactional
     public Loan insert(Loan obj){
-        System.out.println(obj.toString());
-        //userRepo.save(obj.getUser_app());
-        //bookRepo.saveAll(obj.getBooks());
         obj = loanRepo.save(obj);
-        //userRepo.save(obj.getUser_app());
-        //List<User_app> users = obj.getUser_app();
-        //List<Book> books = obj.getBooks();
+
+        User_app user = obj.getUser_app();
+        user.getLoans().add(obj);
+
+        userRepo.save(user);
+
         return  obj;
     }
 
