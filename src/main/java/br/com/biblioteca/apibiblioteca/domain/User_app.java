@@ -1,19 +1,17 @@
 package br.com.biblioteca.apibiblioteca.domain;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data()
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"name", "age", "fone"})
 @Entity
 public class User_app implements Serializable {
@@ -23,13 +21,10 @@ public class User_app implements Serializable {
     @Id
     private Long id;
 
-    @NotEmpty(message = "Preenchimento obrigatório")
     private String name;
 
-    @NotNull(message = "Preenchimento obrigatório")
     private int age;
 
-    @NotEmpty(message = "Preenchimento obrigatório")
     private String fone;
 
     @JsonIgnore

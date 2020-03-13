@@ -1,16 +1,16 @@
 package br.com.biblioteca.apibiblioteca.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"books", "loan_time"})
 @Entity
 public class Loan implements Serializable {
@@ -25,14 +25,13 @@ public class Loan implements Serializable {
     private  User_app user_app;
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "LOAN_BOOK",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "loan_id")
     )
     private List<Book> books = new ArrayList<>();
 
-    @NotEmpty(message = "Preenchimento obrigatório")
     private String loan_time;
 
     public Loan (){}
