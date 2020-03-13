@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,15 +32,16 @@ public class BookService {
         return repo.save(obj);
     }
 
-    public Book update (Book obj){
-        Book newObj = find(obj.getId());
-        //updateData(newObj,obj);
-        return repo.save(obj);
+    public Book update (Book obj){ //atualiza um book
+        Book newBook = find(obj.getId());
+        newBook.setId(obj.getId());
+        newBook.setTitle(obj.getTitle());
+        newBook.setResume(obj.getResume());
+        newBook.setIsbn(obj.getIsbn());
+        newBook.setAuthor(obj.getAuthor());
+        newBook.setYear_book(obj.getYear_book());
+        return repo.save(newBook);
     }
-
-    //private void updateData(Book newObj, Book obj) {
-    //    newObj.setNome(obj.getNome());
-    //}
 
     public void delete(Long id){
         find(id);
@@ -46,7 +49,7 @@ public class BookService {
             repo.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir uma Book que possui dependências");
+            throw new DataIntegrityException("Não é possivevel excluir uma Book que possui emprestimos");
         }
     }
 

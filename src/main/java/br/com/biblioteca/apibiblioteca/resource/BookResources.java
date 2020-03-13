@@ -14,12 +14,11 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/book")
+@RequestMapping(value="/v1/api/book")
 public class BookResources {
 
     @Autowired
     private BookService service;
-
 
     @RequestMapping(method = RequestMethod.GET) //lista todos os livros
     public ResponseEntity<List<Book>> findAll() {

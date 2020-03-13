@@ -1,16 +1,17 @@
 package br.com.biblioteca.apibiblioteca.domain;
 
-
-
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-@Data()
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"name", "age", "fone"})
 @Entity
 public class User_app implements Serializable {
@@ -18,16 +19,17 @@ public class User_app implements Serializable {
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
-    private int id;
+    private Long id;
 
-    @NotEmpty(message = "Preenchimento obrigatório")
     private String name;
 
-    @NotNull(message = "Preenchimento obrigatório")
     private int age;
 
-    @NotEmpty(message = "Preenchimento obrigatório")
     private String fone;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user_app")
+    private List<Loan> loans = new ArrayList<>();
 
     public User_app () {
     }
