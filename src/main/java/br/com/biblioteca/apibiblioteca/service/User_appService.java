@@ -50,7 +50,7 @@ public class User_appService {
             repository.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir um user que possui dependências");
+            throw new DataIntegrityException("Não é possivevel excluir um user que possui emprestimos");
         }
     }
 

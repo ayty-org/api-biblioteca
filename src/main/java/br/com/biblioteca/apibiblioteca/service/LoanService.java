@@ -18,10 +18,12 @@ import org.springframework.stereotype.Service;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 @Service
 public class LoanService {
 
@@ -40,7 +42,6 @@ public class LoanService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
     }
 
-    @Transactional
     public Loan insert(Loan obj){
         obj = loanRepo.save(obj);
 
@@ -53,18 +54,17 @@ public class LoanService {
     }
 
     public Loan update (Loan obj){
+
         Loan newObj = find(obj.getId());
-        return loanRepo.save(obj);
+
+        newObj.setId(obj.getId());
+        newObj.setLoan_time(obj.getLoan_time());
+
+        return loanRepo.save(newObj);
     }
 
     public void delete(Long id){
-        find(id);
-        try {
-            loanRepo.deleteById(id);
-        }
-        catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir um Loan que possui dependências");
-        }
+        loanRepo.deleteById(id);
     }
 
     public List<Loan> findAll() {

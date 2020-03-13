@@ -49,7 +49,7 @@ public class BookService {
             repo.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir uma Book que possui dependências");
+            throw new DataIntegrityException("Não é possivevel excluir uma Book que possui emprestimos");
         }
     }
 
