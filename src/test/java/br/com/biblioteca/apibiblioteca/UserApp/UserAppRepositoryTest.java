@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext
-public class UserAppRepository {
+public class UserAppRepositoryTest {
 
     @Autowired
     private User_appRepository userRepository;
@@ -32,14 +32,14 @@ public class UserAppRepository {
     }
 
     @Test
-    public void createBook(){
+    public void createUser(){
         User_app userTest01 = new User_app("teste nome 2",423,"463563456357");
         userTest01 = this.userRepository.save(userTest01);
         assertThat(userTest01.getId()).isNotNull();
     }
 
     @Test
-    public void getIdBook(){
+    public void getIdUser(){
         Optional<User_app> userTest02 = this.userRepository.findById(2L);
         assertThat(userTest02.isPresent()).isTrue();
         User_app user02 = userTest02.get();
@@ -50,7 +50,7 @@ public class UserAppRepository {
     }
 
     @Test
-    public void updateBook(){
+    public void updateUser(){
         User_app userTest03 = new User_app("teste nome 2",423,"463563456357");
         this.userRepository.save(userTest03);
         Optional<User_app> userTest04 = this.userRepository.findById(3L);
@@ -64,7 +64,7 @@ public class UserAppRepository {
     }
 
     @Test
-    public void deleteBook(){
+    public void deleteUser(){
         User_app userTest03 = new User_app("teste nome 2",423,"463563456357");
         this.userRepository.save(userTest03);
         this.userRepository.deleteById(userTest03.getId());
