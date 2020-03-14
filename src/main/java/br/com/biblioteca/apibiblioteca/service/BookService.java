@@ -24,7 +24,7 @@ public class BookService {
 
     public Book find (Long id) throws ObjectNotFoundException{
         Optional<Book> obj = repo.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(      //estudar como funciona esse retorno
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Book.class.getName()));
     }
 
