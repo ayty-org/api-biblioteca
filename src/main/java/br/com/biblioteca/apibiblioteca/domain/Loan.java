@@ -1,8 +1,6 @@
 package br.com.biblioteca.apibiblioteca.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"books", "loan_time"})
+@RequiredArgsConstructor
 @Entity
 public class Loan implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -24,7 +22,6 @@ public class Loan implements Serializable {
     @JoinColumn(name = "user_app_id")
     private  User_app user_app;
 
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "LOAN_BOOK",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -34,6 +31,9 @@ public class Loan implements Serializable {
 
     private String loan_time;
 
-    public Loan (){}
-
+    public Loan(User_app user_app, List<Book> books, String loan_time) {
+        this.user_app = user_app;
+        this.books = books;
+        this.loan_time = loan_time;
+    }
 }
