@@ -6,6 +6,7 @@ import br.com.biblioteca.apibiblioteca.domain.User_app;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
 import br.com.biblioteca.apibiblioteca.repository.User_appRepository;
+import br.com.biblioteca.apibiblioteca.service.LoanService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -27,16 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext
-public class LoanRepositoryTest {
+public class LoanServiceTest {
 
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private User_appRepository userRepository;
-
-    @Autowired
-    private LoanRepository loanRepository;
+    private LoanService loanService;
 
     private static Date DATA;
     private static List<Book> books = new ArrayList<>();;
@@ -74,13 +69,11 @@ public class LoanRepositoryTest {
 
     @Test
     public void getIdLoan(){
-        Optional<Loan> loanTest02 = this.loanRepository.findById(2L);
-        assertThat(loanTest02.isPresent()).isTrue();
-        Loan loan02 = loanTest02.get();
-        assertThat(loan02.getId()).isNotNull();
-        assertThat(loan02.getUser_app()).isEqualTo(user);
-        assertThat(loan02.getBooks()).isEqualTo(books);
-        assertThat(loan02.getLoan_time()).isEqualTo("50 dias");
+        Loan loanTest02 = this.loanService.find(2L);
+        assertThat(loanTest02.getId()).isNotNull();
+        assertThat(loanTest02.getUser_app()).isEqualTo(user);
+        assertThat(loanTest02.getBooks()).isEqualTo(books);
+        assertThat(loanTest02.getLoan_time()).isEqualTo("50 dias");
     }
 
     @Test
@@ -93,13 +86,11 @@ public class LoanRepositoryTest {
         Loan loanTest03 = new Loan(userTest03,books,"10 dias");
         userTest03.getLoans().add(loanTest03);
 
-        Optional<Loan> loanTest04 = this.loanRepository.findById(3L);
-        assertThat(loanTest04.isPresent()).isTrue();
-        Loan loan03 = loanTest04.get();
-        loan03.setLoan_time("15 dias");
-        this.loanRepository.save(loan03);
-        assertThat(loan03.getId()).isNotNull();
-        assertThat(loan03.getLoan_time()).isEqualTo("15 dias");
+        Loan loanTest04 = this.loanService.find(3L);
+        loanTest04.setLoan_time("15 dias");
+        this.loanService.insert(loanTest04);
+        assertThat(loanTest04.getId()).isNotNull();
+        assertThat(loanTest04.getLoan_time()).isEqualTo("15 dias");
 
     }
 
@@ -112,9 +103,9 @@ public class LoanRepositoryTest {
 
         Loan loanTest05 = new Loan(userTest04,books,"10 dias");
         userTest04.getLoans().add(loanTest05);
-        this.loanRepository.deleteById(1L);
-        Optional<Loan> loan04 = this.loanRepository.findById(1L);
-        assertThat(loan04.isPresent()).isFalse();
+        this.loanService.delete(1L);
+        Loan loan04 = this.loanService.find(1L);
+        assertThat(loan04.getId()).isNull();
     }
 
 }
