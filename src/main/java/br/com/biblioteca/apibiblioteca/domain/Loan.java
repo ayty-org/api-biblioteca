@@ -9,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @RequiredArgsConstructor
 @Entity
 public class Loan implements Serializable {
@@ -22,7 +23,7 @@ public class Loan implements Serializable {
     @JoinColumn(name = "user_app_id")
     private  User_app user_app;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "LOAN_BOOK",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "loan_id")
