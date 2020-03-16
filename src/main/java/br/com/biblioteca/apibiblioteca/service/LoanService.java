@@ -38,8 +38,7 @@ public class LoanService {
 
     public Loan find (Long id) throws ObjectNotFoundException {
         Optional<Loan> obj = loanRepo.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
+        return obj.orElse(null);
     }
 
     public Loan insert(Loan obj){
