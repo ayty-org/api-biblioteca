@@ -4,6 +4,7 @@ import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,6 +30,9 @@ public class BookResources {
     @RequestMapping(value="/{id}", method = RequestMethod.GET) //lista livros por id
     public ResponseEntity<Book> find(@PathVariable Long id){
         Book obj = service.find(id);
+        if (obj.equals(null)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return ResponseEntity.ok().body(obj);
     }
 
