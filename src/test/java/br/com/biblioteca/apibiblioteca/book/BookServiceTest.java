@@ -34,47 +34,47 @@ public class BookServiceTest {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         DATA = timestamp;
 
-        Book bookTest = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        this.bookService.insert(bookTest);
+        Book bookTest01 = new Book("teste title","teste resume","teste isbn","teste author",DATA); //id=2
+        this.bookService.insert(bookTest01);
+        Book bookTest02 = new Book("teste title 2","teste resume 2","teste isbn 2","teste author 2",DATA); //id=3
+        this.bookService.insert(bookTest02);
     }
 
     @Test
     public void createBook(){
-        Book bookTest01 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        this.bookService.insert(bookTest01);
-        assertThat(bookTest01.getId()).isNotNull();
+        Book bookTest03 = new Book("teste title 3","teste resume 3","teste isbn 3","teste author 3",DATA); //id=4
+        bookTest03 = this.bookService.insert(bookTest03);
+        assertThat(bookTest03.getId()).isNotNull();
     }
 
     @Test
     public void getIdBook(){
-        Book bookTest02 = this.bookService.find(2L);
-        assertThat(bookTest02.getId()).isNotNull();
-        assertThat(bookTest02.getTitle()).isEqualTo("teste title");
-        assertThat(bookTest02.getResume()).isEqualTo("teste resume");
-        assertThat(bookTest02.getIsbn()).isEqualTo("teste isbn");
-        assertThat(bookTest02.getAuthor()).isEqualTo("teste author");
-        assertThat(bookTest02.getYear_book()).isEqualTo(DATA);
+        Book bookTest03 = this.bookService.find(2L);
+        assertThat(bookTest03.getId()).isNotNull();
+        assertThat(bookTest03.getTitle()).isEqualTo("teste title");
+        assertThat(bookTest03.getResume()).isEqualTo("teste resume");
+        assertThat(bookTest03.getIsbn()).isEqualTo("teste isbn");
+        assertThat(bookTest03.getAuthor()).isEqualTo("teste author");
+        assertThat(bookTest03.getYear_book()).isEqualTo(DATA);
     }
 
     @Test
     public void updateBook(){
-        Book bookTest03 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        this.bookService.insert(bookTest03);
-        Book bookTest04 = this.bookService.find(3L);
-        bookTest04.setAuthor("Waldir");
-        this.bookService.insert(bookTest04);
-        assertThat(bookTest04.getId()).isNotNull();
-        assertThat(bookTest04.getAuthor()).isEqualTo("Waldir");
+        Book book = this.bookService.find(3L);
+        book.setAuthor("Waldir");
+        book = this.bookService.update(book);
+        assertThat(book.getId()).isNotNull();
+        assertThat(book.getAuthor()).isEqualTo("Waldir");
 
     }
 
     @Test
     public void deleteBook(){
-        Book bookTest05 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        this.bookService.insert(bookTest05);
+        Book bookTest05 = new Book("teste title 5","teste resume 5","teste isbn 5","teste author 5",DATA); //id=5
+        bookTest05 = this.bookService.insert(bookTest05);
         this.bookService.delete(bookTest05.getId());
-        this.bookService.find(bookTest05.getId());
-        assertThat(bookTest05.getId()).isNull();
+        bookTest05 = this.bookService.find(bookTest05.getId());
+        assertThat(bookTest05).isNull();
     }
 
     /*@Test

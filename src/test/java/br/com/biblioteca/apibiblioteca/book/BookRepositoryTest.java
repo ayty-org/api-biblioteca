@@ -33,22 +33,24 @@ public class BookRepositoryTest {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         DATA = timestamp;
 
-        Book bookTest = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        bookTest = this.bookRepository.save(bookTest);
+        Book bookTest01 = new Book("teste title","teste resume","teste isbn","teste author",DATA); //id=2
+        this.bookRepository.save(bookTest01);
+        Book bookTest02 = new Book("teste title 2","teste resume 2","teste isbn 2","teste author 2",DATA); //id=3
+        this.bookRepository.save(bookTest02);
     }
 
     @Test
     public void createBook(){
-        Book bookTest01 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        bookTest01 = this.bookRepository.save(bookTest01);
-        assertThat(bookTest01.getId()).isNotNull();
+        Book bookTest03 = new Book("teste title 3","teste resume 3","teste isbn 3","teste author 3",DATA); //id=4
+        bookTest03 = this.bookRepository.save(bookTest03);
+        assertThat(bookTest03.getId()).isNotNull();
     }
 
     @Test
     public void getIdBook(){
-        Optional<Book> bookTest02 = this.bookRepository.findById(2L);
-        assertThat(bookTest02.isPresent()).isTrue();
-        Book b2 = bookTest02.get();
+        Optional<Book> bookTest04 = this.bookRepository.findById(2L); //pega livro por id 2
+        assertThat(bookTest04.isPresent()).isTrue();
+        Book b2 = bookTest04.get();
         assertThat(b2.getId()).isNotNull();
         assertThat(b2.getTitle()).isEqualTo("teste title");
         assertThat(b2.getResume()).isEqualTo("teste resume");
@@ -59,11 +61,9 @@ public class BookRepositoryTest {
 
     @Test
     public void updateBook(){
-        Book bookTest03 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        this.bookRepository.save(bookTest03);
-        Optional<Book> bookTest04 = this.bookRepository.findById(3L);
-        assertThat(bookTest04.isPresent()).isTrue();
-        Book b3 = bookTest04.get();
+        Optional<Book> book = this.bookRepository.findById(3L); //pega livro por id 3
+        assertThat(book.isPresent()).isTrue();
+        Book b3 = book.get();
         b3.setAuthor("Waldir");
         b3 = this.bookRepository.save(b3);
         assertThat(b3.getId()).isNotNull();
@@ -73,7 +73,7 @@ public class BookRepositoryTest {
 
     @Test
     public void deleteBook(){
-        Book bookTest05 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
+        Book bookTest05 = new Book("teste title 5","teste resume 5","teste isbn 5","teste author 5",DATA);
         bookTest05 = this.bookRepository.save(bookTest05);
         this.bookRepository.deleteById(bookTest05.getId());
         Optional<Book> b = this.bookRepository.findById(bookTest05.getId());

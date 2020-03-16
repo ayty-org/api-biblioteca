@@ -27,49 +27,50 @@ public class UserAppRepositoryTest {
     @BeforeAll
     public void setUp() throws ParseException {
 
-        User_app userTest = new User_app("teste nome",21,"46356357");
-        userTest = this.userRepository.save(userTest);
+        User_app userTest01 = new User_app("teste nome 1",21,"46356357"); //id=2
+        this.userRepository.save(userTest01);
+
+        User_app userTest02 = new User_app("teste nome 2",31,"876353453"); //id=3
+        this.userRepository.save(userTest02);
     }
 
     @Test
     public void createUser(){
-        User_app userTest01 = new User_app("teste nome 2",423,"463563456357");
-        userTest01 = this.userRepository.save(userTest01);
-        assertThat(userTest01.getId()).isNotNull();
+        User_app userTest03 = new User_app("teste nome 3",43,"463563456357"); //id=4
+        userTest03 = this.userRepository.save(userTest03);
+        assertThat(userTest03.getId()).isNotNull();
     }
 
     @Test
     public void getIdUser(){
-        Optional<User_app> userTest02 = this.userRepository.findById(2L);
-        assertThat(userTest02.isPresent()).isTrue();
-        User_app user02 = userTest02.get();
-        assertThat(user02.getId()).isNotNull();
-        assertThat(user02.getName()).isEqualTo("teste nome");
-        assertThat(user02.getAge()).isEqualTo(21);
-        assertThat(user02.getFone()).isEqualTo("46356357");
+        Optional<User_app> userTest04 = this.userRepository.findById(2L);
+        assertThat(userTest04.isPresent()).isTrue();
+        User_app user = userTest04.get();
+        assertThat(user.getId()).isNotNull();
+        assertThat(user.getName()).isEqualTo("teste nome 1");
+        assertThat(user.getAge()).isEqualTo(21);
+        assertThat(user.getFone()).isEqualTo("46356357");
     }
 
     @Test
     public void updateUser(){
-        User_app userTest03 = new User_app("teste nome 2",423,"463563456357");
-        this.userRepository.save(userTest03);
-        Optional<User_app> userTest04 = this.userRepository.findById(3L);
-        assertThat(userTest04.isPresent()).isTrue();
-        User_app user03 = userTest04.get();
-        user03.setName("Waldir");
-        user03 = this.userRepository.save(user03);
-        assertThat(user03.getId()).isNotNull();
-        assertThat(user03.getName()).isEqualTo("Waldir");
+        Optional<User_app> userTest05 = this.userRepository.findById(3L);
+        assertThat(userTest05.isPresent()).isTrue();
+        User_app user = userTest05.get();
+        user.setName("Waldir");
+        user = this.userRepository.save(user);
+        assertThat(user.getId()).isNotNull();
+        assertThat(user.getName()).isEqualTo("Waldir");
 
     }
 
     @Test
     public void deleteUser(){
-        User_app userTest03 = new User_app("teste nome 2",423,"463563456357");
-        this.userRepository.save(userTest03);
-        this.userRepository.deleteById(userTest03.getId());
-        Optional<User_app> user04 = this.userRepository.findById(userTest03.getId());
-        assertThat(user04.isPresent()).isFalse();
+        User_app userTest06 = new User_app("teste nome 6",23,"463563456357");
+        userTest06 = this.userRepository.save(userTest06);
+        this.userRepository.deleteById(userTest06.getId());
+        Optional<User_app> user = this.userRepository.findById(userTest06.getId());
+        assertThat(user.isPresent()).isFalse();
     }
 
     /*@Test

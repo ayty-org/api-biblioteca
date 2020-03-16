@@ -39,7 +39,7 @@ public class LoanRepositoryTest {
     private LoanRepository loanRepository;
 
     private static Date DATA;
-    private static List<Book> books = new ArrayList<>();;
+    private static List<Book> books = new ArrayList<>();
     private static User_app user;
 
     @BeforeAll
@@ -49,26 +49,18 @@ public class LoanRepositoryTest {
 
         User_app userTest = new User_app("teste nome",21,"46356357");
         user = userTest;
-        //this.userRepository.save(user);
+        this.userRepository.save(user);
 
         Book bookTest = new Book("teste title","teste resume","teste isbn","teste author",DATA);
         books.add(bookTest);
-        //this.bookRepository.save(bookTest);
+        this.bookRepository.save(bookTest);
 
-        Loan loanTest = new Loan(user,books,"50 dias");
-        //this.loanRepository.save(loanTest);
-        user.getLoans().add(loanTest);
     }
 
     @Test
     public void createLoan(){
-        User_app userTest01 = new User_app("teste nome 2",22,"4635635754354");
-
-        Book bookTest01 = new Book("teste title 2","teste resume 2","teste isbn 2","teste author 2",DATA);
-        books.add(bookTest01);
-
-        Loan loanTest01 = new Loan(userTest01,books,"150 dias");
-        userTest01.getLoans().add(loanTest01);
+        Loan loanTest01 = new Loan(user,books,"150 dias");
+        loanTest01 = loanRepository.save(loanTest01);
         assertThat(loanTest01.getId()).isNotNull();
     }
 
@@ -85,14 +77,6 @@ public class LoanRepositoryTest {
 
     @Test
     public void updateLoan(){
-        User_app userTest03 = new User_app("teste nome 2",22,"4635635754354");
-
-        Book bookTest03 = new Book("teste title 2","teste resume 2","teste isbn 2","teste author 2",DATA);
-        books.add(bookTest03);
-
-        Loan loanTest03 = new Loan(userTest03,books,"10 dias");
-        userTest03.getLoans().add(loanTest03);
-
         Optional<Loan> loanTest04 = this.loanRepository.findById(3L);
         assertThat(loanTest04.isPresent()).isTrue();
         Loan loan03 = loanTest04.get();
