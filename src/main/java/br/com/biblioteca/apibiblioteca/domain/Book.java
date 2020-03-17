@@ -36,7 +36,7 @@ public class Book implements Serializable {
     private Date year_book; //ano
 
     @JsonIgnore
-    @ManyToMany(mappedBy="books")
+    @ManyToMany(mappedBy="books", fetch = FetchType.LAZY)
     private List<Loan> loan = new ArrayList<>();
 
 
