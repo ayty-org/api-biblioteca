@@ -1,8 +1,7 @@
 package br.com.biblioteca.apibiblioteca.resource;
 
 
-import br.com.biblioteca.apibiblioteca.domain.Loan;
-import br.com.biblioteca.apibiblioteca.domain.User_app;
+import br.com.biblioteca.apibiblioteca.domain.UserApp;
 import br.com.biblioteca.apibiblioteca.service.User_appService;
 import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +23,14 @@ public class User_appResources {
     private User_appService service;
 
     @GetMapping //lista todos os usuários
-    public ResponseEntity<List<User_app>> findAll() {
-        List<User_app> list = service.findAll();
+    public ResponseEntity<List<UserApp>> findAll() {
+        List<UserApp> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value="/{id}") //lista usuário por id
-    public ResponseEntity<User_app> find(@PathVariable Long id){
-        User_app obj = service.find(id);
+    public ResponseEntity<UserApp> find(@PathVariable Long id){
+        UserApp obj = service.find(id);
         if (obj.equals(null)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -39,17 +38,17 @@ public class User_appResources {
     }
 
     @GetMapping(value = "/page") //lista todas os usuários com paginação
-    public ResponseEntity<Page<User_app>> findPage(
+    public ResponseEntity<Page<UserApp>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue="name") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
-        Page<User_app> list = service.findPage(page, linesPerPage, orderBy, direction);
+        Page<UserApp> list = service.findPage(page, linesPerPage, orderBy, direction);
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping() //adiciona um usuário Book
-    public ResponseEntity<Void> insert(@Valid @RequestBody User_app obj){
+    public ResponseEntity<Void> insert(@Valid @RequestBody UserApp obj){
         service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(obj.getId()).toUri();
@@ -57,7 +56,7 @@ public class User_appResources {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody User_app obj, @PathVariable Long id) throws ObjectNotFoundException {
+    public ResponseEntity<Void> update(@Valid @RequestBody UserApp obj, @PathVariable Long id) throws ObjectNotFoundException {
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();

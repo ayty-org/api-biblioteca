@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User_app implements Serializable {
+public class UserApp implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class User_app implements Serializable {
     @OneToMany(mappedBy = "user_app")
     private List<Loan> loans = new ArrayList<>();
 
-    public User_app(String name, int age, String fone) {
+    public UserApp(String name, int age, String fone) {
         this.name = name;
         this.age = age;
         this.fone = fone;
