@@ -2,11 +2,10 @@ package br.com.biblioteca.apibiblioteca.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +13,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"title", "resume", "isbn", "author", "year_book"})
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,10 +36,15 @@ public class Book implements Serializable {
     private Date year_book; //ano
 
     @JsonIgnore
-    @ManyToMany(mappedBy="books")
+    @ManyToMany(mappedBy="books", fetch = FetchType.LAZY)
     private List<Loan> loan = new ArrayList<>();
 
-    public  Book () {}
 
-
+    public Book(String title, String resume, String isbn, String author, Date year_book) {
+        this.title = title;
+        this.resume = resume;
+        this.isbn = isbn;
+        this.author = author;
+        this.year_book = year_book;
+    }
 }

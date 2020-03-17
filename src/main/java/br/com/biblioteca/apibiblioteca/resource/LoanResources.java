@@ -5,6 +5,7 @@ import br.com.biblioteca.apibiblioteca.service.LoanService;
 import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,6 +30,9 @@ public class LoanResources {
     @GetMapping(value="/{id}") //lista emprestimos por id
     public ResponseEntity<Loan> find(@PathVariable Long id){
         Loan obj = service.find(id);
+        if (obj.equals(null)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return ResponseEntity.ok().body(obj);
     }
 

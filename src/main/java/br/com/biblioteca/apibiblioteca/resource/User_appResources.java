@@ -7,6 +7,7 @@ import br.com.biblioteca.apibiblioteca.service.User_appService;
 import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -31,6 +32,9 @@ public class User_appResources {
     @GetMapping(value="/{id}") //lista usuário por id
     public ResponseEntity<User_app> find(@PathVariable Long id){
         User_app obj = service.find(id);
+        if (obj.equals(null)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         return ResponseEntity.ok().body(obj);
     }
 

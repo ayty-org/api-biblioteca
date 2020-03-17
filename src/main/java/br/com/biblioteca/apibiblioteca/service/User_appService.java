@@ -22,8 +22,7 @@ public class User_appService {
 
     public User_app find (Long id) throws ObjectNotFoundException{
         Optional<User_app> obj = repository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Objeto não encontrado! Id: " + id + ", Tipo: " + User_app.class.getName()));
+        return obj.orElse(null);
     }
 
     public Page<User_app> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
