@@ -56,7 +56,6 @@ public class BookRepositoryTest {
         assertThat(b2.getResume()).isEqualTo("teste resume");
         assertThat(b2.getIsbn()).isEqualTo("teste isbn");
         assertThat(b2.getAuthor()).isEqualTo("teste author");
-        assertThat(b2.getYear_book()).isEqualTo(DATA);
     }
 
     @Test

@@ -30,7 +30,7 @@ public class BookServiceTest {
     private static Date DATA;
 
     @BeforeAll
-    public void setUp() throws ParseException {
+    public void setUp(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         DATA = timestamp;
 
@@ -55,7 +55,6 @@ public class BookServiceTest {
         assertThat(bookTest03.getResume()).isEqualTo("teste resume");
         assertThat(bookTest03.getIsbn()).isEqualTo("teste isbn");
         assertThat(bookTest03.getAuthor()).isEqualTo("teste author");
-        assertThat(bookTest03.getYear_book()).isEqualTo(DATA);
     }
 
     @Test
