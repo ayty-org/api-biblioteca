@@ -2,7 +2,7 @@ package br.com.biblioteca.apibiblioteca.resource;
 
 
 import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.service.User_appService;
+import br.com.biblioteca.apibiblioteca.service.UserAppService;
 import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,10 +17,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value="/v1/api/user")
-public class User_appResources {
+public class UserAppResources {
 
     @Autowired
-    private User_appService service;
+    private UserAppService service;
 
     @GetMapping //lista todos os usuários
     public ResponseEntity<List<UserApp>> findAll() {
@@ -56,14 +56,14 @@ public class User_appResources {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody UserApp obj, @PathVariable Long id) throws ObjectNotFoundException {
+    public ResponseEntity<Void> update(@Valid @RequestBody UserApp obj, @PathVariable Long id){
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value="/{id}") //Deleta usuário
-    public ResponseEntity<Void> delete(@PathVariable Long id) throws ObjectNotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

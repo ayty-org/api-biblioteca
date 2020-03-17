@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,18 +32,18 @@ public class Book implements Serializable {
     private String author; //autor
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date year_book; //ano
+    private Date yearBook; //ano
 
     @JsonIgnore
     @ManyToMany(mappedBy="books", fetch = FetchType.LAZY)
     private List<Loan> loan = new ArrayList<>();
 
 
-    public Book(String title, String resume, String isbn, String author, Date year_book) {
+    public Book(String title, String resume, String isbn, String author, Date yearBook) {
         this.title = title;
         this.resume = resume;
         this.isbn = isbn;
         this.author = author;
-        this.year_book = year_book;
+        this.yearBook = yearBook;
     }
 }

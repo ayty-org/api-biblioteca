@@ -27,7 +27,7 @@ public class UserApp implements Serializable {
     private String fone;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user_app")
+    @OneToMany(mappedBy = "userApp")
     private List<Loan> loans = new ArrayList<>();
 
     public UserApp(String name, int age, String fone) {

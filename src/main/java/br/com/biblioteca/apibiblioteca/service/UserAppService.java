@@ -1,7 +1,7 @@
 package br.com.biblioteca.apibiblioteca.service;
 
 import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.repository.User_appRepository;
+import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
 import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class User_appService {
+public class UserAppService {
 
     @Autowired
-    User_appRepository repository;
+    UserAppRepository repository;
 
     public UserApp find (Long id) throws ObjectNotFoundException{
         Optional<UserApp> obj = repository.findById(id);
