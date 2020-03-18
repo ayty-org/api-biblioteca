@@ -1,25 +1,17 @@
 package br.com.biblioteca.apibiblioteca.service;
 
-import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.domain.Loan;
-import br.com.biblioteca.apibiblioteca.domain.User_app;
+import br.com.biblioteca.apibiblioteca.domain.UserApp;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
-import br.com.biblioteca.apibiblioteca.repository.User_appRepository;
-import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
-import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
+import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,26 +20,26 @@ import java.util.Optional;
 public class LoanService {
 
     @Autowired
-    private LoanRepository loanRepo;
+    private LoanRepository loanRepository;
 
     @Autowired
-    private BookRepository bookRepo;
+    private BookRepository bookRepository;
 
     @Autowired
-    private User_appRepository userRepo;
+    private UserAppRepository userAppRepository;
 
-    public Loan find (Long id) throws ObjectNotFoundException {
-        Optional<Loan> obj = loanRepo.findById(id);
+    public Loan find (Long id){
+        Optional<Loan> obj = loanRepository.findById(id);
         return obj.orElse(null);
     }
 
     public Loan insert(Loan obj){
-        obj = loanRepo.save(obj);
+        obj = loanRepository.save(obj);
 
-        User_app user = obj.getUser_app();
+        UserApp user = obj.getUserApp();
         user.getLoans().add(obj);
 
-        userRepo.save(user);
+        userAppRepository.save(user);
 
         return  obj;
     }
@@ -57,22 +49,22 @@ public class LoanService {
         Loan newObj = find(obj.getId());
 
         newObj.setId(obj.getId());
-        newObj.setLoan_time(obj.getLoan_time());
+        newObj.setLoanTime(obj.getLoanTime());
 
-        return loanRepo.save(newObj);
+        return loanRepository.save(newObj);
     }
 
     public void delete(Long id){
-        loanRepo.deleteById(id);
+        loanRepository.deleteById(id);
     }
 
     public List<Loan> findAll() {
-        return loanRepo.findAll();
+        return loanRepository.findAll();
     }
 
     public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage , Sort.Direction.valueOf(direction), orderBy);
-        return loanRepo.findAll(pageRequest);
+        return loanRepository.findAll(pageRequest);
     }
 
 }

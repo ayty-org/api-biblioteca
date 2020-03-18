@@ -1,7 +1,7 @@
 package br.com.biblioteca.apibiblioteca.service;
 
-import br.com.biblioteca.apibiblioteca.domain.User_app;
-import br.com.biblioteca.apibiblioteca.repository.User_appRepository;
+import br.com.biblioteca.apibiblioteca.domain.UserApp;
+import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
 import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,27 +15,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class User_appService {
+public class UserAppService {
 
     @Autowired
-    User_appRepository repository;
+    UserAppRepository repository;
 
-    public User_app find (Long id) throws ObjectNotFoundException{
-        Optional<User_app> obj = repository.findById(id);
+    public UserApp find (Long id) throws ObjectNotFoundException{
+        Optional<UserApp> obj = repository.findById(id);
         return obj.orElse(null);
     }
 
-    public Page<User_app> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+    public Page<UserApp> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage , Sort.Direction.valueOf(direction), orderBy);
         return repository.findAll(pageRequest);
     }
 
-    public User_app insert(User_app obj){ //Insere um livro no banco
+    public UserApp insert(UserApp obj){ //Insere um livro no banco
         return repository.save(obj);
     }
 
-    public User_app update (User_app obj){ //atualiza um book
-        User_app newObj = find(obj.getId());
+    public UserApp update (UserApp obj){ //atualiza um book
+        UserApp newObj = find(obj.getId());
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());
         newObj.setAge(obj.getAge());
@@ -53,7 +53,7 @@ public class User_appService {
         }
     }
 
-    public List<User_app> findAll() {
+    public List<UserApp> findAll() {
         return repository.findAll();
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import javassist.tools.rmi.ObjectNotFoundException;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -19,17 +18,17 @@ import java.util.List;
 public class BookResources {
 
     @Autowired
-    private BookService service;
+    private BookService bookService;
 
     @RequestMapping(method = RequestMethod.GET) //lista todos os livros
     public ResponseEntity<List<Book>> findAll() {
-        List<Book> list = service.findAll();
+        List<Book> list = bookService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET) //lista livros por id
     public ResponseEntity<Book> find(@PathVariable Long id){
-        Book obj = service.find(id);
+        Book obj = bookService.find(id);
         if (obj.equals(null)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -42,28 +41,28 @@ public class BookResources {
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue="title") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
-        Page<Book> list = service.findPage(page, linesPerPage, orderBy, direction);
+        Page<Book> list = bookService.findPage(page, linesPerPage, orderBy, direction);
         return ResponseEntity.ok().body(list);
     }
 
     @PostMapping() //adiciona um novo Book
     public ResponseEntity<Void> insert(@Valid @RequestBody Book obj){
-        service.insert(obj);
+        bookService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value="/{id}") //atualizar uma Book
-    public ResponseEntity<Void> update(@Valid @RequestBody Book obj, @PathVariable Long id) throws ObjectNotFoundException{
+    public ResponseEntity<Void> update(@Valid @RequestBody Book obj, @PathVariable Long id){
         obj.setId(id);
-        obj = service.update(obj);
+        obj = bookService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping(value="/{id}") //Deleta Book
-    public ResponseEntity<Void> delete(@PathVariable Long id) throws ObjectNotFoundException {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        bookService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

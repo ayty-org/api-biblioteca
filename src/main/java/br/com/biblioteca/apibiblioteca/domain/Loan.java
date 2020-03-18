@@ -20,8 +20,8 @@ public class Loan implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_app_id")
-    private  User_app user_app;
+    @JoinColumn(name = "userApp_id")
+    private UserApp userApp;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "LOAN_BOOK",
@@ -30,11 +30,11 @@ public class Loan implements Serializable {
     )
     private List<Book> books = new ArrayList<>();
 
-    private String loan_time;
+    private String loanTime;
 
-    public Loan(User_app user_app, List<Book> books, String loan_time) {
-        this.user_app = user_app;
+    public Loan(UserApp userApp, List<Book> books, String loanTime) {
+        this.userApp = userApp;
         this.books = books;
-        this.loan_time = loan_time;
+        this.loanTime = loanTime;
     }
 }

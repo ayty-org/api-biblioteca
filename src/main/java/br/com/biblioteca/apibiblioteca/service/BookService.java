@@ -3,7 +3,6 @@ package br.com.biblioteca.apibiblioteca.service;
 import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
-import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -11,8 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,15 +17,15 @@ import java.util.Optional;
 public class BookService {
 
     @Autowired
-    private BookRepository repo;
+    private BookRepository bookRepository;
 
-    public Book find (Long id) throws ObjectNotFoundException{
-        Optional<Book> obj = repo.findById(id);
+    public Book find (Long id){
+        Optional<Book> obj = bookRepository.findById(id);
         return obj.orElse(null);
     }
 
     public Book insert(Book obj){ //Insere um livro no banco
-        return repo.save(obj);
+        return bookRepository.save(obj);
     }
 
     public Book update (Book obj){ //atualiza um book
@@ -38,14 +35,14 @@ public class BookService {
         newBook.setResume(obj.getResume());
         newBook.setIsbn(obj.getIsbn());
         newBook.setAuthor(obj.getAuthor());
-        newBook.setYear_book(obj.getYear_book());
-        return repo.save(newBook);
+        newBook.setYearBook(obj.getYearBook());
+        return bookRepository.save(newBook);
     }
 
     public void delete(Long id){
         find(id);
         try {
-            repo.deleteById(id);
+            bookRepository.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possivevel excluir uma Book que possui emprestimos");
@@ -53,11 +50,11 @@ public class BookService {
     }
 
     public List<Book> findAll() {
-        return repo.findAll();
+        return bookRepository.findAll();
     }
 
     public Page<Book> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage , Direction.valueOf(direction), orderBy);
-        return repo.findAll(pageRequest);
+        return bookRepository.findAll(pageRequest);
     }
 }

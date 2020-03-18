@@ -2,13 +2,10 @@ package br.com.biblioteca.apibiblioteca.Loan;
 
 import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.domain.Loan;
-import br.com.biblioteca.apibiblioteca.domain.User_app;
-import br.com.biblioteca.apibiblioteca.repository.BookRepository;
-import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
-import br.com.biblioteca.apibiblioteca.repository.User_appRepository;
+import br.com.biblioteca.apibiblioteca.domain.UserApp;
 import br.com.biblioteca.apibiblioteca.service.BookService;
 import br.com.biblioteca.apibiblioteca.service.LoanService;
-import br.com.biblioteca.apibiblioteca.service.User_appService;
+import br.com.biblioteca.apibiblioteca.service.UserAppService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -22,7 +19,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,14 +32,14 @@ public class LoanServiceTest {
     private BookService bookService;
 
     @Autowired
-    private User_appService userAppService;
+    private UserAppService userAppService;
 
     @Autowired
     private LoanService loanService;
 
     private static Date DATA;
-    private static User_app user01;
-    private static User_app user02;
+    private static UserApp user01;
+    private static UserApp user02;
     private static List<Book> books01 = new ArrayList<>();
     private static List<Book> books02 = new ArrayList<>();
     @BeforeAll
@@ -52,7 +48,7 @@ public class LoanServiceTest {
         DATA = timestamp;
 
         //primeiro emprestimo
-        User_app userTest01 = new User_app("teste nome 1",21,"46356357");
+        UserApp userTest01 = new UserApp("teste nome 1",21,"46356357");
         userTest01 = this.userAppService.insert(userTest01);
         user01 = userTest01;
 
@@ -66,7 +62,7 @@ public class LoanServiceTest {
         loanService.insert(loanTest01);
 
         //segundo emprestimo
-        User_app userTest02 = new User_app("teste nome 2",21,"46356357");
+        UserApp userTest02 = new UserApp("teste nome 2",21,"46356357");
         userTest02 = this.userAppService.insert(userTest02);
 
         Book bookTest02 = new Book("teste title 2","teste resume","teste isbn","teste author",DATA);
@@ -81,7 +77,7 @@ public class LoanServiceTest {
     @Test
     public void createLoan(){
 
-        User_app userTest03 = new User_app("teste nome",21,"46356357");
+        UserApp userTest03 = new UserApp("teste nome",21,"46356357");
         userTest03 = this.userAppService.insert(userTest03);
 
         Book bookTest03 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
@@ -99,24 +95,24 @@ public class LoanServiceTest {
     public void getIdLoan(){
         Loan loanTest04 = this.loanService.find(2L);
         assertThat(loanTest04.getId()).isNotNull();
-        assertThat(loanTest04.getUser_app().getName()).isEqualTo(user01.getName());
+        assertThat(loanTest04.getUserApp().getName()).isEqualTo(user01.getName());
         assertThat(loanTest04.getBooks().get(0).getAuthor()).isEqualTo(books01.get(0).getAuthor());
-        assertThat(loanTest04.getLoan_time()).isEqualTo("150 dias");
+        assertThat(loanTest04.getLoanTime()).isEqualTo("150 dias");
     }
 
     @Test
     public void updateLoan(){
         Loan loanTest05 = this.loanService.find(3L);
-        loanTest05.setLoan_time("15 dias");
+        loanTest05.setLoanTime("15 dias");
         loanTest05 = this.loanService.update(loanTest05);
         assertThat(loanTest05.getId()).isNotNull();
-        assertThat(loanTest05.getLoan_time()).isEqualTo("15 dias");
+        assertThat(loanTest05.getLoanTime()).isEqualTo("15 dias");
 
     }
 
     @Test
     public void deleteBook(){
-        User_app userTest06 = new User_app("teste nome 2",22,"4635635754354");
+        UserApp userTest06 = new UserApp("teste nome 2",22,"4635635754354");
         user02 = userTest06;
         user02 = this.userAppService.insert(user02);
 
