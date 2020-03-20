@@ -20,7 +20,7 @@ public class UserAppService {
     @Autowired
     UserAppRepository repository;
 
-    public UserApp find (Long id) throws ObjectNotFoundException{
+    public UserApp find (Long id){
         Optional<UserApp> obj = repository.findById(id);
         return obj.orElse(null);
     }

@@ -20,13 +20,13 @@ public class BookResources {
     @Autowired
     private BookService bookService;
 
-    @RequestMapping(method = RequestMethod.GET) //lista todos os livros
+    @GetMapping //lista todos os livros
     public ResponseEntity<List<Book>> findAll() {
         List<Book> list = bookService.findAll();
         return ResponseEntity.ok().body(list);
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET) //lista livros por id
+    @GetMapping(value="/{id}") //lista livros por id
     public ResponseEntity<Book> find(@PathVariable Long id){
         Book obj = bookService.find(id);
         if (obj.equals(null)){
@@ -35,7 +35,7 @@ public class BookResources {
         return ResponseEntity.ok().body(obj);
     }
 
-    @RequestMapping(value = "/page", method = RequestMethod.GET) //lista todas os livros com paginação
+    @GetMapping(value = "/page") //lista todas os livros com paginação
     public ResponseEntity<Page<Book>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
@@ -45,7 +45,7 @@ public class BookResources {
         return ResponseEntity.ok().body(list);
     }
 
-    @PostMapping() //adiciona um novo Book
+    @PostMapping //adiciona um novo Book
     public ResponseEntity<Void> insert(@Valid @RequestBody Book obj){
         bookService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
@@ -56,7 +56,7 @@ public class BookResources {
     @PutMapping(value="/{id}") //atualizar uma Book
     public ResponseEntity<Void> update(@Valid @RequestBody Book obj, @PathVariable Long id){
         obj.setId(id);
-        obj = bookService.update(obj);
+        bookService.update(obj);
         return ResponseEntity.noContent().build();
     }
 
