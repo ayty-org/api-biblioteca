@@ -5,6 +5,7 @@ import br.com.biblioteca.apibiblioteca.domain.UserApp;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
 import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
+import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,18 +31,22 @@ public class LoanService {
 
     public Loan find (Long id){
         Optional<Loan> obj = loanRepository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
     }
 
     public Loan insert(Loan obj){
-        obj = loanRepository.save(obj);
 
+        System.out.println(obj.getLoanTime());
+        System.out.println(obj.getBooks().get(0));
         UserApp user = obj.getUserApp();
-        user.getLoans().add(obj);
+
+        //user.getLoans().add(obj);
 
         userAppRepository.save(user);
 
-        return  obj;
+        return loanRepository.save(obj);
+
     }
 
     public Loan update (Loan obj){

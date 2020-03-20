@@ -7,10 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,9 +27,6 @@ public class LoanResources {
     @GetMapping(value="/{id}") //lista emprestimos por id
     public ResponseEntity<Loan> find(@PathVariable Long id){
         Loan obj = loanService.find(id);
-        if (obj.equals(null)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         return ResponseEntity.ok().body(obj);
     }
 
@@ -45,24 +40,22 @@ public class LoanResources {
         return ResponseEntity.ok().body(list);
     }
 
+    @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping() //adiciona um emprestimo Book
-    public ResponseEntity<Void> insert(@Valid @RequestBody Loan obj){
+    public void insert(@Valid @RequestBody Loan obj){
         loanService.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
-                buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
     }
 
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PutMapping(value="/{id}") //atualizar uma emprestimo
-    public ResponseEntity<Void> update(@Valid @RequestBody Loan obj, @PathVariable Long id){
+    public void update(@Valid @RequestBody Loan obj, @PathVariable Long id){
         obj.setId(id);
-        obj = loanService.update(obj);
-        return ResponseEntity.noContent().build();
+        loanService.update(obj);
     }
 
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value="/{id}") //Deleta emprestimo
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id){
         loanService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

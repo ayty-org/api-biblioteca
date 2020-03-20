@@ -1,18 +1,14 @@
 package br.com.biblioteca.apibiblioteca.resource;
 
-
 import br.com.biblioteca.apibiblioteca.domain.UserApp;
 import br.com.biblioteca.apibiblioteca.service.UserAppService;
-import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -31,9 +27,6 @@ public class UserAppResources {
     @GetMapping(value="/{id}") //lista usuário por id
     public ResponseEntity<UserApp> find(@PathVariable Long id){
         UserApp obj = service.find(id);
-        if (obj.equals(null)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         return ResponseEntity.ok().body(obj);
     }
 
@@ -47,25 +40,23 @@ public class UserAppResources {
         return ResponseEntity.ok().body(list);
     }
 
+    @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping() //adiciona um usuário Book
-    public ResponseEntity<Void> insert(@Valid @RequestBody UserApp obj){
+    public void insert(@Valid @RequestBody UserApp obj){
         service.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
-                buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
     }
 
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> update(@Valid @RequestBody UserApp obj, @PathVariable Long id){
+    public void update(@Valid @RequestBody UserApp obj, @PathVariable Long id){
         obj.setId(id);
-        obj = service.update(obj);
-        return ResponseEntity.noContent().build();
+        service.update(obj);
     }
 
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value="/{id}") //Deleta usuário
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id){
         service.delete(id);
-        return ResponseEntity.noContent().build();
     }
 
 
