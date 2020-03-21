@@ -37,7 +37,7 @@ public class UserAppRepositoryTest {
     @Test
     public void createUser(){
         UserApp userTest03 = new UserApp("teste nome 3",43,"463563456357"); //id=4
-        userTest03 = this.userRepository.save(userTest03);
+        this.userRepository.save(userTest03);
         assertThat(userTest03.getId()).isNotNull();
     }
 
@@ -58,7 +58,7 @@ public class UserAppRepositoryTest {
         assertThat(userTest05.isPresent()).isTrue();
         UserApp user = userTest05.get();
         user.setName("Waldir");
-        user = this.userRepository.save(user);
+        this.userRepository.save(user);
         assertThat(user.getId()).isNotNull();
         assertThat(user.getName()).isEqualTo("Waldir");
 

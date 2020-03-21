@@ -2,6 +2,7 @@ package br.com.biblioteca.apibiblioteca.UserApp;
 
 import br.com.biblioteca.apibiblioteca.domain.UserApp;
 import br.com.biblioteca.apibiblioteca.service.UserAppService;
+import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -62,9 +63,13 @@ public class UserAppServiceTest {
     @Test
     public void deleteUser(){
         UserApp userTest06 = new UserApp("teste nome 2",423,"463563456357");
-        userTest06 = this.userService.insert(userTest06);
+        this.userService.insert(userTest06);
         this.userService.delete(userTest06.getId());
-        userTest06 = this.userService.find(userTest06.getId());
+        try {
+            userTest06 = this.userService.find(userTest06.getId());
+        }catch (ObjectNotFoundException o){
+            userTest06=null;
+        }
         assertThat(userTest06).isNull();
     }
 
