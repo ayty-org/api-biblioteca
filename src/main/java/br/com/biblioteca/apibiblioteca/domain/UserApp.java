@@ -35,4 +35,10 @@ public class UserApp implements Serializable {
         this.age = age;
         this.fone = fone;
     }
+    public UserApp(Long id, String name, int age, String fone) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.fone = fone;
+    }
 }
