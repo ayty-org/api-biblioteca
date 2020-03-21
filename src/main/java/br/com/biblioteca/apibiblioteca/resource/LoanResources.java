@@ -1,6 +1,7 @@
 package br.com.biblioteca.apibiblioteca.resource;
 
 import br.com.biblioteca.apibiblioteca.domain.Loan;
+import br.com.biblioteca.apibiblioteca.dto.LoanDTO;
 import br.com.biblioteca.apibiblioteca.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/v1/api/loan")
@@ -19,9 +21,10 @@ public class LoanResources {
     private LoanService loanService;
 
     @GetMapping //lista todos os emprestimos
-    public ResponseEntity<List<Loan>> findAll() {
+    public ResponseEntity<List<LoanDTO>> findAll() {
         List<Loan> list = loanService.findAll();
-        return ResponseEntity.ok().body(list);
+        List<LoanDTO> listDto = list.stream().map(obj -> new LoanDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
     }
 
     @GetMapping(value="/{id}") //lista emprestimos por id
@@ -31,28 +34,29 @@ public class LoanResources {
     }
 
     @GetMapping(value = "/page") //lista todas os emprestimos com paginação
-    public ResponseEntity<Page<Loan>> findPage(
+    public ResponseEntity<Page<LoanDTO>> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue="id") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<Loan> list = loanService.findPage(page, linesPerPage, orderBy, direction);
-        return ResponseEntity.ok().body(list);
+        Page<LoanDTO> listDto = list.map(obj -> new LoanDTO(obj));
+        return ResponseEntity.ok().body(listDto);
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping() //adiciona um emprestimo Book
-    public void insert(@Valid @RequestBody Loan obj){
-        System.out.println(obj.getLoanTime());
-        System.out.println(obj.getBooks().get(0).getAuthor());
-        loanService.insert(obj);
+    public void insert(@Valid @RequestBody LoanDTO objDto){
+        Loan loan = loanService.fromDTO(objDto);
+        loanService.insert(loan);
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PutMapping(value="/{id}") //atualizar uma emprestimo
-    public void update(@Valid @RequestBody Loan obj, @PathVariable Long id){
-        obj.setId(id);
-        loanService.update(obj);
+    public void update(@Valid @RequestBody LoanDTO objDto, @PathVariable Long id){
+        Loan loan = loanService.fromDTO(objDto);
+        loan.setId(id);
+        loanService.update(loan);
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
