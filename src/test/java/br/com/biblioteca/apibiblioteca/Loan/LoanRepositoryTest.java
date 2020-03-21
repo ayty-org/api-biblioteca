@@ -50,13 +50,11 @@ public class LoanRepositoryTest {
 
         //primeiro emprestimo
         UserApp userTest01 = new UserApp("teste nome 1",21,"46356357");
-        userTest01 = this.userRepository.save(userTest01);
         user01 = userTest01;
 
         Book bookTest01 = new Book("teste title 1","teste resume","teste isbn","teste author",DATA);
         List<Book> book01 = new ArrayList<>();
         book01.add(bookTest01);
-        this.bookRepository.save(bookTest01);
         books01 = book01;
 
         Loan loanTest01 = new Loan(userTest01,book01,"150 dias"); //id=2
@@ -64,12 +62,10 @@ public class LoanRepositoryTest {
 
         //segundo emprestimo
         UserApp userTest02 = new UserApp("teste nome 2",21,"46356357");
-        userTest02 = this.userRepository.save(userTest02);
 
         Book bookTest02 = new Book("teste title 2","teste resume","teste isbn","teste author",DATA);
         List<Book> book02 = new ArrayList<>();
         book02.add(bookTest02);
-        this.bookRepository.save(bookTest02);
 
         Loan loanTest02 = new Loan(userTest02,book02,"200 dias"); //id=2
         loanRepository.save(loanTest02);
@@ -79,15 +75,13 @@ public class LoanRepositoryTest {
     @Test
     public void createLoan(){
         UserApp userTest03 = new UserApp("teste nome",21,"46356357");
-        userTest03 = this.userRepository.save(userTest03);
 
         Book bookTest03 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
         List<Book> books03 = new ArrayList<>();
         books03.add(bookTest03);
-        this.bookRepository.save(bookTest03);
 
         Loan loanTest03 = new Loan(userTest03,books03,"250 dias"); //id=3
-        loanTest03 = this.loanRepository.save(loanTest03);
+        this.loanRepository.save(loanTest03);
 
         assertThat(loanTest03.getId()).isNotNull();
     }
@@ -109,7 +103,7 @@ public class LoanRepositoryTest {
         assertThat(loanTest05.isPresent()).isTrue();
         Loan loan05 = loanTest05.get();
         loan05.setLoanTime("15 dias");
-        loan05 = this.loanRepository.save(loan05);
+        this.loanRepository.save(loan05);
         assertThat(loan05.getId()).isNotNull();
         assertThat(loan05.getLoanTime()).isEqualTo("15 dias");
     }
@@ -118,14 +112,12 @@ public class LoanRepositoryTest {
     public void deleteBook(){
         UserApp userTest06 = new UserApp("teste nome 3",21,"46356357");
         user02 = userTest06;
-        user02 = this.userRepository.save(user02);
 
         Book bookTest06 = new Book("teste title 3","teste resume","teste isbn","teste author",DATA);
         books02.add(bookTest06);
-        this.bookRepository.save(bookTest06);
 
         Loan loanTest06 = new Loan(user02,books02,"200 dias"); //id=2
-        loanTest06 = loanRepository.save(loanTest06);
+        loanRepository.save(loanTest06);
 
         this.loanRepository.deleteById(loanTest06.getId());
         Optional<Loan> loan06 = this.loanRepository.findById(loanTest06.getId());

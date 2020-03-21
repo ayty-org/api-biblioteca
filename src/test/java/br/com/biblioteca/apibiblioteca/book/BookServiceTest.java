@@ -3,6 +3,7 @@ package br.com.biblioteca.apibiblioteca.book;
 import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.service.BookService;
+import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -43,7 +44,7 @@ public class BookServiceTest {
     @Test
     public void createBook(){
         Book bookTest03 = new Book("teste title 3","teste resume 3","teste isbn 3","teste author 3",DATA); //id=4
-        bookTest03 = this.bookService.insert(bookTest03);
+        this.bookService.insert(bookTest03);
         assertThat(bookTest03.getId()).isNotNull();
     }
 
@@ -61,7 +62,7 @@ public class BookServiceTest {
     public void updateBook(){
         Book book = this.bookService.find(3L);
         book.setAuthor("Waldir");
-        book = this.bookService.update(book);
+        this.bookService.update(book);
         assertThat(book.getId()).isNotNull();
         assertThat(book.getAuthor()).isEqualTo("Waldir");
 
@@ -70,9 +71,13 @@ public class BookServiceTest {
     @Test
     public void deleteBook(){
         Book bookTest05 = new Book("teste title 5","teste resume 5","teste isbn 5","teste author 5",DATA); //id=5
-        bookTest05 = this.bookService.insert(bookTest05);
+        this.bookService.insert(bookTest05);
         this.bookService.delete(bookTest05.getId());
-        bookTest05 = this.bookService.find(bookTest05.getId());
+        try {
+            bookTest05 = this.bookService.find(bookTest05.getId());
+        }catch (ObjectNotFoundException o){
+            bookTest05=null;
+        }
         assertThat(bookTest05).isNull();
     }
 

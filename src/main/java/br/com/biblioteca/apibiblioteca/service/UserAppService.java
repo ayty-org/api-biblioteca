@@ -22,7 +22,8 @@ public class UserAppService {
 
     public UserApp find (Long id){
         Optional<UserApp> obj = repository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + UserApp.class.getName()));
     }
 
     public Page<UserApp> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
@@ -43,13 +44,13 @@ public class UserAppService {
         return repository.save(newObj);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws DataIntegrityException{
         find(id);
         try {
             repository.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir um user que possui emprestimos");
+            throw new DataIntegrityException("Não é possivevel excluir um User que possui emprestimos");
         }
     }
 

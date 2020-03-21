@@ -7,10 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,9 +27,6 @@ public class BookResources {
     @GetMapping(value="/{id}") //lista livros por id
     public ResponseEntity<Book> find(@PathVariable Long id){
         Book obj = bookService.find(id);
-        if (obj.equals(null)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         return ResponseEntity.ok().body(obj);
     }
 
@@ -45,24 +40,22 @@ public class BookResources {
         return ResponseEntity.ok().body(list);
     }
 
+    @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping //adiciona um novo Book
-    public ResponseEntity<Void> insert(@Valid @RequestBody Book obj){
+    public void insert(@Valid @RequestBody Book obj){
         bookService.insert(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
-                buildAndExpand(obj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
     }
 
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PutMapping(value="/{id}") //atualizar uma Book
-    public ResponseEntity<Void> update(@Valid @RequestBody Book obj, @PathVariable Long id){
+    public void update(@Valid @RequestBody Book obj, @PathVariable Long id){
         obj.setId(id);
         bookService.update(obj);
-        return ResponseEntity.noContent().build();
     }
 
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value="/{id}") //Deleta Book
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public void delete(@PathVariable Long id){
         bookService.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }

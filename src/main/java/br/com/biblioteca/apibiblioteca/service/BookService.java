@@ -3,6 +3,7 @@ package br.com.biblioteca.apibiblioteca.service;
 import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
+import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,10 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    public Book find (Long id){
+    public Book find (Long id) throws ObjectNotFoundException {
         Optional<Book> obj = bookRepository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Book.class.getName()));
     }
 
     public Book insert(Book obj){ //Insere um livro no banco
@@ -39,7 +41,7 @@ public class BookService {
         return bookRepository.save(newBook);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws DataIntegrityException{
         find(id);
         try {
             bookRepository.deleteById(id);

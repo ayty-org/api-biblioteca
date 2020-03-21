@@ -6,6 +6,7 @@ import br.com.biblioteca.apibiblioteca.domain.UserApp;
 import br.com.biblioteca.apibiblioteca.service.BookService;
 import br.com.biblioteca.apibiblioteca.service.LoanService;
 import br.com.biblioteca.apibiblioteca.service.UserAppService;
+import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -49,13 +50,11 @@ public class LoanServiceTest {
 
         //primeiro emprestimo
         UserApp userTest01 = new UserApp("teste nome 1",21,"46356357");
-        userTest01 = this.userAppService.insert(userTest01);
         user01 = userTest01;
 
         Book bookTest01 = new Book("teste title 1","teste resume","teste isbn","teste author",DATA);
         List<Book> book01 = new ArrayList<>();
         book01.add(bookTest01);
-        this.bookService.insert(bookTest01);
         books01 = book01;
 
         Loan loanTest01 = new Loan(userTest01,book01,"150 dias"); //id=2
@@ -63,12 +62,10 @@ public class LoanServiceTest {
 
         //segundo emprestimo
         UserApp userTest02 = new UserApp("teste nome 2",21,"46356357");
-        userTest02 = this.userAppService.insert(userTest02);
 
         Book bookTest02 = new Book("teste title 2","teste resume","teste isbn","teste author",DATA);
         List<Book> book02 = new ArrayList<>();
         book02.add(bookTest02);
-        this.bookService.insert(bookTest02);
 
         Loan loanTest02 = new Loan(userTest02,book02,"200 dias"); //id=2
         loanService.insert(loanTest02);
@@ -78,15 +75,13 @@ public class LoanServiceTest {
     public void createLoan(){
 
         UserApp userTest03 = new UserApp("teste nome",21,"46356357");
-        userTest03 = this.userAppService.insert(userTest03);
 
         Book bookTest03 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
         List<Book> books03 = new ArrayList<>();
         books03.add(bookTest03);
-        this.bookService.insert(bookTest03);
 
         Loan loanTest03 = new Loan(userTest03,books03,"250 dias"); //id=3
-        loanTest03 = this.loanService.insert(loanTest03);
+        this.loanService.insert(loanTest03);
 
         assertThat(loanTest03.getId()).isNotNull();
     }
@@ -104,7 +99,7 @@ public class LoanServiceTest {
     public void updateLoan(){
         Loan loanTest05 = this.loanService.find(3L);
         loanTest05.setLoanTime("15 dias");
-        loanTest05 = this.loanService.update(loanTest05);
+        this.loanService.update(loanTest05);
         assertThat(loanTest05.getId()).isNotNull();
         assertThat(loanTest05.getLoanTime()).isEqualTo("15 dias");
 
@@ -114,17 +109,19 @@ public class LoanServiceTest {
     public void deleteBook(){
         UserApp userTest06 = new UserApp("teste nome 2",22,"4635635754354");
         user02 = userTest06;
-        user02 = this.userAppService.insert(user02);
 
         Book bookTest06 = new Book("teste title 2","teste resume 2","teste isbn 2","teste author 2",DATA);
         books02.add(bookTest06);
-        this.bookService.insert(bookTest06);
 
         Loan loanTest06 = new Loan(user02,books02,"10 dias");
-        loanTest06 = this.loanService.insert(loanTest06);
+        this.loanService.insert(loanTest06);
         this.loanService.delete(loanTest06.getId());
-        Loan loan06 = this.loanService.find(loanTest06.getId());
-        assertThat(loan06).isNull();
+        try {
+            loanTest06 = this.loanService.find(loanTest06.getId());
+        }catch (ObjectNotFoundException o){
+            loanTest06=null;
+        }
+        assertThat(loanTest06).isNull();
     }
 
 }

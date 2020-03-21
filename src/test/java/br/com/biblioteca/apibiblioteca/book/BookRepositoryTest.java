@@ -42,7 +42,7 @@ public class BookRepositoryTest {
     @Test
     public void createBook(){
         Book bookTest03 = new Book("teste title 3","teste resume 3","teste isbn 3","teste author 3",DATA); //id=4
-        bookTest03 = this.bookRepository.save(bookTest03);
+        this.bookRepository.save(bookTest03);
         assertThat(bookTest03.getId()).isNotNull();
     }
 
@@ -64,7 +64,7 @@ public class BookRepositoryTest {
         assertThat(book.isPresent()).isTrue();
         Book b3 = book.get();
         b3.setAuthor("Waldir");
-        b3 = this.bookRepository.save(b3);
+        this.bookRepository.save(b3);
         assertThat(b3.getId()).isNotNull();
         assertThat(b3.getAuthor()).isEqualTo("Waldir");
 
@@ -73,7 +73,7 @@ public class BookRepositoryTest {
     @Test
     public void deleteBook(){
         Book bookTest05 = new Book("teste title 5","teste resume 5","teste isbn 5","teste author 5",DATA);
-        bookTest05 = this.bookRepository.save(bookTest05);
+        this.bookRepository.save(bookTest05);
         this.bookRepository.deleteById(bookTest05.getId());
         Optional<Book> b = this.bookRepository.findById(bookTest05.getId());
         assertThat(b.isPresent()).isFalse();
