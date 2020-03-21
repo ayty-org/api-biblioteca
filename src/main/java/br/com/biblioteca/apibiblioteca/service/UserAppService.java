@@ -44,13 +44,13 @@ public class UserAppService {
         return repository.save(newObj);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws DataIntegrityException{
         find(id);
         try {
             repository.deleteById(id);
         }
         catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityException("Não é possivevel excluir um user que possui emprestimos");
+            throw new DataIntegrityException("Não é possivevel excluir um User que possui emprestimos");
         }
     }
 

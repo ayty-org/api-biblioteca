@@ -36,17 +36,7 @@ public class LoanService {
     }
 
     public Loan insert(Loan obj){
-
-        System.out.println(obj.getLoanTime());
-        System.out.println(obj.getBooks().get(0));
-        UserApp user = obj.getUserApp();
-
-        //user.getLoans().add(obj);
-
-        userAppRepository.save(user);
-
         return loanRepository.save(obj);
-
     }
 
     public Loan update (Loan obj){

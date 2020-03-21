@@ -41,7 +41,7 @@ public class BookService {
         return bookRepository.save(newBook);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws DataIntegrityException{
         find(id);
         try {
             bookRepository.deleteById(id);

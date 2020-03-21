@@ -43,6 +43,8 @@ public class LoanResources {
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping() //adiciona um emprestimo Book
     public void insert(@Valid @RequestBody Loan obj){
+        System.out.println(obj.getLoanTime());
+        System.out.println(obj.getBooks().get(0).getAuthor());
         loanService.insert(obj);
     }
 
