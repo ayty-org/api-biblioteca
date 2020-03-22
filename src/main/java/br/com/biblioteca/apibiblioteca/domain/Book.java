@@ -45,4 +45,13 @@ public class Book implements Serializable {
         this.author = author;
         this.yearBook = yearBook;
     }
+
+    public Book(Long id, String title, String resume, String isbn, String author, Date yearBook) {
+        this.id = id;
+        this.title = title;
+        this.resume = resume;
+        this.isbn = isbn;
+        this.author = author;
+        this.yearBook = yearBook;
+    }
 }

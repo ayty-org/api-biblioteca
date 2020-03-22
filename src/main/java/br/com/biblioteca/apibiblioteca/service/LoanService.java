@@ -2,6 +2,8 @@ package br.com.biblioteca.apibiblioteca.service;
 
 import br.com.biblioteca.apibiblioteca.domain.Loan;
 import br.com.biblioteca.apibiblioteca.domain.UserApp;
+import br.com.biblioteca.apibiblioteca.dto.LoanDTO;
+import br.com.biblioteca.apibiblioteca.dto.UserAppDTO;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
 import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
@@ -35,6 +37,15 @@ public class LoanService {
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
     }
 
+    public List<Loan> findAll() {
+        return loanRepository.findAll();
+    }
+
+    public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage , Sort.Direction.valueOf(direction), orderBy);
+        return loanRepository.findAll(pageRequest);
+    }
+
     public Loan insert(Loan obj){
         return loanRepository.save(obj);
     }
@@ -53,13 +64,8 @@ public class LoanService {
         loanRepository.deleteById(id);
     }
 
-    public List<Loan> findAll() {
-        return loanRepository.findAll();
-    }
-
-    public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage , Sort.Direction.valueOf(direction), orderBy);
-        return loanRepository.findAll(pageRequest);
+    public Loan fromDTO(LoanDTO loanDTO){
+        return new Loan(loanDTO.getId(),loanDTO.getUserApp(),loanDTO.getBooks(),loanDTO.getLoanTime());
     }
 
 }

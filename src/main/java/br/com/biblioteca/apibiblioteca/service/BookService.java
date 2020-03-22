@@ -1,6 +1,7 @@
 package br.com.biblioteca.apibiblioteca.service;
 
 import br.com.biblioteca.apibiblioteca.domain.Book;
+import br.com.biblioteca.apibiblioteca.dto.BookDTO;
 import br.com.biblioteca.apibiblioteca.repository.BookRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
 import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
@@ -24,6 +25,15 @@ public class BookService {
         Optional<Book> obj = bookRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Book.class.getName()));
+    }
+
+    public List<Book> findAll() {
+        return bookRepository.findAll();
+    }
+
+    public Page<Book> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage , Direction.valueOf(direction), orderBy);
+        return bookRepository.findAll(pageRequest);
     }
 
     public Book insert(Book obj){ //Insere um livro no banco
@@ -51,12 +61,7 @@ public class BookService {
         }
     }
 
-    public List<Book> findAll() {
-        return bookRepository.findAll();
-    }
-
-    public Page<Book> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage , Direction.valueOf(direction), orderBy);
-        return bookRepository.findAll(pageRequest);
+    public Book fromDTO(BookDTO bookDTO){
+        return new Book(bookDTO.getId(),bookDTO.getTitle(),bookDTO.getResume(),bookDTO.getIsbn(),bookDTO.getAuthor(),bookDTO.getYearBook());
     }
 }

@@ -1,6 +1,9 @@
 package br.com.biblioteca.apibiblioteca.service;
 
+import br.com.biblioteca.apibiblioteca.domain.Book;
 import br.com.biblioteca.apibiblioteca.domain.UserApp;
+import br.com.biblioteca.apibiblioteca.dto.BookDTO;
+import br.com.biblioteca.apibiblioteca.dto.UserAppDTO;
 import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
 import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
 import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
@@ -24,6 +27,10 @@ public class UserAppService {
         Optional<UserApp> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + UserApp.class.getName()));
+    }
+
+    public List<UserApp> findAll() {
+        return repository.findAll();
     }
 
     public Page<UserApp> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
@@ -54,7 +61,7 @@ public class UserAppService {
         }
     }
 
-    public List<UserApp> findAll() {
-        return repository.findAll();
+    public UserApp fromDTO(UserAppDTO userAppDTO){
+        return new UserApp(userAppDTO.getId(),userAppDTO.getName(),userAppDTO.getAge(),userAppDTO.getFone());
     }
 }
