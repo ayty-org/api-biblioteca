@@ -1,4 +1,4 @@
-package br.com.biblioteca.apibiblioteca.service.exception;
+package br.com.biblioteca.apibiblioteca.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

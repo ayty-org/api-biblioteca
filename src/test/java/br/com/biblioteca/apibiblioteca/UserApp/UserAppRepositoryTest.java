@@ -1,7 +1,7 @@
 package br.com.biblioteca.apibiblioteca.UserApp;
 
-import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
+import br.com.biblioteca.apibiblioteca.user.UserApp;
+import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

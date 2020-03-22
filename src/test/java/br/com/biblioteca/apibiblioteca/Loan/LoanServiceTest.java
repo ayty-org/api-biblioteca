@@ -1,12 +1,12 @@
 package br.com.biblioteca.apibiblioteca.Loan;
 
-import br.com.biblioteca.apibiblioteca.domain.Book;
-import br.com.biblioteca.apibiblioteca.domain.Loan;
-import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.service.BookService;
-import br.com.biblioteca.apibiblioteca.service.LoanService;
-import br.com.biblioteca.apibiblioteca.service.UserAppService;
-import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
+import br.com.biblioteca.apibiblioteca.book.Book;
+import br.com.biblioteca.apibiblioteca.loan.Loan;
+import br.com.biblioteca.apibiblioteca.user.UserApp;
+import br.com.biblioteca.apibiblioteca.book.serveces.BookService;
+import br.com.biblioteca.apibiblioteca.loan.services.LoanService;
+import br.com.biblioteca.apibiblioteca.user.services.UserAppService;
+import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

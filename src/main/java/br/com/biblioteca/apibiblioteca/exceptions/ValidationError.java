@@ -1,4 +1,4 @@
-package br.com.biblioteca.apibiblioteca.resource.exception;
+package br.com.biblioteca.apibiblioteca.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

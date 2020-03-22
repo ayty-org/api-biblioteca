@@ -1,8 +1,8 @@
-package br.com.biblioteca.apibiblioteca.resource;
+package br.com.biblioteca.apibiblioteca.loan.v1;
 
-import br.com.biblioteca.apibiblioteca.domain.Loan;
-import br.com.biblioteca.apibiblioteca.dto.LoanDTO;
-import br.com.biblioteca.apibiblioteca.service.LoanService;
+import br.com.biblioteca.apibiblioteca.loan.Loan;
+import br.com.biblioteca.apibiblioteca.loan.LoanDTO;
+import br.com.biblioteca.apibiblioteca.loan.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/v1/api/loan")
-public class LoanResources {
+public class LoanController {
 
     @Autowired
     private LoanService loanService;

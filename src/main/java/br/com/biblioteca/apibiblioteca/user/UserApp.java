@@ -1,5 +1,6 @@
-package br.com.biblioteca.apibiblioteca.domain;
+package br.com.biblioteca.apibiblioteca.user;
 
+import br.com.biblioteca.apibiblioteca.loan.Loan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 

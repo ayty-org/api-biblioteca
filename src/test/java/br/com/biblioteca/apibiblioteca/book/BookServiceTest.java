@@ -1,9 +1,7 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import br.com.biblioteca.apibiblioteca.domain.Book;
-import br.com.biblioteca.apibiblioteca.repository.BookRepository;
-import br.com.biblioteca.apibiblioteca.service.BookService;
-import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
+import br.com.biblioteca.apibiblioteca.book.serveces.BookService;
+import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,9 +11,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.Date;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

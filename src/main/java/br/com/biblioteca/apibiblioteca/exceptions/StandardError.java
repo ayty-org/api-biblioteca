@@ -1,4 +1,4 @@
-package br.com.biblioteca.apibiblioteca.resource.exception;
+package br.com.biblioteca.apibiblioteca.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;

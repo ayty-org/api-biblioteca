@@ -1,6 +1,6 @@
-package br.com.biblioteca.apibiblioteca.dto;
+package br.com.biblioteca.apibiblioteca.user;
 
-import br.com.biblioteca.apibiblioteca.domain.UserApp;
+import br.com.biblioteca.apibiblioteca.user.UserApp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
