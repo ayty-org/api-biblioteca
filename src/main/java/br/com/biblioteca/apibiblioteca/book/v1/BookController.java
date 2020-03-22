@@ -1,8 +1,8 @@
-package br.com.biblioteca.apibiblioteca.resource;
+package br.com.biblioteca.apibiblioteca.book.v1;
 
-import br.com.biblioteca.apibiblioteca.domain.Book;
-import br.com.biblioteca.apibiblioteca.dto.BookDTO;
-import br.com.biblioteca.apibiblioteca.service.BookService;
+import br.com.biblioteca.apibiblioteca.book.Book;
+import br.com.biblioteca.apibiblioteca.book.BookDTO;
+import br.com.biblioteca.apibiblioteca.book.serveces.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/v1/api/book")
-public class BookResources {
+public class BookController {
 
     @Autowired
     private BookService bookService;

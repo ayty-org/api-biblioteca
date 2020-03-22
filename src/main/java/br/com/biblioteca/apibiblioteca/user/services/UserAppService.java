@@ -1,12 +1,10 @@
-package br.com.biblioteca.apibiblioteca.service;
+package br.com.biblioteca.apibiblioteca.user.services;
 
-import br.com.biblioteca.apibiblioteca.domain.Book;
-import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.dto.BookDTO;
-import br.com.biblioteca.apibiblioteca.dto.UserAppDTO;
-import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
-import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
-import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
+import br.com.biblioteca.apibiblioteca.user.UserApp;
+import br.com.biblioteca.apibiblioteca.user.UserAppDTO;
+import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
+import br.com.biblioteca.apibiblioteca.exceptions.DataIntegrityException;
+import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;

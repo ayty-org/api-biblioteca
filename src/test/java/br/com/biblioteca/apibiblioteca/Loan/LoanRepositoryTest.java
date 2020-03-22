@@ -1,11 +1,11 @@
 package br.com.biblioteca.apibiblioteca.Loan;
 
-import br.com.biblioteca.apibiblioteca.domain.Book;
-import br.com.biblioteca.apibiblioteca.domain.Loan;
-import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.repository.BookRepository;
-import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
-import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
+import br.com.biblioteca.apibiblioteca.book.Book;
+import br.com.biblioteca.apibiblioteca.loan.Loan;
+import br.com.biblioteca.apibiblioteca.user.UserApp;
+import br.com.biblioteca.apibiblioteca.book.BookRepository;
+import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
+import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -27,12 +27,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext
 public class LoanRepositoryTest {
-
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private UserAppRepository userRepository;
 
     @Autowired
     private LoanRepository loanRepository;

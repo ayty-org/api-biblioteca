@@ -1,7 +1,6 @@
-package br.com.biblioteca.apibiblioteca.dto;
+package br.com.biblioteca.apibiblioteca.book;
 
-import br.com.biblioteca.apibiblioteca.domain.Book;
-import br.com.biblioteca.apibiblioteca.domain.Loan;
+import br.com.biblioteca.apibiblioteca.book.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

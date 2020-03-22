@@ -1,4 +1,4 @@
-package br.com.biblioteca.apibiblioteca.resource.exception;
+package br.com.biblioteca.apibiblioteca.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,10 +9,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-
-import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
-import br.com.biblioteca.apibiblioteca.service.exception.DataIntegrityException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {

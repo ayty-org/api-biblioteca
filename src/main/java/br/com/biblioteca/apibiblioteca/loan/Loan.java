@@ -1,5 +1,7 @@
-package br.com.biblioteca.apibiblioteca.domain;
+package br.com.biblioteca.apibiblioteca.loan;
 
+import br.com.biblioteca.apibiblioteca.book.Book;
+import br.com.biblioteca.apibiblioteca.user.UserApp;
 import lombok.*;
 
 import javax.persistence.*;

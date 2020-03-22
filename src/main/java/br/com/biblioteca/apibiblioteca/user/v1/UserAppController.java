@@ -1,8 +1,8 @@
-package br.com.biblioteca.apibiblioteca.resource;
+package br.com.biblioteca.apibiblioteca.user.v1;
 
-import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.dto.UserAppDTO;
-import br.com.biblioteca.apibiblioteca.service.UserAppService;
+import br.com.biblioteca.apibiblioteca.user.UserApp;
+import br.com.biblioteca.apibiblioteca.user.UserAppDTO;
+import br.com.biblioteca.apibiblioteca.user.services.UserAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/v1/api/user")
-public class UserAppResources {
+public class UserAppController {
 
     @Autowired
     private UserAppService userAppService;

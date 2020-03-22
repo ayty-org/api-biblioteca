@@ -1,13 +1,11 @@
-package br.com.biblioteca.apibiblioteca.service;
+package br.com.biblioteca.apibiblioteca.loan.services;
 
-import br.com.biblioteca.apibiblioteca.domain.Loan;
-import br.com.biblioteca.apibiblioteca.domain.UserApp;
-import br.com.biblioteca.apibiblioteca.dto.LoanDTO;
-import br.com.biblioteca.apibiblioteca.dto.UserAppDTO;
-import br.com.biblioteca.apibiblioteca.repository.BookRepository;
-import br.com.biblioteca.apibiblioteca.repository.LoanRepository;
-import br.com.biblioteca.apibiblioteca.repository.UserAppRepository;
-import br.com.biblioteca.apibiblioteca.service.exception.ObjectNotFoundException;
+import br.com.biblioteca.apibiblioteca.loan.Loan;
+import br.com.biblioteca.apibiblioteca.loan.LoanDTO;
+import br.com.biblioteca.apibiblioteca.book.BookRepository;
+import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
+import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
+import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
