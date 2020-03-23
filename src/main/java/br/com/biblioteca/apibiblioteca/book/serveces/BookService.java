@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookService {
+public class BookService implements GetBookService, GetAllBookService, GetPageBookService,PostBookService,PutBookService,DeleteBookService {
 
     @Autowired
     private BookRepository bookRepository;
@@ -36,11 +36,11 @@ public class BookService {
         return bookRepository.findAll(pageRequest);
     }
 
-    public Book insert(Book obj){ //Insere um livro no banco
-        return bookRepository.save(obj);
+    public void insert(Book obj){ //Insere um livro no banco
+        bookRepository.save(obj);
     }
 
-    public Book update (Book obj){ //atualiza um book
+    public void update (Book obj){ //atualiza um book
         Book newBook = find(obj.getId());
         newBook.setId(obj.getId());
         newBook.setTitle(obj.getTitle());
@@ -48,7 +48,7 @@ public class BookService {
         newBook.setIsbn(obj.getIsbn());
         newBook.setAuthor(obj.getAuthor());
         newBook.setYearBook(obj.getYearBook());
-        return bookRepository.save(newBook);
+        bookRepository.save(newBook);
     }
 
     public void delete(Long id) throws DataIntegrityException{
