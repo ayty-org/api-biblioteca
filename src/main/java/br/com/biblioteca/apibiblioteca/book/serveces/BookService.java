@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
@@ -64,4 +65,10 @@ public class BookService implements GetBookService, GetAllBookService, GetPageBo
     public Book fromDTO(BookDTO bookDTO){
         return new Book(bookDTO.getId(),bookDTO.getTitle(),bookDTO.getResume(),bookDTO.getIsbn(),bookDTO.getAuthor(),bookDTO.getYearBook());
     }
+
+    public List<Book> pageable(double price, Pageable pageable){
+        Pageable test = PageRequest.of(0,2);
+        return bookRepository.findAllByPrice(10,test);
+    }
+
 }

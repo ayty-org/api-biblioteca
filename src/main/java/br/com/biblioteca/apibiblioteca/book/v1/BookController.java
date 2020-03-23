@@ -5,6 +5,8 @@ import br.com.biblioteca.apibiblioteca.book.BookDTO;
 import br.com.biblioteca.apibiblioteca.book.serveces.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,14 @@ public class BookController {
             @RequestParam(value="orderBy", defaultValue="title") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<Book> list = bookService.findPage(page, linesPerPage, orderBy, direction);
+        Page<BookDTO> listDTO = list.map(obj -> new BookDTO(obj));
+        return listDTO;
+    }
+
+    @GetMapping(value = "/pageable") //lista todas os livros com paginação
+    public Page<BookDTO> pageable(){
+        Pageable test = PageRequest.of(0,2);
+        Page<Book> list = (Page<Book>) bookService.pageable(10,test);
         Page<BookDTO> listDTO = list.map(obj -> new BookDTO(obj));
         return listDTO;
     }
