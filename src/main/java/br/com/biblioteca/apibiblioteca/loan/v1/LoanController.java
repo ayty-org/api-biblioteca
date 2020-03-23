@@ -21,27 +21,27 @@ public class LoanController {
     private LoanService loanService;
 
     @GetMapping //lista todos os emprestimos
-    public ResponseEntity<List<LoanDTO>> findAll() {
+    public List<LoanDTO> findAll() {
         List<Loan> list = loanService.findAll();
         List<LoanDTO> listDto = list.stream().map(obj -> new LoanDTO(obj)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
+        return listDto;
     }
 
     @GetMapping(value="/{id}") //lista emprestimos por id
-    public ResponseEntity<Loan> find(@PathVariable Long id){
-        Loan obj = loanService.find(id);
-        return ResponseEntity.ok().body(obj);
+    public Loan find(@PathVariable Long id){
+        Loan loan = loanService.find(id);
+        return loan;
     }
 
     @GetMapping(value = "/page") //lista todas os emprestimos com paginação
-    public ResponseEntity<Page<LoanDTO>> findPage(
+    public Page<LoanDTO> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue="id") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<Loan> list = loanService.findPage(page, linesPerPage, orderBy, direction);
         Page<LoanDTO> listDto = list.map(obj -> new LoanDTO(obj));
-        return ResponseEntity.ok().body(listDto);
+        return listDto;
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)

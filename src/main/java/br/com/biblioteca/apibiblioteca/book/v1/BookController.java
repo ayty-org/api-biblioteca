@@ -21,27 +21,27 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping //lista todos os livros
-    public ResponseEntity<List<BookDTO>> findAll() {
+    public List<BookDTO> findAll() {
         List<Book> list = bookService.findAll();
         List<BookDTO> listDto = list.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
+        return listDto;
     }
 
     @GetMapping(value="/{id}") //lista livros por id
-    public ResponseEntity<Book> find(@PathVariable Long id){
-        Book obj = bookService.find(id);
-        return ResponseEntity.ok().body(obj);
+    public Book find(@PathVariable Long id){
+        Book book = bookService.find(id);
+        return book;
     }
 
     @GetMapping(value = "/page") //lista todas os livros com paginação
-    public ResponseEntity<Page<BookDTO>> findPage(
+    public Page<BookDTO> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue="title") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<Book> list = bookService.findPage(page, linesPerPage, orderBy, direction);
         Page<BookDTO> listDTO = list.map(obj -> new BookDTO(obj));
-        return ResponseEntity.ok().body(listDTO);
+        return listDTO;
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)

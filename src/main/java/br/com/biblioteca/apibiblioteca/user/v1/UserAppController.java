@@ -21,27 +21,27 @@ public class UserAppController {
     private UserAppService userAppService;
 
     @GetMapping //lista todos os usuários
-    public ResponseEntity<List<UserAppDTO>> findAll() {
+    public List<UserAppDTO> findAll() {
         List<UserApp> list = userAppService.findAll();
         List<UserAppDTO> listDto = list.stream().map(obj -> new UserAppDTO(obj)).collect(Collectors.toList());
-        return ResponseEntity.ok().body(listDto);
+        return listDto;
     }
 
     @GetMapping(value="/{id}") //lista usuário por id
-    public ResponseEntity<UserApp> find(@PathVariable Long id){
-        UserApp obj = userAppService.find(id);
-        return ResponseEntity.ok().body(obj);
+    public UserApp find(@PathVariable Long id){
+        UserApp userApp = userAppService.find(id);
+        return userApp;
     }
 
     @GetMapping(value = "/page") //lista todas os usuários com paginação
-    public ResponseEntity<Page<UserAppDTO>> findPage(
+    public Page<UserAppDTO> findPage(
             @RequestParam(value="page", defaultValue="0") Integer page,
             @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
             @RequestParam(value="orderBy", defaultValue="name") String orderBy,
             @RequestParam(value="direction", defaultValue="ASC") String direction){
         Page<UserApp> list = userAppService.findPage(page, linesPerPage, orderBy, direction);
         Page<UserAppDTO> listDto = list.map(obj -> new UserAppDTO(obj));
-        return ResponseEntity.ok().body(listDto);
+        return listDto;
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
