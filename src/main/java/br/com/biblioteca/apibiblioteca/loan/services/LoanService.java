@@ -2,9 +2,7 @@ package br.com.biblioteca.apibiblioteca.loan.services;
 
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanDTO;
-import br.com.biblioteca.apibiblioteca.book.BookRepository;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
-import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
 import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,16 +16,10 @@ import java.util.Optional;
 
 @Transactional
 @Service
-public class LoanService {
+public class LoanService implements GetLoanService, GetAllLoanService,GetPageLoanService,PostLoanService,PutLoanService,DeleteLoanService {
 
     @Autowired
     private LoanRepository loanRepository;
-
-    @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
-    private UserAppRepository userAppRepository;
 
     public Loan find (Long id){
         Optional<Loan> obj = loanRepository.findById(id);
@@ -44,21 +36,22 @@ public class LoanService {
         return loanRepository.findAll(pageRequest);
     }
 
-    public Loan insert(Loan obj){
-        return loanRepository.save(obj);
+    public void insert(Loan obj){
+        loanRepository.save(obj);
     }
 
-    public Loan update (Loan obj){
+    public void update (Loan obj){
 
         Loan newObj = find(obj.getId());
 
         newObj.setId(obj.getId());
         newObj.setLoanTime(obj.getLoanTime());
 
-        return loanRepository.save(newObj);
+        loanRepository.save(newObj);
     }
 
     public void delete(Long id){
+        find(id);
         loanRepository.deleteById(id);
     }
 
