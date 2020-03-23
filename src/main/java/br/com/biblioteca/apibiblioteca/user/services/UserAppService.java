@@ -1,5 +1,8 @@
 package br.com.biblioteca.apibiblioteca.user.services;
 
+import br.com.biblioteca.apibiblioteca.book.serveces.PostBookService;
+import br.com.biblioteca.apibiblioteca.loan.services.GetAllLoanService;
+import br.com.biblioteca.apibiblioteca.loan.services.GetPageLoanService;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
 import br.com.biblioteca.apibiblioteca.user.UserAppDTO;
 import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
@@ -16,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserAppService {
+public class UserAppService implements GetUserAppService, GetAllUserAppService, GetPageUserAppService, PostUserAppService,PutUserAppService,DeleteUserAppService {
 
     @Autowired
     UserAppRepository repository;
@@ -36,17 +39,17 @@ public class UserAppService {
         return repository.findAll(pageRequest);
     }
 
-    public UserApp insert(UserApp obj){ //Insere um livro no banco
-        return repository.save(obj);
+    public void insert(UserApp obj){ //Insere um livro no banco
+        repository.save(obj);
     }
 
-    public UserApp update (UserApp obj){ //atualiza um book
+    public void update (UserApp obj){ //atualiza um book
         UserApp newObj = find(obj.getId());
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());
         newObj.setAge(obj.getAge());
         newObj.setFone(obj.getFone());
-        return repository.save(newObj);
+        repository.save(newObj);
     }
 
     public void delete(Long id) throws DataIntegrityException{

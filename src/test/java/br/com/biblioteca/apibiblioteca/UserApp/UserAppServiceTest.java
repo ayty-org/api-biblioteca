@@ -37,7 +37,7 @@ public class UserAppServiceTest {
     @Test
     public void createUser(){
         UserApp userTest03 = new UserApp("teste nome 3",43,"463563456357"); //id=4
-        userTest03 = this.userService.insert(userTest03);
+        this.userService.insert(userTest03);
         assertThat(userTest03.getId()).isNotNull();
     }
 
@@ -54,7 +54,7 @@ public class UserAppServiceTest {
     public void updateUser(){
         UserApp userTest05 = this.userService.find(3L);
         userTest05.setName("Waldir");
-        userTest05 = this.userService.update(userTest05);
+        this.userService.update(userTest05);
         assertThat(userTest05.getId()).isNotNull();
         assertThat(userTest05.getName()).isEqualTo("Waldir");
 
