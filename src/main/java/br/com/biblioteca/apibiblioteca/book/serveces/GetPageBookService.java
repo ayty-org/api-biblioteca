@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 @FunctionalInterface
 public interface GetPageBookService {
 
-    public Page<Book> findPage(Integer page, Integer linesPerPage, String orderBy, String direction);
+    public Page<Book> findPage();
 }

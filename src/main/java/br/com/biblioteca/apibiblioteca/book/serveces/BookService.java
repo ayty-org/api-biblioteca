@@ -31,8 +31,8 @@ public class BookService implements GetBookService, GetAllBookService, GetPageBo
         return bookRepository.findAll();
     }
 
-    public Page<Book> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage , Direction.valueOf(direction), orderBy);
+    public Page<Book> findPage(){
+        PageRequest pageRequest = PageRequest.of(0, 24 , Direction.valueOf("ASC"), "title");
         return bookRepository.findAll(pageRequest);
     }
 

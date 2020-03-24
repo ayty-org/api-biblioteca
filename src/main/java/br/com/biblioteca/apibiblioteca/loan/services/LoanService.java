@@ -7,7 +7,7 @@ import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,8 +31,8 @@ public class LoanService implements GetLoanService, GetAllLoanService,GetPageLoa
         return loanRepository.findAll();
     }
 
-    public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage , Sort.Direction.valueOf(direction), orderBy);
+    public Page<Loan> findPage(){
+        PageRequest pageRequest = PageRequest.of(0, 24 , Direction.valueOf("ASC"), "loanTime");
         return loanRepository.findAll(pageRequest);
     }
 
