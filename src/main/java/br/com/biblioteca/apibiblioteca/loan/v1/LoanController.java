@@ -34,12 +34,8 @@ public class LoanController {
     }
 
     @GetMapping(value = "/page") //lista todas os emprestimos com paginação
-    public Page<LoanDTO> findPage(
-            @RequestParam(value="page", defaultValue="0") Integer page,
-            @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
-            @RequestParam(value="orderBy", defaultValue="id") String orderBy,
-            @RequestParam(value="direction", defaultValue="ASC") String direction){
-        Page<Loan> list = loanService.findPage(page, linesPerPage, orderBy, direction);
+    public Page<LoanDTO> findPage(){
+        Page<Loan> list = loanService.findPage();
         Page<LoanDTO> listDto = list.map(obj -> new LoanDTO(obj));
         return listDto;
     }

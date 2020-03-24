@@ -36,27 +36,17 @@ public class BookController {
     }
 
     @GetMapping(value = "/page") //lista todas os livros com paginação
-    public Page<BookDTO> findPage(
-            @RequestParam(value="page", defaultValue="0") Integer page,
-            @RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
-            @RequestParam(value="orderBy", defaultValue="title") String orderBy,
-            @RequestParam(value="direction", defaultValue="ASC") String direction){
-        Page<Book> list = bookService.findPage(page, linesPerPage, orderBy, direction);
+    public Page<BookDTO> findPage(){
+        Page<Book> list = bookService.findPage();
         Page<BookDTO> listDTO = list.map(obj -> new BookDTO(obj));
         return listDTO;
     }
 
-    @GetMapping(value = "/pageable") //lista todas os livros com paginação
-    public Page<BookDTO> pageable(){
-        Pageable test = PageRequest.of(0,2);
-        Page<Book> list = (Page<Book>) bookService.pageable(10,test);
-        Page<BookDTO> listDTO = list.map(obj -> new BookDTO(obj));
-        return listDTO;
-    }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping //adiciona um novo Book
     public void insert(@Valid @RequestBody BookDTO objDto){
+        System.out.println("testando ano = "+objDto.getYearBook());
         Book book = bookService.fromDTO(objDto);
         bookService.insert(book);
     }

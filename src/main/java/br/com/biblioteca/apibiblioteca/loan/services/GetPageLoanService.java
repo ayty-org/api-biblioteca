@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 @FunctionalInterface
 public interface GetPageLoanService {
 
-    public Page<Loan> findPage(Integer page, Integer linesPerPage, String orderBy, String direction);
+    public Page<Loan> findPage();
 }

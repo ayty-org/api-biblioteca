@@ -1,8 +1,5 @@
 package br.com.biblioteca.apibiblioteca.user.services;
 
-import br.com.biblioteca.apibiblioteca.book.serveces.PostBookService;
-import br.com.biblioteca.apibiblioteca.loan.services.GetAllLoanService;
-import br.com.biblioteca.apibiblioteca.loan.services.GetPageLoanService;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
 import br.com.biblioteca.apibiblioteca.user.UserAppDTO;
 import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
@@ -12,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,16 +31,16 @@ public class UserAppService implements GetUserAppService, GetAllUserAppService, 
         return repository.findAll();
     }
 
-    public Page<UserApp> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage , Sort.Direction.valueOf(direction), orderBy);
+    public Page<UserApp> findPage() {
+        PageRequest pageRequest = PageRequest.of(0, 24 , Direction.valueOf("ASC"), "name");
         return repository.findAll(pageRequest);
     }
 
-    public void insert(UserApp obj){ //Insere um livro no banco
+    public void insert(UserApp obj){
         repository.save(obj);
     }
 
-    public void update (UserApp obj){ //atualiza um book
+    public void update (UserApp obj){
         UserApp newObj = find(obj.getId());
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());
