@@ -2,13 +2,10 @@ package br.com.biblioteca.apibiblioteca.book.v1;
 
 import br.com.biblioteca.apibiblioteca.book.Book;
 import br.com.biblioteca.apibiblioteca.book.BookDTO;
-import br.com.biblioteca.apibiblioteca.book.serveces.BookService;
+import br.com.biblioteca.apibiblioteca.book.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/v1/api/book")
-public class BookController {
+public class BookControllerV1 {
 
     @Autowired
     private BookService bookService;

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/v1/api/loan")
-public class LoanController {
+public class LoanControllerV1 {
 
     @Autowired
     private LoanService loanService;
