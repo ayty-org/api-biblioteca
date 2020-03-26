@@ -22,8 +22,8 @@ tags:
   - name: "loan-controller"
     description: "All about library loans"
 schemes:
-  - "https"
   - "http"
+  - "https"
 
 paths:
   /v1/api/book: #Endpoint para livros
@@ -335,54 +335,30 @@ paths:
           description: "Loan not found"
 
 definitions:
-
   #Emprestimos
   Loan:
-    type: "object"
+    type: object
     properties:
-
       User:
-        type: "object"
+        type: object
         required:
-          - "name"
-          - "age"
-          - "fone"
+          - name
+          - age
+          - fone
         properties:
           name:
-            type: "string"
+            type: string
           age:
-            type: "integer"
+            type: integer
           fone:
-            type: "string"
+            type: string
 
-      Book:
-        type: "object"
-        required:
-          - "author"
-          - "isbn"
-          - "resume"
-          - "title"
-          - "yearBook"
-        properties:
-          title:
-            type: "string"
-
-          resume:
-            type: "string"
-
-          isbn:
-            type: "string"
-
-          author:
-            type: "string"
-
-          yearBook:
-            type: "string"
-            format: "date"
-
+          Book:
+            type: array
+            items:
+              $ref: '#/definitions/Book'
       loanTime:
-        type: "string"
-
+        type: string
 
   #UserAPP
   User:
