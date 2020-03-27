@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value="/v1/api/user")
-public class UserAppController {
+public class UserAppControllerV1 {
 
     @Autowired
     private UserAppService userAppService;

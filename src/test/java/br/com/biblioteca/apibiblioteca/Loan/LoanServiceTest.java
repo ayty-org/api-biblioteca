@@ -3,7 +3,7 @@ package br.com.biblioteca.apibiblioteca.Loan;
 import br.com.biblioteca.apibiblioteca.book.Book;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
-import br.com.biblioteca.apibiblioteca.book.serveces.BookService;
+import br.com.biblioteca.apibiblioteca.book.services.BookService;
 import br.com.biblioteca.apibiblioteca.loan.services.LoanService;
 import br.com.biblioteca.apibiblioteca.user.services.UserAppService;
 import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;

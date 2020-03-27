@@ -1,6 +1,6 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import br.com.biblioteca.apibiblioteca.book.serveces.BookService;
+import br.com.biblioteca.apibiblioteca.book.services.BookService;
 import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

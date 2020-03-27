@@ -1,4 +1,4 @@
-package br.com.biblioteca.apibiblioteca.book.serveces;
+package br.com.biblioteca.apibiblioteca.book.services;
 
 import br.com.biblioteca.apibiblioteca.book.Book;
 import br.com.biblioteca.apibiblioteca.book.BookDTO;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookService implements GetBookService, GetAllBookService, GetPageBookService,PostBookService,PutBookService,DeleteBookService {
+public class BookService implements FindBook, FindAllBook, FindPageBook, InsertBook, UpdateBook, DeleteBook {
 
     @Autowired
     private BookRepository bookRepository;
