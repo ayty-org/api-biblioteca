@@ -1,7 +1,7 @@
 package br.com.biblioteca.apibiblioteca.user.services;
 
 @FunctionalInterface
-public interface DeleteUserAppService {
+public interface DeleteUserApp {
 
-    public void delete(Long id);
+    void delete(Long id);
 }

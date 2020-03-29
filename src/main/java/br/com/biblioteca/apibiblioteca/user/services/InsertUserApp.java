@@ -3,7 +3,7 @@ package br.com.biblioteca.apibiblioteca.user.services;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
 
 @FunctionalInterface
-public interface PostUserAppService {
+public interface InsertUserApp {
 
-    public void insert(UserApp userApp);
+    void insert(UserApp userApp);
 }

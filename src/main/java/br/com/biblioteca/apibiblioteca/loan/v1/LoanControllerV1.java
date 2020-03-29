@@ -2,11 +2,9 @@ package br.com.biblioteca.apibiblioteca.loan.v1;
 
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanDTO;
-import br.com.biblioteca.apibiblioteca.loan.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

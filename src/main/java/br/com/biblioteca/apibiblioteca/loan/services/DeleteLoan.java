@@ -1,7 +1,7 @@
 package br.com.biblioteca.apibiblioteca.loan.services;
 
 @FunctionalInterface
-public interface DeleteLoanService {
+public interface DeleteLoan {
 
-    public void delete(Long id);
+    void delete(Long id);
 }

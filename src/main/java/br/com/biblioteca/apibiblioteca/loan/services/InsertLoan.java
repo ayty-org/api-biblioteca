@@ -3,8 +3,8 @@ package br.com.biblioteca.apibiblioteca.loan.services;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 
 @FunctionalInterface
-public interface PostLoanService {
+public interface InsertLoan {
 
-    public void insert(Loan obj);
+    void insert(Loan obj);
 
 }

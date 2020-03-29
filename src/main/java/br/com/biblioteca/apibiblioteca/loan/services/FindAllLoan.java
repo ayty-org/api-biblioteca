@@ -2,8 +2,10 @@ package br.com.biblioteca.apibiblioteca.loan.services;
 
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 
-@FunctionalInterface
-public interface PutLoanService {
+import java.util.List;
 
-    public void update (Loan loan);
+@FunctionalInterface
+public interface FindAllLoan {
+
+    List<Loan> findAll();
 }
