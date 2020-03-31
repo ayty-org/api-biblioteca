@@ -1,33 +1,59 @@
 package br.com.biblioteca.apibiblioteca.user;
 
-import br.com.biblioteca.apibiblioteca.user.UserApp;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.domain.Page;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder(builderClassName = "Builder")
 public class UserAppDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
+    @NotEmpty
     private String name;
 
+    @NotNull
     private int age;
 
+    @NotEmpty
     private String fone;
 
-    public UserAppDTO (UserApp userApp){
-        this.id = userApp.getId();
-        this.name = userApp.getName();
-        this.age = userApp.getAge();
-        this.fone = userApp.getFone();
+    public static UserAppDTO from (UserApp userApp){
+        return UserAppDTO
+                .builder()
+                .id(userApp.getId())
+                .name(userApp.getName())
+                .age(userApp.getAge())
+                .fone(userApp.getFone())
+                .build();
     }
 
+    public static UserApp to (UserAppDTO userAppDTO){
+        return UserApp
+                .builder()
+                .id(userAppDTO.getId())
+                .name(userAppDTO.getName())
+                .age(userAppDTO.getAge())
+                .fone(userAppDTO.getFone())
+                .build();
+    }
 
+    public static List<UserAppDTO> fromAll(List<UserApp> userApps) {
+        return userApps.stream().map(UserAppDTO::from).collect(Collectors.toList());
+    }
+
+    public static Page<UserAppDTO> fromPage(Page<UserApp> pages) {
+        return pages.map(UserAppDTO::from);
+    }
 
 }

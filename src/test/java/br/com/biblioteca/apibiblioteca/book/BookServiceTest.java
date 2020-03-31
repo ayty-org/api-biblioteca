@@ -1,87 +1,90 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import br.com.biblioteca.apibiblioteca.book.services.BookService;
-import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
-import org.junit.jupiter.api.BeforeAll;
+import br.com.biblioteca.apibiblioteca.book.services.FindBookImpl;
+import br.com.biblioteca.apibiblioteca.book.services.InsertBookImpl;
+import br.com.biblioteca.apibiblioteca.exceptions.BookNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static br.com.biblioteca.apibiblioteca.book.builders.BookBuilder.createBook;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@ActiveProfiles("test")
-@SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DirtiesContext
+@ExtendWith(MockitoExtension.class)
+@Tag("service")
+@DisplayName("Valida funcionalidade do serviço responsável por gerenciar books")
 public class BookServiceTest {
 
-    @Autowired
-    private BookService bookService;
+    @Mock
+    private BookRepository bookRepository;
 
-    private static Date DATA;
+    private InsertBookImpl insertBook;
 
-    @BeforeAll
-    public void setUp(){
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        DATA = timestamp;
+    private FindBookImpl findBook;
 
-        Book bookTest01 = new Book("teste title","teste resume","teste isbn","teste author",DATA); //id=2
-        this.bookService.insert(bookTest01);
-        Book bookTest02 = new Book("teste title 2","teste resume 2","teste isbn 2","teste author 2",DATA); //id=3
-        this.bookService.insert(bookTest02);
+    @BeforeEach
+    public void setUp() {
+        this.insertBook = new InsertBookImpl(bookRepository);
+        this.findBook = new FindBookImpl(bookRepository);
     }
 
     @Test
-    public void createBook(){
-        Book bookTest03 = new Book("teste title 3","teste resume 3","teste isbn 3","teste author 3",DATA); //id=4
-        this.bookService.insert(bookTest03);
-        assertThat(bookTest03.getId()).isNotNull();
+    @DisplayName("Deve criar um livro")
+    void shouldCreateBook() {
+
+        //execução
+        insertBook.insert(createBook().build());
+
+        //preparação
+        ArgumentCaptor<Book> captorBook = ArgumentCaptor.forClass(Book.class);
+        verify(bookRepository).save(captorBook.capture());
+
+        Book result = captorBook.getValue();
+
+        //verificação
+        assertAll("book",
+                () -> assertThat(result.getAuthor(), is("teste author")),
+                () -> assertThat(result.getResume(), is("teste resume")),
+                () -> assertThat(result.getIsbn(), is("teste isbn")),
+                () -> assertThat(result.getTitle(),is("teste title"))
+        );
     }
 
     @Test
-    public void getIdBook(){
-        Book bookTest03 = this.bookService.find(2L);
-        assertThat(bookTest03.getId()).isNotNull();
-        assertThat(bookTest03.getTitle()).isEqualTo("teste title");
-        assertThat(bookTest03.getResume()).isEqualTo("teste resume");
-        assertThat(bookTest03.getIsbn()).isEqualTo("teste isbn");
-        assertThat(bookTest03.getAuthor()).isEqualTo("teste author");
+    @DisplayName("Deve retornar um livro")
+    void shouldFindById() {
+        when(bookRepository.findById(anyLong())).thenReturn(
+                Optional.of(createBook().author("Author Teste GET").build())
+        );
+
+        Book result = this.findBook.find(1L);
+
+        //verificação
+        assertAll("book",
+                () -> assertThat(result.getAuthor(), is("Author Teste GET")),
+                () -> assertThat(result.getResume(), is("teste resume")),
+                () -> assertThat(result.getIsbn(), is("teste isbn")),
+                () -> assertThat(result.getTitle(), is("teste title"))
+        );
     }
 
     @Test
-    public void updateBook(){
-        Book book = this.bookService.find(3L);
-        book.setAuthor("Waldir");
-        this.bookService.update(book);
-        assertThat(book.getId()).isNotNull();
-        assertThat(book.getAuthor()).isEqualTo("Waldir");
-
+    @DisplayName("Deve lançar exceção quando o livro não for encontrado")
+    void shouldThrowBookNotFoundException() {
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(BookNotFoundException.class, () -> this.findBook.find(1L));
     }
-
-    @Test
-    public void deleteBook(){
-        Book bookTest05 = new Book("teste title 5","teste resume 5","teste isbn 5","teste author 5",DATA); //id=5
-        this.bookService.insert(bookTest05);
-        this.bookService.delete(bookTest05.getId());
-        try {
-            bookTest05 = this.bookService.find(bookTest05.getId());
-        }catch (ObjectNotFoundException o){
-            bookTest05=null;
-        }
-        assertThat(bookTest05).isNull();
-    }
-
-    /*@Test
-    public void FindPageBook(){
-        Pageable paging = (Pageable) PageRequest.of(1,10,Sort.by(Sort.Direction.fromString("ASC"),"id"));
-        Page<Book> pages = (Page<Book>) this.bookRepository.findAll();
-        assertThat(pages.getTotalElements()).isEqualTo(1);
-    }
-    */
 }

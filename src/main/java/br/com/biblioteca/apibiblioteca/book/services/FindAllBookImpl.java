@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class FindAllImpl implements FindAllBook {
+public class FindAllBookImpl implements FindAllBook {
 
     private final BookRepository bookRepository;
 

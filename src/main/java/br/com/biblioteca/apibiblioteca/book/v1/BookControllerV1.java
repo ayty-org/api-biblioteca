@@ -1,64 +1,58 @@
 package br.com.biblioteca.apibiblioteca.book.v1;
 
-import br.com.biblioteca.apibiblioteca.book.Book;
 import br.com.biblioteca.apibiblioteca.book.BookDTO;
-import br.com.biblioteca.apibiblioteca.book.services.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.biblioteca.apibiblioteca.book.services.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value="/v1/api/book")
 public class BookControllerV1 {
 
-    @Autowired
-    private BookService bookService;
+    private final FindBookImpl findBookImpl;
+    private final FindAllBookImpl findAllBookImpl;
+    private final FindPageBookImpl findPageBookImpl;
+    private final InsertBookImpl insertBookImpl;
+    private final UpdateBookImpl updateBookImpl;
+    private final DeleteBookImpl deleteBookImpl;
+
+    @GetMapping(value="/{id}") //lista livros por id
+    public BookDTO find(@PathVariable Long id){
+        return BookDTO.from(findBookImpl.find(id));
+    }
 
     @GetMapping //lista todos os livros
     public List<BookDTO> findAll() {
-        List<Book> list = bookService.findAll();
-        List<BookDTO> listDto = list.stream().map(obj -> new BookDTO(obj)).collect(Collectors.toList());
-        return listDto;
-    }
-
-    @GetMapping(value="/{id}") //lista livros por id
-    public Book find(@PathVariable Long id){
-        Book book = bookService.find(id);
-        return book;
+        return BookDTO.fromAll(findAllBookImpl.findAll());
     }
 
     @GetMapping(value = "/page") //lista todas os livros com paginação
     public Page<BookDTO> findPage(){
-        Page<Book> list = bookService.findPage();
-        Page<BookDTO> listDTO = list.map(obj -> new BookDTO(obj));
-        return listDTO;
+        return BookDTO.fromPage(findPageBookImpl.findPage());
     }
 
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping //adiciona um novo Book
-    public void insert(@Valid @RequestBody BookDTO objDto){
-        System.out.println("testando ano = "+objDto.getYearBook());
-        Book book = bookService.fromDTO(objDto);
-        bookService.insert(book);
+    public void insert(@Valid @RequestBody BookDTO bookDTO){
+        insertBookImpl.insert(bookDTO.to(bookDTO));
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @PutMapping(value="/{id}") //atualizar uma Book
-    public void update(@Valid @RequestBody BookDTO objDto, @PathVariable Long id){
-        Book book = bookService.fromDTO(objDto);
-        book.setId(id);
-        bookService.update(book);
+    public void update(@Valid @RequestBody BookDTO bookDTO, @PathVariable Long id){
+        updateBookImpl.update(bookDTO.to(bookDTO));
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping(value="/{id}") //Deleta Book
     public void delete(@PathVariable Long id){
-        bookService.delete(id);
+        deleteBookImpl.delete(id);
     }
 }

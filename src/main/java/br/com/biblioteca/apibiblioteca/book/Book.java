@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder(builderClassName = "Builder")
 public class Book implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -38,21 +39,10 @@ public class Book implements Serializable {
     @ManyToMany(mappedBy="books", fetch = FetchType.LAZY)
     private List<Loan> loan = new ArrayList<>();
 
-
-    public Book(String title, String resume, String isbn, String author, Date yearBook) {
+    public Book(String title, String resume, String isbn, String author) {
         this.title = title;
         this.resume = resume;
         this.isbn = isbn;
         this.author = author;
-        this.yearBook = yearBook;
-    }
-
-    public Book(Long id, String title, String resume, String isbn, String author, Date yearBook) {
-        this.id = id;
-        this.title = title;
-        this.resume = resume;
-        this.isbn = isbn;
-        this.author = author;
-        this.yearBook = yearBook;
     }
 }

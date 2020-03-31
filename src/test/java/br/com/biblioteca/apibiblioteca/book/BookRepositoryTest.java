@@ -1,10 +1,11 @@
 package br.com.biblioteca.apibiblioteca.book;
-
+/*
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -77,11 +78,12 @@ public class BookRepositoryTest {
         assertThat(b.isPresent()).isFalse();
     }
 
-    /*@Test
+    @Test
     public void FindPageBook(){
         Pageable paging = (Pageable) PageRequest.of(1,10,Sort.by(Sort.Direction.fromString("ASC"),"id"));
         Page<Book> pages = (Page<Book>) this.bookRepository.findAll();
         assertThat(pages.getTotalElements()).isEqualTo(1);
     }
-    */
+
 }
+    */

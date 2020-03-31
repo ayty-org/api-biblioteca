@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder(builderClassName = "Builder")
 public class UserApp implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -32,12 +33,6 @@ public class UserApp implements Serializable {
     private List<Loan> loans = new ArrayList<>();
 
     public UserApp(String name, int age, String fone) {
-        this.name = name;
-        this.age = age;
-        this.fone = fone;
-    }
-    public UserApp(Long id, String name, int age, String fone) {
-        this.id = id;
         this.name = name;
         this.age = age;
         this.fone = fone;

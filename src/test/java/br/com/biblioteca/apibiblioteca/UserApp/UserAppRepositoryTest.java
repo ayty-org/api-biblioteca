@@ -14,7 +14,7 @@ import java.text.ParseException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+/*
 @ActiveProfiles("test")
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -73,11 +73,12 @@ public class UserAppRepositoryTest {
         assertThat(user.isPresent()).isFalse();
     }
 
-    /*@Test
+    @Test
     public void FindPageBook(){
         Pageable paging = (Pageable) PageRequest.of(1,10,Sort.by(Sort.Direction.fromString("ASC"),"id"));
         Page<Book> pages = (Page<Book>) this.bookRepository.findAll();
         assertThat(pages.getTotalElements()).isEqualTo(1);
     }
-    */
+
 }
+*/

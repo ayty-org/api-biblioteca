@@ -1,83 +1,90 @@
 package br.com.biblioteca.apibiblioteca.UserApp;
 
+import br.com.biblioteca.apibiblioteca.exceptions.UserAppNotFoundException;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
-import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
-import org.junit.jupiter.api.BeforeAll;
+import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
+import br.com.biblioteca.apibiblioteca.user.services.FindUserApp;
+import br.com.biblioteca.apibiblioteca.user.services.FindUserAppImpl;
+import br.com.biblioteca.apibiblioteca.user.services.InsertUserAppImpl;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.text.ParseException;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static br.com.biblioteca.apibiblioteca.UserApp.builders.UserAppBuilder.createUserApp;
+import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@ActiveProfiles("test")
-@SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DirtiesContext
+@ExtendWith(MockitoExtension.class)
+@Tag("service")
+@DisplayName("Valida funcionalidade do serviço responsável por gerenciar UserApp")
 public class UserAppServiceTest {
 
-    @Autowired
-    private UserAppService userService;
+    @Mock
+    private UserAppRepository userAppRepository;
 
-    @BeforeAll
-    public void setUp() throws ParseException {
+    private InsertUserAppImpl insertUserApp;
 
-        UserApp userTest01 = new UserApp("teste nome 1",21,"46356357"); //id=2
-        this.userService.insert(userTest01);
+    private FindUserApp findUserApp;
 
-        UserApp userTest02 = new UserApp("teste nome 2",31,"876353453"); //id=3
-        this.userService.insert(userTest02);
+    @BeforeEach
+    public void setUp() {
+        this.insertUserApp = new InsertUserAppImpl(userAppRepository);
+        this.findUserApp = new FindUserAppImpl(userAppRepository);
     }
 
     @Test
-    public void createUser(){
-        UserApp userTest03 = new UserApp("teste nome 3",43,"463563456357"); //id=4
-        this.userService.insert(userTest03);
-        assertThat(userTest03.getId()).isNotNull();
+    @DisplayName("Deve criar um usuário")
+    public void shouldCreateBook(){
+        //execução
+        insertUserApp.insert(createUserApp().build());
+
+        //preparação
+        ArgumentCaptor<UserApp> captorUserApp = ArgumentCaptor.forClass(UserApp.class);
+        verify(userAppRepository).save(captorUserApp.capture());
+
+        UserApp result = captorUserApp.getValue();
+
+        //verificação
+        assertAll("book",
+                () -> MatcherAssert.assertThat(result.getName(), is("teste nome")),
+                () -> MatcherAssert.assertThat(result.getAge(), is(20)),
+                () -> MatcherAssert.assertThat(result.getFone(), is("teste fone"))
+        );
     }
 
     @Test
-    public void getIdUser(){
-        UserApp userTest04 = this.userService.find(2L);
-        assertThat(userTest04.getId()).isNotNull();
-        assertThat(userTest04.getName()).isEqualTo("teste nome 1");
-        assertThat(userTest04.getAge()).isEqualTo(21);
-        assertThat(userTest04.getFone()).isEqualTo("46356357");
+    @DisplayName("Deve retornar um usuário")
+    void shouldFindById() {
+        when(userAppRepository.findById(anyLong())).thenReturn(
+                Optional.of(createUserApp().name("Nome Teste GET").build())
+        );
+
+        UserApp result = this.findUserApp.find(1L);
+
+        //verificação
+        assertAll("book",
+                () -> MatcherAssert.assertThat(result.getName(), is("Nome Teste GET")),
+                () -> MatcherAssert.assertThat(result.getAge(), is(20)),
+                () -> MatcherAssert.assertThat(result.getFone(), is("teste fone"))
+        );
     }
 
     @Test
-    public void updateUser(){
-        UserApp userTest05 = this.userService.find(3L);
-        userTest05.setName("Waldir");
-        this.userService.update(userTest05);
-        assertThat(userTest05.getId()).isNotNull();
-        assertThat(userTest05.getName()).isEqualTo("Waldir");
-
+    @DisplayName("Deve lançar exceção quando o usuário não for encontrado")
+    void shouldThrowUserAppNotFoundException() {
+        when(userAppRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(UserAppNotFoundException.class, () -> this.findUserApp.find(1L));
     }
-
-    @Test
-    public void deleteUser(){
-        UserApp userTest06 = new UserApp("teste nome 2",423,"463563456357");
-        this.userService.insert(userTest06);
-        this.userService.delete(userTest06.getId());
-        try {
-            userTest06 = this.userService.find(userTest06.getId());
-        }catch (ObjectNotFoundException o){
-            userTest06=null;
-        }
-        assertThat(userTest06).isNull();
-    }
-
-    /*@Test
-    public void FindPageBook(){
-        Pageable paging = (Pageable) PageRequest.of(1,10,Sort.by(Sort.Direction.fromString("ASC"),"id"));
-        Page<Book> pages = (Page<Book>) this.bookRepository.findAll();
-        assertThat(pages.getTotalElements()).isEqualTo(1);
-    }
-    */
-
 }

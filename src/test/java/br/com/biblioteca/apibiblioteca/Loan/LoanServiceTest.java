@@ -1,125 +1,101 @@
 package br.com.biblioteca.apibiblioteca.Loan;
 
-import br.com.biblioteca.apibiblioteca.book.Book;
+import br.com.biblioteca.apibiblioteca.exceptions.LoanNotFoundException;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
-import br.com.biblioteca.apibiblioteca.user.UserApp;
-import br.com.biblioteca.apibiblioteca.book.services.BookService;
-import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
-import org.junit.jupiter.api.BeforeAll;
+import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
+import br.com.biblioteca.apibiblioteca.loan.services.FindLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.InsertLoanImpl;
+import org.hamcrest.MatcherAssert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static br.com.biblioteca.apibiblioteca.Loan.builders.LoanBuilder.createLoan;
+import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@ActiveProfiles("test")
-@SpringBootTest
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DirtiesContext
+@ExtendWith(MockitoExtension.class)
+@Tag("service")
+@DisplayName("Valida funcionalidade do serviço responsável por gerenciar emprestimos")
 public class LoanServiceTest {
 
-    @Autowired
-    private BookService bookService;
+    @Mock
+    private LoanRepository loanRepository;
 
-    @Autowired
-    private UserAppService userAppService;
+    private InsertLoanImpl insertLoan;
 
-    @Autowired
-    private LoanService loanService;
+    private FindLoanImpl findLoan;
 
-    private static Date DATA;
-    private static UserApp user01;
-    private static UserApp user02;
-    private static List<Book> books01 = new ArrayList<>();
-    private static List<Book> books02 = new ArrayList<>();
-    @BeforeAll
-    public void setUp() throws ParseException {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        DATA = timestamp;
-
-        //primeiro emprestimo
-        UserApp userTest01 = new UserApp("teste nome 1",21,"46356357");
-        user01 = userTest01;
-
-        Book bookTest01 = new Book("teste title 1","teste resume","teste isbn","teste author",DATA);
-        List<Book> book01 = new ArrayList<>();
-        book01.add(bookTest01);
-        books01 = book01;
-
-        Loan loanTest01 = new Loan(userTest01,book01,"150 dias"); //id=2
-        loanService.insert(loanTest01);
-
-        //segundo emprestimo
-        UserApp userTest02 = new UserApp("teste nome 2",21,"46356357");
-
-        Book bookTest02 = new Book("teste title 2","teste resume","teste isbn","teste author",DATA);
-        List<Book> book02 = new ArrayList<>();
-        book02.add(bookTest02);
-
-        Loan loanTest02 = new Loan(userTest02,book02,"200 dias"); //id=2
-        loanService.insert(loanTest02);
+    @BeforeEach
+    public void setUp() {
+        this.insertLoan = new InsertLoanImpl(loanRepository);
+        this.findLoan = new FindLoanImpl(loanRepository);
     }
 
     @Test
-    public void createLoan(){
+    @DisplayName("Deve criar um emprestimo")
+    void shouldCreateLoan() {
 
-        UserApp userTest03 = new UserApp("teste nome",21,"46356357");
+        //execução
+        insertLoan.insert(createLoan().build());
 
-        Book bookTest03 = new Book("teste title","teste resume","teste isbn","teste author",DATA);
-        List<Book> books03 = new ArrayList<>();
-        books03.add(bookTest03);
+        //preparação
+        ArgumentCaptor<Loan> captorLoan = ArgumentCaptor.forClass(Loan.class);
+        verify(loanRepository).save(captorLoan.capture());
 
-        Loan loanTest03 = new Loan(userTest03,books03,"250 dias"); //id=3
-        this.loanService.insert(loanTest03);
+        Loan result = captorLoan.getValue();
 
-        assertThat(loanTest03.getId()).isNotNull();
+        //verificação
+        assertAll("loan",
+                () -> MatcherAssert.assertThat(result.getUserApp().getName(), is("teste nome")),
+                () -> MatcherAssert.assertThat(result.getUserApp().getAge(), is(21)),
+                () -> MatcherAssert.assertThat(result.getUserApp().getFone(), is("46356357")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getAuthor(), is("teste author")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getResume(), is("teste resume")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getIsbn(), is("teste isbn")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getTitle(), is("teste title")),
+                () -> MatcherAssert.assertThat(result.getLoanTime(), is("50 dias"))
+        );
     }
 
     @Test
-    public void getIdLoan(){
-        Loan loanTest04 = this.loanService.find(2L);
-        assertThat(loanTest04.getId()).isNotNull();
-        assertThat(loanTest04.getUserApp().getName()).isEqualTo(user01.getName());
-        assertThat(loanTest04.getBooks().get(0).getAuthor()).isEqualTo(books01.get(0).getAuthor());
-        assertThat(loanTest04.getLoanTime()).isEqualTo("150 dias");
+    @DisplayName("Deve retornar um loan")
+    void shouldFindById() {
+        when(loanRepository.findById(anyLong())).thenReturn(
+                Optional.of(createLoan().loanTime("loanTime Teste GET").build())
+        );
+
+        Loan result = this.findLoan.find(1L);
+
+        //verificação
+        assertAll("loan",
+                () -> MatcherAssert.assertThat(result.getUserApp().getName(), is("teste nome")),
+                () -> MatcherAssert.assertThat(result.getUserApp().getAge(), is(21)),
+                () -> MatcherAssert.assertThat(result.getUserApp().getFone(), is("46356357")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getAuthor(), is("teste author")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getResume(), is("teste resume")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getIsbn(), is("teste isbn")),
+                () -> MatcherAssert.assertThat(result.getBooks().get(0).getTitle(), is("teste title")),
+                () -> MatcherAssert.assertThat(result.getLoanTime(), is("loanTime Teste GET"))
+        );
     }
 
     @Test
-    public void updateLoan(){
-        Loan loanTest05 = this.loanService.find(3L);
-        loanTest05.setLoanTime("15 dias");
-        this.loanService.update(loanTest05);
-        assertThat(loanTest05.getId()).isNotNull();
-        assertThat(loanTest05.getLoanTime()).isEqualTo("15 dias");
-
-    }
-
-    @Test
-    public void deleteBook(){
-        UserApp userTest06 = new UserApp("teste nome 2",22,"4635635754354");
-        user02 = userTest06;
-
-        Book bookTest06 = new Book("teste title 2","teste resume 2","teste isbn 2","teste author 2",DATA);
-        books02.add(bookTest06);
-
-        Loan loanTest06 = new Loan(user02,books02,"10 dias");
-        this.loanService.insert(loanTest06);
-        this.loanService.delete(loanTest06.getId());
-        try {
-            loanTest06 = this.loanService.find(loanTest06.getId());
-        }catch (ObjectNotFoundException o){
-            loanTest06=null;
-        }
-        assertThat(loanTest06).isNull();
+    @DisplayName("Deve lançar exceção quando o emprestimo não for encontrado")
+    void shouldThrowLoanNotFoundException() {
+        when(loanRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(LoanNotFoundException.class, () -> this.findLoan.find(1L));
     }
 
 }

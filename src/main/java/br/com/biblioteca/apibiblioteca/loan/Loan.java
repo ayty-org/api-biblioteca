@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder(builderClassName = "Builder")
 public class Loan implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -39,10 +41,4 @@ public class Loan implements Serializable {
         this.loanTime = loanTime;
     }
 
-    public Loan(Long id, UserApp userApp, List<Book> books, String loanTime) {
-        this.id = id;
-        this.userApp = userApp;
-        this.books = books;
-        this.loanTime = loanTime;
-    }
 }

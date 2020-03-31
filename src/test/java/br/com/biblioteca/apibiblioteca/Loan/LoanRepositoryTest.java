@@ -1,27 +1,6 @@
 package br.com.biblioteca.apibiblioteca.Loan;
 
-import br.com.biblioteca.apibiblioteca.book.Book;
-import br.com.biblioteca.apibiblioteca.loan.Loan;
-import br.com.biblioteca.apibiblioteca.user.UserApp;
-import br.com.biblioteca.apibiblioteca.book.BookRepository;
-import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
-import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ActiveProfiles;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
+/*
 @ActiveProfiles("test")
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -119,3 +98,5 @@ public class LoanRepositoryTest {
     }
 
 }
+
+ */

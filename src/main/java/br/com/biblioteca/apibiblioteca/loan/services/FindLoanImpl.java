@@ -1,12 +1,10 @@
 package br.com.biblioteca.apibiblioteca.loan.services;
 
-import br.com.biblioteca.apibiblioteca.exceptions.ObjectNotFoundException;
+import br.com.biblioteca.apibiblioteca.exceptions.LoanNotFoundException;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -16,8 +14,6 @@ public class FindLoanImpl implements FindLoan {
 
     @Override
     public Loan find (Long id){
-        Optional<Loan> obj = loanRepository.findById(id);
-        return obj.orElseThrow(() -> new ObjectNotFoundException(
-                "Objeto não encontrado! Id: " + id + ", Tipo: " + Loan.class.getName()));
+        return loanRepository.findById(id).orElseThrow(LoanNotFoundException::new);
     }
 }
