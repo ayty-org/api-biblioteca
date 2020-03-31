@@ -2,7 +2,11 @@ package br.com.biblioteca.apibiblioteca.loan;
 
 import br.com.biblioteca.apibiblioteca.book.Book;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.NotEmpty;
@@ -29,7 +33,7 @@ public class LoanDTO implements Serializable {
     @NotEmpty
     private String loanTime;
 
-    public static LoanDTO from (Loan loan){
+    public static LoanDTO from(Loan loan) {
         return LoanDTO
                 .builder()
                 .id(loan.getId())
@@ -38,16 +42,6 @@ public class LoanDTO implements Serializable {
                 .loanTime(loan.getLoanTime())
                 .build();
 
-    }
-
-    public static Loan to (LoanDTO loanDTO){
-        return Loan
-                .builder()
-                .id(loanDTO.getId())
-                .userApp(loanDTO.getUserApp())
-                .books(loanDTO.getBooks())
-                .loanTime(loanDTO.getLoanTime())
-                .build();
     }
 
     public static List<LoanDTO> fromAll(List<Loan> userApps) {

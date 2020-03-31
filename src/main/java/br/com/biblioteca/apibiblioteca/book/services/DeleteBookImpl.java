@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class DeleteBookImpl implements DeleteBook{
+public class DeleteBookImpl implements DeleteBook {
 
     private final BookRepository bookRepository;
 

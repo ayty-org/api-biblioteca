@@ -5,7 +5,7 @@ import br.com.biblioteca.apibiblioteca.user.UserApp;
 import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
 import br.com.biblioteca.apibiblioteca.user.services.FindUserApp;
 import br.com.biblioteca.apibiblioteca.user.services.FindUserAppImpl;
-import br.com.biblioteca.apibiblioteca.user.services.InsertUserAppImpl;
+import br.com.biblioteca.apibiblioteca.user.services.SaveUserAppImpl;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,13 +34,13 @@ public class UserAppServiceTest {
     @Mock
     private UserAppRepository userAppRepository;
 
-    private InsertUserAppImpl insertUserApp;
+    private SaveUserAppImpl insertUserApp;
 
     private FindUserApp findUserApp;
 
     @BeforeEach
     public void setUp() {
-        this.insertUserApp = new InsertUserAppImpl(userAppRepository);
+        this.insertUserApp = new SaveUserAppImpl(userAppRepository);
         this.findUserApp = new FindUserAppImpl(userAppRepository);
     }
 

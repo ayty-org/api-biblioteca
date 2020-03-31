@@ -16,7 +16,7 @@ public class FindPageLoanImpl implements FindPageLoan {
 
     @Override
     public Page<Loan> findPage() {
-        PageRequest pageRequest = PageRequest.of(0, 24 , Sort.Direction.valueOf("ASC"), "loanTime");
+        PageRequest pageRequest = PageRequest.of(0, 24, Sort.Direction.valueOf("ASC"), "loanTime");
         return loanRepository.findAll(pageRequest);
     }
 }

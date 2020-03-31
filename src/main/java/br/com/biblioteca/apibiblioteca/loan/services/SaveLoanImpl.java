@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class InsertLoanImpl implements InsertLoan {
+public class SaveLoanImpl implements SaveLoan {
 
     private final LoanRepository loanRepository;
 
     @Override
-    public void insert(Loan obj){
+    public void insert(Loan obj) {
         loanRepository.save(obj);
     }
 }

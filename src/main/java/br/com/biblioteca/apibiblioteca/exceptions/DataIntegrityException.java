@@ -12,8 +12,8 @@ public class DataIntegrityException extends RuntimeException {
         super(mgs);
     }
 
-    public DataIntegrityException(String mgs,Throwable cause) {
-        super(mgs,cause);
+    public DataIntegrityException(String mgs, Throwable cause) {
+        super(mgs, cause);
     }
 
 }

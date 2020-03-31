@@ -15,7 +15,7 @@ public class FindPageBookImpl implements FindPageBook {
 
     @Override
     public Page<Book> findPage() {
-        PageRequest pageRequest = PageRequest.of(0, 24 , Sort.Direction.valueOf("ASC"), "title");
+        PageRequest pageRequest = PageRequest.of(0, 24, Sort.Direction.valueOf("ASC"), "title");
         return bookRepository.findAll(pageRequest);
     }
 }

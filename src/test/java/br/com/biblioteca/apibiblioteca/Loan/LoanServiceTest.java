@@ -4,7 +4,7 @@ import br.com.biblioteca.apibiblioteca.exceptions.LoanNotFoundException;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
 import br.com.biblioteca.apibiblioteca.loan.services.FindLoanImpl;
-import br.com.biblioteca.apibiblioteca.loan.services.InsertLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.SaveLoanImpl;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,13 +33,13 @@ public class LoanServiceTest {
     @Mock
     private LoanRepository loanRepository;
 
-    private InsertLoanImpl insertLoan;
+    private SaveLoanImpl insertLoan;
 
     private FindLoanImpl findLoan;
 
     @BeforeEach
     public void setUp() {
-        this.insertLoan = new InsertLoanImpl(loanRepository);
+        this.insertLoan = new SaveLoanImpl(loanRepository);
         this.findLoan = new FindLoanImpl(loanRepository);
     }
 

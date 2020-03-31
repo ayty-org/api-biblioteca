@@ -13,7 +13,7 @@ public class UpdateLoanImpl implements UpdateLoan {
     private final FindLoanImpl findLoan;
 
     @Override
-    public void update (Loan obj){
+    public void update(Loan obj) {
 
         Loan newObj = findLoan.find(obj.getId());
 

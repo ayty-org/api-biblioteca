@@ -13,7 +13,7 @@ public class FindLoanImpl implements FindLoan {
     private final LoanRepository loanRepository;
 
     @Override
-    public Loan find (Long id){
+    public Loan find(Long id) {
         return loanRepository.findById(id).orElseThrow(LoanNotFoundException::new);
     }
 }

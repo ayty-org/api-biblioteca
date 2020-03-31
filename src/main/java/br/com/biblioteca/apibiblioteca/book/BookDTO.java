@@ -1,6 +1,10 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,7 +20,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(builderClassName = "Builder")
-public class BookDTO  implements Serializable {
+public class BookDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -45,18 +49,6 @@ public class BookDTO  implements Serializable {
                 .isbn(book.getIsbn())
                 .author(book.getAuthor())
                 .yearBook(book.getYearBook())
-                .build();
-    }
-
-    public static Book to(BookDTO bookDTO) {
-        return Book
-                .builder()
-                .id(bookDTO.getId())
-                .title(bookDTO.getTitle())
-                .resume(bookDTO.getResume())
-                .isbn(bookDTO.getIsbn())
-                .author(bookDTO.getAuthor())
-                .yearBook(bookDTO.getYearBook())
                 .build();
     }
 

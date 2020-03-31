@@ -1,29 +1,43 @@
 package br.com.biblioteca.apibiblioteca.loan.v1;
 
+import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanDTO;
-import br.com.biblioteca.apibiblioteca.loan.services.*;
+import br.com.biblioteca.apibiblioteca.loan.services.DeleteLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.FindAllLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.FindLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.FindPageLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.SaveLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.UpdateLoanImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value="/v1/api/loan")
+@RequestMapping(value = "/v1/api/loan")
 public class LoanControllerV1 {
 
     private final FindLoanImpl findLoanImpl;
     private final FindAllLoanImpl findAllLoanImpl;
     private final FindPageLoanImpl findPageLoanImpl;
-    private final InsertLoanImpl insertLoanImpl;
+    private final SaveLoanImpl saveLoanImpl;
     private final UpdateLoanImpl updateLoanImpl;
     private final DeleteLoanImpl deleteLoanImpl;
 
-    @GetMapping(value="/{id}") //lista emprestimos por id
-    public LoanDTO find(@PathVariable Long id){
+    @GetMapping(value = "/{id}") //lista emprestimos por id
+    public LoanDTO find(@PathVariable Long id) {
         return LoanDTO.from(findLoanImpl.find(id));
     }
 
@@ -33,25 +47,25 @@ public class LoanControllerV1 {
     }
 
     @GetMapping(value = "/page") //lista todas os emprestimos com paginação
-    public Page<LoanDTO> findPage(){
+    public Page<LoanDTO> findPage() {
         return LoanDTO.fromPage(findPageLoanImpl.findPage());
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
     @PostMapping() //adiciona um emprestimo Book
-    public void insert(@Valid @RequestBody LoanDTO loanDTO){
-        insertLoanImpl.insert(loanDTO.to(loanDTO));
+    public void insert(@Valid @RequestBody LoanDTO loanDTO) {
+        saveLoanImpl.insert(Loan.to(loanDTO));
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    @PutMapping(value="/{id}") //atualizar uma emprestimo
-    public void update(@Valid @RequestBody LoanDTO loanDTO, @PathVariable Long id){
-        updateLoanImpl.update(loanDTO.to(loanDTO));
+    @PutMapping(value = "/{id}") //atualizar uma emprestimo
+    public void update(@Valid @RequestBody LoanDTO loanDTO, @PathVariable Long id) {
+        updateLoanImpl.update(Loan.to(loanDTO));
     }
 
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    @DeleteMapping(value="/{id}") //Deleta emprestimo
-    public void delete(@PathVariable Long id){
+    @DeleteMapping(value = "/{id}") //Deleta emprestimo
+    public void delete(@PathVariable Long id) {
         deleteLoanImpl.delete(id);
     }
 }

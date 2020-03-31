@@ -4,7 +4,7 @@ import br.com.biblioteca.apibiblioteca.book.Book;
 
 public class BookBuilder {
 
-    public static Book.Builder createBook(){
+    public static Book.Builder createBook() {
         return Book
                 .builder()
                 .author("teste author")
@@ -12,4 +12,5 @@ public class BookBuilder {
                 .isbn("teste isbn")
                 .title("teste title");
     }
+
 }

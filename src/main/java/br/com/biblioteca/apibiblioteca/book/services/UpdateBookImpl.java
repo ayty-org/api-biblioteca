@@ -5,14 +5,13 @@ import br.com.biblioteca.apibiblioteca.book.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
 public class UpdateBookImpl implements UpdateBook {
 
     private final BookRepository bookRepository;
     private final FindBookImpl findBook;
+
     @Override
     public void update(Book book) {
         Book newBook = findBook.find(book.getId());

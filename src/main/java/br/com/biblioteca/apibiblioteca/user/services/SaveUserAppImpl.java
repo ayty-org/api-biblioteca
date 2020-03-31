@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class InsertUserAppImpl implements InsertUserApp {
+public class SaveUserAppImpl implements SaveUserApp {
 
     private final UserAppRepository userAppRepository;
 
     @Override
-    public void insert(UserApp obj){
+    public void insert(UserApp obj) {
         userAppRepository.save(obj);
     }
 }

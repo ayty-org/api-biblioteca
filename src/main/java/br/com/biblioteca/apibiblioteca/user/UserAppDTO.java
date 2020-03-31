@@ -1,6 +1,10 @@
 package br.com.biblioteca.apibiblioteca.user;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.NotEmpty;
@@ -28,23 +32,13 @@ public class UserAppDTO implements Serializable {
     @NotEmpty
     private String fone;
 
-    public static UserAppDTO from (UserApp userApp){
+    public static UserAppDTO from(UserApp userApp) {
         return UserAppDTO
                 .builder()
                 .id(userApp.getId())
                 .name(userApp.getName())
                 .age(userApp.getAge())
                 .fone(userApp.getFone())
-                .build();
-    }
-
-    public static UserApp to (UserAppDTO userAppDTO){
-        return UserApp
-                .builder()
-                .id(userAppDTO.getId())
-                .name(userAppDTO.getName())
-                .age(userAppDTO.getAge())
-                .fone(userAppDTO.getFone())
                 .build();
     }
 

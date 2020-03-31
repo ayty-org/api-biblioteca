@@ -13,7 +13,7 @@ public class UpdateUserAppImpl implements UpdateUserApp {
     private final FindUserApp findUserApp;
 
     @Override
-    public void update (UserApp obj){
+    public void update(UserApp obj) {
         UserApp newObj = findUserApp.find(obj.getId());
         newObj.setId(obj.getId());
         newObj.setName(obj.getName());

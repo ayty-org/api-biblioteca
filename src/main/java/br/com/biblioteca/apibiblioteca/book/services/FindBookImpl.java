@@ -12,7 +12,7 @@ public class FindBookImpl implements FindBook {
 
     private final BookRepository bookRepository;
 
-    public Book find (Long id){
+    public Book find(Long id) {
         return bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
     }
 

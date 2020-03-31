@@ -16,7 +16,7 @@ public class FindPageUserAppImpl implements FindPageUserApp {
 
     @Override
     public Page<UserApp> findPage() {
-        PageRequest pageRequest = PageRequest.of(0, 24 , Sort.Direction.valueOf("ASC"), "title");
+        PageRequest pageRequest = PageRequest.of(0, 24, Sort.Direction.valueOf("ASC"), "title");
         return userAppRepository.findAll(pageRequest);
     }
 }

@@ -5,5 +5,5 @@ import br.com.biblioteca.apibiblioteca.user.UserApp;
 @FunctionalInterface
 public interface FindUserApp {
 
-    UserApp find (Long id);
+    UserApp find(Long id);
 }
