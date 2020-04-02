@@ -9,7 +9,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class FindAllLoanImpl implements FindAllLoan {
+public class ListLoanImpl implements ListLoan {
 
     private final LoanRepository loanRepository;
 

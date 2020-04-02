@@ -2,9 +2,18 @@ package br.com.biblioteca.apibiblioteca.book;
 
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +43,7 @@ public class Book implements Serializable {
     private Date yearBook; //ano
 
     @JsonIgnore
-    @ManyToMany(mappedBy="books", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "books", fetch = FetchType.LAZY)
     private List<Loan> loan = new ArrayList<>();
 
     public Book(String title, String resume, String isbn, String author) {

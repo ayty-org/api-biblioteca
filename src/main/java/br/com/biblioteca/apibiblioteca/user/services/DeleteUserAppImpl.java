@@ -13,8 +13,9 @@ public class DeleteUserAppImpl implements DeleteUserApp {
 
     @Override
     public void delete(Long id) {
-        if (userAppRepository.findById(id).isPresent()) {
-            userAppRepository.deleteById(id);
-        }throw new UserAppNotDeletedException();
+        if (!userAppRepository.existsById(id)) {
+            throw new UserAppNotDeletedException();
+        }
+        userAppRepository.deleteById(id);
     }
 }

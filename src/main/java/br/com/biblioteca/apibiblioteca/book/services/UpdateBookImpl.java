@@ -13,10 +13,14 @@ public class UpdateBookImpl implements UpdateBook {
     private final BookRepository bookRepository;
 
     @Override
-    public void update(Book book, Long id) {
-        if (bookRepository.findById(id).isPresent()){
-            book.setId(id);
-            bookRepository.save(book);
-        }throw new BookNotFoundException();
+    public void update(Book newBook, Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
+
+        book.setTitle(newBook.getTitle());
+        book.setResume(newBook.getResume());
+        book.setIsbn(newBook.getIsbn());
+        book.setAuthor(newBook.getAuthor());
+        book.setYearBook(newBook.getYearBook());
+        bookRepository.save(book);
     }
 }

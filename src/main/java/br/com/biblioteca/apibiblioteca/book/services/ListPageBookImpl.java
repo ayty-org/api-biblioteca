@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class FindPageBookImpl implements FindPageBook {
+public class ListPageBookImpl implements ListPageBook {
     private final BookRepository bookRepository;
 
     @Override

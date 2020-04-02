@@ -3,7 +3,7 @@ package br.com.biblioteca.apibiblioteca.UserApp;
 import br.com.biblioteca.apibiblioteca.exceptions.UserAppNotFoundException;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
 import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
-import br.com.biblioteca.apibiblioteca.user.services.FindUserAppImpl;
+import br.com.biblioteca.apibiblioteca.user.services.GetUserAppImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -25,15 +25,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
 @DisplayName("Valida funcionalidade do serviço responsável por pesquisar um UserApp")
-public class FindUserAppTest {
+public class GetUserAppTest {
 
     @Mock
     private UserAppRepository userAppRepository;
-    private FindUserAppImpl findUserApp;
+    private GetUserAppImpl findUserApp;
 
     @BeforeEach
     public void setUp() {
-        this.findUserApp = new FindUserAppImpl(userAppRepository);
+        this.findUserApp = new GetUserAppImpl(userAppRepository);
     }
 
     @Test

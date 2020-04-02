@@ -5,7 +5,7 @@ import br.com.biblioteca.apibiblioteca.loan.Loan;
 import java.util.List;
 
 @FunctionalInterface
-public interface FindAllLoan {
+public interface ListLoan {
 
     List<Loan> findAll();
 }

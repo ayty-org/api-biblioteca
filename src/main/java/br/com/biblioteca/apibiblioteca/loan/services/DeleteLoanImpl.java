@@ -12,8 +12,10 @@ public class DeleteLoanImpl implements DeleteLoan {
 
     @Override
     public void delete(Long id) {
-        if (loanRepository.findById(id).isPresent()){
-            loanRepository.deleteById(id);
-        }throw new LoanNotDeletedException();
+
+        if (!loanRepository.existsById(id)) {
+            throw new LoanNotDeletedException();
+        }
+        loanRepository.deleteById(id);
     }
 }

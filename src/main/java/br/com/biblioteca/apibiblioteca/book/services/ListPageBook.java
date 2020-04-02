@@ -1,10 +1,10 @@
 package br.com.biblioteca.apibiblioteca.book.services;
 
 import br.com.biblioteca.apibiblioteca.book.Book;
+import org.springframework.data.domain.Page;
 
 @FunctionalInterface
-public interface FindBook {
+public interface ListPageBook {
 
-    Book find(Long id);
-
+    Page<Book> findPage(Integer page, Integer size);
 }

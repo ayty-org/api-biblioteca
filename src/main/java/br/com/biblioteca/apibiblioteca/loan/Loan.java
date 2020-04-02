@@ -63,5 +63,4 @@ public class Loan implements Serializable {
                 .loanTime(loanDTO.getLoanTime())
                 .build();
     }
-
 }

@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class FindPageUserAppImpl implements FindPageUserApp {
+public class ListPageUserAppImpl implements ListPageUserApp {
 
     private final UserAppRepository userAppRepository;
 
     @Override
     public Page<UserApp> findPage(Integer page, Integer size) {
-        Pageable pageRequest = PageRequest.of(page, size, Sort.Direction.valueOf("ASC"));
+        Pageable pageRequest = PageRequest.of(page, size, Sort.Direction.ASC);
         return userAppRepository.findAll(pageRequest);
     }
 }

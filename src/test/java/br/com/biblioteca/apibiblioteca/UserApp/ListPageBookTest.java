@@ -1,7 +1,7 @@
 package br.com.biblioteca.apibiblioteca.UserApp;
 
 import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
-import br.com.biblioteca.apibiblioteca.user.services.FindPageUserAppImpl;
+import br.com.biblioteca.apibiblioteca.user.services.ListPageUserAppImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -12,15 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
 @DisplayName("Valida funcionalidade do serviço responsável por pesquisar UserApp por paginação")
-public class FindPageBookTest {
+public class ListPageBookTest {
 
     @Mock
     private UserAppRepository userAppRepository;
-    private FindPageUserAppImpl findPageUserApp;
+    private ListPageUserAppImpl findPageUserApp;
 
     @BeforeEach
     public void setUp() {
-        this.findPageUserApp = new FindPageUserAppImpl(userAppRepository);
+        this.findPageUserApp = new ListPageUserAppImpl(userAppRepository);
     }
 
 }

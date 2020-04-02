@@ -79,7 +79,7 @@ public class BookRepositoryTest {
     }
 
     @Test
-    public void FindPageBook(){
+    public void ListPageBook(){
         Pageable paging = (Pageable) PageRequest.of(1,10,Sort.by(Sort.Direction.fromString("ASC"),"id"));
         Page<Book> pages = (Page<Book>) this.bookRepository.findAll();
         assertThat(pages.getTotalElements()).isEqualTo(1);

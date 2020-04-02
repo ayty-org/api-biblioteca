@@ -14,9 +14,11 @@ public class UpdateUserAppImpl implements UpdateUserApp {
 
     @Override
     public void update(UserApp obj, Long id) {
-        if (userAppRepository.findById(id).isPresent()) {
-            obj.setId(id);
-            userAppRepository.save(obj);
-        }throw new UserAppNotFoundException();
+        UserApp userApp = userAppRepository.findById(id).orElseThrow(UserAppNotFoundException::new);
+
+        userApp.setName(obj.getName());
+        userApp.setAge(obj.getAge());
+        userApp.setFone(obj.getFone());
+        userAppRepository.save(userApp);
     }
 }

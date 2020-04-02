@@ -2,10 +2,8 @@ package br.com.biblioteca.apibiblioteca.user.services;
 
 import br.com.biblioteca.apibiblioteca.user.UserApp;
 
-import java.util.List;
-
 @FunctionalInterface
-public interface FindAllUserApp {
+public interface GetUserApp {
 
-    List<UserApp> findAll();
+    UserApp find(Long id);
 }

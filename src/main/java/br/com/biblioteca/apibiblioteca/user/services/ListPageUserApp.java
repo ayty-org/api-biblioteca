@@ -4,7 +4,7 @@ import br.com.biblioteca.apibiblioteca.user.UserApp;
 import org.springframework.data.domain.Page;
 
 @FunctionalInterface
-public interface FindPageUserApp {
+public interface ListPageUserApp {
 
     Page<UserApp> findPage(Integer page, Integer size);
 }

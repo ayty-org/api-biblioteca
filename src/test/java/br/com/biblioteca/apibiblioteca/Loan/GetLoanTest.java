@@ -3,7 +3,7 @@ package br.com.biblioteca.apibiblioteca.Loan;
 import br.com.biblioteca.apibiblioteca.exceptions.LoanNotFoundException;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
-import br.com.biblioteca.apibiblioteca.loan.services.FindLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.GetLoanImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -25,15 +25,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
 @DisplayName("Valida funcionalidade do serviço responsável por pesquisar um Loan")
-public class FindLoanTest {
+public class GetLoanTest {
 
     @Mock
     private LoanRepository loanRepository;
-    private FindLoanImpl findLoan;
+    private GetLoanImpl findLoan;
 
     @BeforeEach
     public void setUp() {
-        this.findLoan = new FindLoanImpl(loanRepository);
+        this.findLoan = new GetLoanImpl(loanRepository);
     }
 
     @Test

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class FindBookImpl implements FindBook {
+public class GetBookImpl implements GetBook {
 
     private final BookRepository bookRepository;
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class FindPageLoanImpl implements FindPageLoan {
+public class ListPageLoanImpl implements ListPageLoan {
 
     private final LoanRepository loanRepository;
 

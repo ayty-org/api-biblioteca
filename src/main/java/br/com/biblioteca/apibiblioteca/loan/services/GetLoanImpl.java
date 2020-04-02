@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class FindLoanImpl implements FindLoan {
+public class GetLoanImpl implements GetLoan {
 
     private final LoanRepository loanRepository;
 

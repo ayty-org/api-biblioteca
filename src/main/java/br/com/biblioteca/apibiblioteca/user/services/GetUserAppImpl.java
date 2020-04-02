@@ -1,20 +1,19 @@
 package br.com.biblioteca.apibiblioteca.user.services;
 
+import br.com.biblioteca.apibiblioteca.exceptions.UserAppNotFoundException;
 import br.com.biblioteca.apibiblioteca.user.UserApp;
 import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
-public class FindAllUserAppImpl implements FindAllUserApp {
+public class GetUserAppImpl implements GetUserApp {
 
     private final UserAppRepository userAppRepository;
 
     @Override
-    public List<UserApp> findAll() {
-        return userAppRepository.findAll();
+    public UserApp find(Long id) {
+        return userAppRepository.findById(id).orElseThrow(UserAppNotFoundException::new);
     }
 }

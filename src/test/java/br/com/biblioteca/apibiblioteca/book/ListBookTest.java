@@ -1,6 +1,6 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import br.com.biblioteca.apibiblioteca.book.services.FindAllBookImpl;
+import br.com.biblioteca.apibiblioteca.book.services.ListBookImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -22,15 +22,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
 @DisplayName("Valida funcionalidade do serviço responsável por pesquisar todos os books")
-public class FindAllBookTest {
+public class ListBookTest {
 
     @Mock
     private BookRepository bookRepository;
-    private FindAllBookImpl findAllBook;
+    private ListBookImpl findAllBook;
 
     @BeforeEach
     public void setUp() {
-        this.findAllBook = new FindAllBookImpl(bookRepository);
+        this.findAllBook = new ListBookImpl(bookRepository);
     }
 
     @Test

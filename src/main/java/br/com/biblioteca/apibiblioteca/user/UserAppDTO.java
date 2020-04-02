@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,8 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(builderClassName = "Builder")
-public class UserAppDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class UserAppDTO {
 
     private Long id;
 

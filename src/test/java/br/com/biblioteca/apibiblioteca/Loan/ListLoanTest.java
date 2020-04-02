@@ -2,7 +2,7 @@ package br.com.biblioteca.apibiblioteca.Loan;
 
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
-import br.com.biblioteca.apibiblioteca.loan.services.FindAllLoanImpl;
+import br.com.biblioteca.apibiblioteca.loan.services.ListLoanImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -23,15 +23,15 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
 @DisplayName("Valida funcionalidade do serviço responsável por pesquisar todos os Loan")
-public class FindAllLoanTest {
+public class ListLoanTest {
 
     @Mock
     private LoanRepository loanRepository;
-    private FindAllLoanImpl findAllLoan;
+    private ListLoanImpl findAllLoan;
 
     @BeforeEach
     public void setUp() {
-        this.findAllLoan = new FindAllLoanImpl(loanRepository);
+        this.findAllLoan = new ListLoanImpl(loanRepository);
     }
 
     @Test
