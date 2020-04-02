@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
-@DisplayName("Valida funcionalidade do serviço responsável por pesquisar todos os book")
+@DisplayName("Valida funcionalidade do serviço responsável por pesquisar todos os books")
 public class FindAllBookTest {
 
     @Mock

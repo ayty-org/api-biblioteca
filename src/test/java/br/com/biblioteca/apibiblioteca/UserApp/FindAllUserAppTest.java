@@ -37,7 +37,7 @@ public class FindAllUserAppTest {
 
     @Test
     @DisplayName("Deve retornar todos os usuários")
-    void shouldFindAllUserApp() { // testando buscar livro por id
+    void shouldFindAllUserApp() {
 
         when(userAppRepository.findAll()).thenReturn(
                 Stream.of(createUserApp().name("Nome Teste GET 01").build(),

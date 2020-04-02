@@ -35,19 +35,17 @@ public class FindAllLoanTest {
     }
 
     @Test
-    @DisplayName("Deve retornar todos os livros")
-    void shouldFindAllLoan() { // testando buscar livro por id
+    @DisplayName("Deve retornar todos os emprestimos")
+    void shouldFindAllLoan() {
 
         when(loanRepository.findAll()).thenReturn(
                 Stream.of(createLoan().loanTime("50 dias").build(),
                         createLoan().loanTime("60 dias").build(),
                         createLoan().loanTime("35 dias").build()).collect(Collectors.toList())
-
         );
 
         List<Loan> result = this.findAllLoan.findAll();
 
-        //verificação
         assertAll("Loan",
                 () -> assertThat(result.size(), is(3)),
                 () -> assertThat(result.get(0).getLoanTime(), is("50 dias")),

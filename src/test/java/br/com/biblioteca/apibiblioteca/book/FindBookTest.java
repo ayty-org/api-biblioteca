@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
-@DisplayName("Valida funcionalidade do serviço responsável por pesquisar um book por id")
+@DisplayName("Valida funcionalidade do serviço responsável por pesquisar um book")
 public class FindBookTest {
 
     @Mock
@@ -59,5 +59,4 @@ public class FindBookTest {
         when(bookRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(BookNotFoundException.class, () -> this.findBook.find(1L));
     }
-
 }

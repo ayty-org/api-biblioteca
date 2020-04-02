@@ -34,7 +34,7 @@ public class UpdateBookTest {
 
     @Test
     @DisplayName("Deve atualizar um Loan")
-    void shouldUpdateLaon() { // testando atualizar livro
+    void shouldUpdateLaon() {
 
         //execução
         updateLoan.update(createLoan().loanTime("teste update").build(), 1L);

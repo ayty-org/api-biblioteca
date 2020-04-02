@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
-@DisplayName("Valida funcionalidade do serviço responsável por pesquisar um Loan por id")
+@DisplayName("Valida funcionalidade do serviço responsável por pesquisar um Loan")
 public class FindLoanTest {
 
     @Mock
@@ -38,7 +38,7 @@ public class FindLoanTest {
 
     @Test
     @DisplayName("Deve retornar um emprestimo")
-    void shouldFindByIdLoan() { // testando buscar livro por id
+    void shouldFindByIdLoan() {
 
         when(loanRepository.findById(anyLong())).thenReturn(
                 Optional.of(createLoan().loanTime("Loan Teste GET").build())
@@ -55,7 +55,7 @@ public class FindLoanTest {
     }
 
     @Test
-    @DisplayName("Deve lançar exceção quando o livro não for encontrado")
+    @DisplayName("Deve lançar exceção quando o emprestimo não for encontrado")
     void shouldThrowBookNotFoundException() {
         when(loanRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(LoanNotFoundException.class, () -> this.findLoan.find(1L));

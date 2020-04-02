@@ -1,6 +1,6 @@
 package br.com.biblioteca.apibiblioteca.Loan;
 
-import br.com.biblioteca.apibiblioteca.exceptions.BookNotDeletedException;
+import br.com.biblioteca.apibiblioteca.exceptions.LoanNotDeletedException;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
 import br.com.biblioteca.apibiblioteca.loan.services.DeleteLoanImpl;
@@ -18,7 +18,9 @@ import java.util.Optional;
 import static br.com.biblioteca.apibiblioteca.Loan.builders.LoanBuilder.createLoan;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -39,7 +41,7 @@ public class DeleteLoanTest {
 
     @Test
     @DisplayName("Deve deletar um emprestimo")
-    void shouldUserAppDeleted() {
+    void shouldLoanDeleted() {
         loanRepository.save(createLoan().build());
 
         ArgumentCaptor<Loan> captorLoan = ArgumentCaptor.forClass(Loan.class);
@@ -47,11 +49,10 @@ public class DeleteLoanTest {
 
         Loan result = captorLoan.getValue();
 
-        assertAll("UserApp",
+        assertAll("Loan",
                 () -> assertThat(result.getUserApp().getName(), is("teste nome")),
                 () -> assertThat(result.getBooks().get(0).getTitle(), is("teste title")),
                 () -> assertThat(result.getLoanTime(), is("50 dias"))
-
         );
 
         deleteLoan.delete(result.getId());
@@ -63,6 +64,6 @@ public class DeleteLoanTest {
     @DisplayName("Deve lançar exceção quando o emprestimo não puder ser excluido")
     void shouldThrowLoanNotDeletedException() {
         when(loanRepository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(BookNotDeletedException.class, () -> this.deleteLoan.delete(1L));
+        assertThrows(LoanNotDeletedException.class, () -> this.deleteLoan.delete(1L));
     }
 }

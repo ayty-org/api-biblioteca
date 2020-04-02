@@ -34,7 +34,7 @@ public class SaveUserAppTest {
 
     @Test
     @DisplayName("Deve salvar um usuário")
-    void shouldSaveBook() { //testando save book
+    void shouldSaveUserApp() {
 
         //execução
         saveUserApp.insert(createUserApp().build());

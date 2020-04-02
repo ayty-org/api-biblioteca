@@ -34,24 +34,21 @@ public class UpdateBookTest {
     @DisplayName("Deve atualizar um livro")
     void shouldUpdateBook() { // testando atualizar livro
 
-        //execução
+        bookRepository.save(createBook().build());
+
         updateBook.update(createBook().author("teste update").build(), 1L);
 
-        //preparação
         ArgumentCaptor<Book> captorBook = ArgumentCaptor.forClass(Book.class);
         verify(bookRepository).save(captorBook.capture());
 
         Book result = captorBook.getValue();
 
-        //verificação
         assertAll("book",
                 () -> assertThat(result.getAuthor(), is("teste update")),
                 () -> assertThat(result.getResume(), is("teste resume")),
                 () -> assertThat(result.getIsbn(), is("teste isbn")),
                 () -> assertThat(result.getTitle(), is("teste title"))
         );
-
-
     }
 }
 

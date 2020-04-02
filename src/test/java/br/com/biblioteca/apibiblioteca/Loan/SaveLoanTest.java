@@ -33,8 +33,8 @@ public class SaveLoanTest {
     }
 
     @Test
-    @DisplayName("Deve salvar um livro")
-    void shouldSaveBook() { //testando save book
+    @DisplayName("Deve salvar um Loan")
+    void shouldSaveLoan() {
 
         //execução
         saveLoan.insert(createLoan().build());
@@ -49,7 +49,7 @@ public class SaveLoanTest {
         assertAll("Loan",
                 () -> assertThat(result.getUserApp().getName(), is("teste nome")),
                 () -> assertThat(result.getBooks().get(0).getTitle(), is("teste title")),
-                () -> assertThat(result.getLoanTime(), is("Loan Teste GET"))
+                () -> assertThat(result.getLoanTime(), is("50 dias"))
         );
     }
 }

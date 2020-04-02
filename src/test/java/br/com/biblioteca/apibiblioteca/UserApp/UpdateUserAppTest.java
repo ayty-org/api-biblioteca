@@ -34,7 +34,7 @@ public class UpdateUserAppTest {
 
     @Test
     @DisplayName("Deve atualizar um usuário")
-    void shouldUpdateUserApp() { // testando atualizar livro
+    void shouldUpdateUserApp() {
 
         //execução
         updateUserApp.update(createUserApp().name("teste update").build(), 1L);
