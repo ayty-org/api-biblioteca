@@ -1,5 +1,6 @@
 package br.com.biblioteca.apibiblioteca.loan.services;
 
+import br.com.biblioteca.apibiblioteca.exceptions.LoanNotDeletedException;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ public class DeleteLoanImpl implements DeleteLoan {
 
     @Override
     public void delete(Long id) {
-        loanRepository.deleteById(id);
+        if (loanRepository.findById(id).isPresent()){
+            loanRepository.deleteById(id);
+        }throw new LoanNotDeletedException();
     }
 }

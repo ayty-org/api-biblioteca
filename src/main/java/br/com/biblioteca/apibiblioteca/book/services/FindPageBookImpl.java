@@ -5,6 +5,7 @@ import br.com.biblioteca.apibiblioteca.book.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,8 @@ public class FindPageBookImpl implements FindPageBook {
     private final BookRepository bookRepository;
 
     @Override
-    public Page<Book> findPage() {
-        PageRequest pageRequest = PageRequest.of(0, 24, Sort.Direction.valueOf("ASC"), "title");
+    public Page<Book> findPage(Integer page, Integer size) {
+        Pageable pageRequest = PageRequest.of(page, size, Sort.Direction.ASC);
         return bookRepository.findAll(pageRequest);
     }
 }

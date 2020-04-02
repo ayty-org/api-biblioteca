@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 @FunctionalInterface
 public interface FindPageBook {
 
-    Page<Book> findPage();
+    Page<Book> findPage(Integer page, Integer size);
 }

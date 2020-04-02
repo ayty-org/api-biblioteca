@@ -1,11 +1,8 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -37,7 +34,10 @@ public class BookDTO implements Serializable {
     @NotEmpty
     private String author; //autor
 
+
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date yearBook; //ano
 
     public static BookDTO from(Book book) {

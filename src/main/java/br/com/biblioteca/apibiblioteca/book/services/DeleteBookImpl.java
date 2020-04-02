@@ -1,6 +1,7 @@
 package br.com.biblioteca.apibiblioteca.book.services;
 
 import br.com.biblioteca.apibiblioteca.book.BookRepository;
+import br.com.biblioteca.apibiblioteca.exceptions.BookNotDeletedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ public class DeleteBookImpl implements DeleteBook {
 
     @Override
     public void delete(Long id) {
-        bookRepository.deleteById(id);
+        if (bookRepository.findById(id).isPresent()){
+            bookRepository.deleteById(id);
+        }throw new BookNotDeletedException();
     }
 }

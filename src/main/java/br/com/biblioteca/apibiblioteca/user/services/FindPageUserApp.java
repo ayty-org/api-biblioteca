@@ -6,5 +6,5 @@ import org.springframework.data.domain.Page;
 @FunctionalInterface
 public interface FindPageUserApp {
 
-    Page<UserApp> findPage();
+    Page<UserApp> findPage(Integer page, Integer size);
 }

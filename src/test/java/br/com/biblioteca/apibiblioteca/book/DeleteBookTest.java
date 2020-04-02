@@ -1,6 +1,7 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import br.com.biblioteca.apibiblioteca.book.services.UpdateBookImpl;
+import br.com.biblioteca.apibiblioteca.book.services.DeleteBookImpl;
+import br.com.biblioteca.apibiblioteca.exceptions.BookNotDeletedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -10,48 +11,56 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static br.com.biblioteca.apibiblioteca.book.builders.BookBuilder.createBook;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
-@DisplayName("Valida funcionalidade do serviço responsável por atualizar book")
-public class UpdateBookTest {
+@DisplayName("Valida funcionalidade do serviço responsável por deletar um book")
+public class DeleteBookTest {
 
     @Mock
     private BookRepository bookRepository;
-    private UpdateBookImpl updateBook;
+    private DeleteBookImpl deleteBook;
 
     @BeforeEach
     public void setUp() {
-        this.updateBook = new UpdateBookImpl(bookRepository);
+        this.deleteBook = new DeleteBookImpl(bookRepository);
     }
 
     @Test
-    @DisplayName("Deve atualizar um livro")
-    void shouldUpdateBook() { // testando atualizar livro
+    @DisplayName("Deve deletar um livro")
+    void shouldBookDeleted() {
+        bookRepository.save(createBook().build());
 
-        //execução
-        updateBook.update(createBook().author("teste update").build(), 1L);
-
-        //preparação
         ArgumentCaptor<Book> captorBook = ArgumentCaptor.forClass(Book.class);
         verify(bookRepository).save(captorBook.capture());
 
         Book result = captorBook.getValue();
 
-        //verificação
         assertAll("book",
-                () -> assertThat(result.getAuthor(), is("teste update")),
+                () -> assertThat(result.getAuthor(), is("teste author")),
                 () -> assertThat(result.getResume(), is("teste resume")),
                 () -> assertThat(result.getIsbn(), is("teste isbn")),
                 () -> assertThat(result.getTitle(), is("teste title"))
         );
 
+        deleteBook.delete(result.getId());
 
+        assertNull(result);
+    }
+
+    @Test
+    @DisplayName("Deve lançar exceção quando o livro não puder ser excluido")
+    void shouldThrowBookNotDeletedException() {
+        when(bookRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(BookNotDeletedException.class, () -> this.deleteBook.delete(1L));
     }
 }
-

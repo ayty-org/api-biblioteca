@@ -1,5 +1,6 @@
 package br.com.biblioteca.apibiblioteca.user.services;
 
+import br.com.biblioteca.apibiblioteca.exceptions.UserAppNotDeletedException;
 import br.com.biblioteca.apibiblioteca.user.UserAppRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class DeleteUserAppImpl implements DeleteUserApp {
 
     @Override
     public void delete(Long id) {
-        userAppRepository.deleteById(id);
+        if (userAppRepository.findById(id).isPresent()) {
+            userAppRepository.deleteById(id);
+        }throw new UserAppNotDeletedException();
     }
 }

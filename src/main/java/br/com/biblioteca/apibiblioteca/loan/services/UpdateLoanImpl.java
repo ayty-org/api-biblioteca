@@ -1,5 +1,6 @@
 package br.com.biblioteca.apibiblioteca.loan.services;
 
+import br.com.biblioteca.apibiblioteca.exceptions.LoanNotFoundException;
 import br.com.biblioteca.apibiblioteca.loan.Loan;
 import br.com.biblioteca.apibiblioteca.loan.LoanRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,16 +11,12 @@ import org.springframework.stereotype.Service;
 public class UpdateLoanImpl implements UpdateLoan {
 
     private final LoanRepository loanRepository;
-    private final FindLoanImpl findLoan;
 
     @Override
-    public void update(Loan obj) {
-
-        Loan newObj = findLoan.find(obj.getId());
-
-        newObj.setId(obj.getId());
-        newObj.setLoanTime(obj.getLoanTime());
-
-        loanRepository.save(newObj);
+    public void update(Loan obj, Long id) {
+        if (loanRepository.findById(id).isPresent()){
+            obj.setId(id);
+            loanRepository.save(obj);
+        }throw new LoanNotFoundException();
     }
 }
