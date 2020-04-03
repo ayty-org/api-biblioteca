@@ -18,8 +18,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
@@ -60,7 +60,7 @@ public class DeleteBookTest {
     @Test
     @DisplayName("Deve lançar exceção quando o livro não puder ser excluido")
     void shouldThrowBookNotDeletedException() {
-        when(bookRepository.findById(anyLong())).thenReturn(Optional.empty());
+        lenient().when(bookRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(BookNotDeletedException.class, () -> this.deleteBook.delete(1L));
     }
 }

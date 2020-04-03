@@ -20,8 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
@@ -62,7 +61,7 @@ public class DeleteUserAppTest {
     @Test
     @DisplayName("Deve lançar exceção quando o usuário não puder ser excluido")
     void shouldThrowUserAppNotDeletedException() {
-        when(userAppRepository.findById(anyLong())).thenReturn(Optional.empty());
+        lenient().when(userAppRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(UserAppNotDeletedException.class, () -> this.deleteUserApp.delete(1L));
     }
 }

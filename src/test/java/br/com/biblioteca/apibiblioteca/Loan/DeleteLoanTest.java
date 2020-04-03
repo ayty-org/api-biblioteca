@@ -22,8 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
@@ -63,7 +62,7 @@ public class DeleteLoanTest {
     @Test
     @DisplayName("Deve lançar exceção quando o emprestimo não puder ser excluido")
     void shouldThrowLoanNotDeletedException() {
-        when(loanRepository.findById(anyLong())).thenReturn(Optional.empty());
+        lenient().when(loanRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(LoanNotDeletedException.class, () -> this.deleteLoan.delete(1L));
     }
 }
