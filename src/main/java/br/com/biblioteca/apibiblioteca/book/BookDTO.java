@@ -1,9 +1,12 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -33,21 +36,9 @@ public class BookDTO {
     @NotEmpty
     private String author; //autor
 
-
-    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date yearBook; //ano
-
-    public BookDTO(@JsonProperty("title") String title, @JsonProperty("resume") String resume,
-                   @JsonProperty("isbn") String isbn, @JsonProperty("author") String author,
-                   @JsonProperty("data") Date yearBook) {
-        this.title = title;
-        this.resume = resume;
-        this.isbn = isbn;
-        this.author = author;
-        this.yearBook = yearBook;
-    }
 
     public static BookDTO from(Book book) {
         return BookDTO

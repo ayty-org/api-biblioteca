@@ -1,0 +1,19 @@
+{
+  "userApp":
+  {
+    "name": "Emerson 56345",
+    "age": 28,
+    "fone": "993488354"
+  },
+  "books": [
+    {
+      "title": "The Hitchhiker's Guide to the Galaxy",
+      "resume": "hkefgnjedorlgjgjgjthprjrjrjrjrjrjrjrjrjrjrjrjrjtçlhnjsl.",
+      "isbn": "9781605148380464",
+      "author": "teste 6587493567",
+      "yearBook": "1979-10-18"
+    }
+  ],
+  "loanTime":"2 dias"
+}
+
