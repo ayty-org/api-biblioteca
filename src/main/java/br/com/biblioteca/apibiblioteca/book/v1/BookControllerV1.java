@@ -38,7 +38,7 @@ public class BookControllerV1 {
     private final DeleteBook deleteBook;
 
     @GetMapping(value = "/{id}") //lista livros por id
-    public BookDTO find(@PathVariable Long id) {
+    public BookDTO find(@PathVariable("id") Long id) {
         return BookDTO.from(getBook.find(id));
     }
 

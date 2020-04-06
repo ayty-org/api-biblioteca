@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static br.com.biblioteca.apibiblioteca.book.builders.BookBuilder.createBook;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -58,9 +57,8 @@ public class BookControllerTest {
     @Test
     @DisplayName("Pesquisa livro por id")
     void whenValidGetIdBook_thenReturnsBook() throws Exception { //pesquisa por livro
-        saveBook.insert(createBook().id(1L).build());
         mockMvc.perform( MockMvcRequestBuilders
-                .get("/v1/api/book/{id}",1)
+                .get("/v1/api/book/1",1)
                 .accept(MediaType.APPLICATION_JSON ))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -109,7 +107,6 @@ public class BookControllerTest {
     @Test
     @DisplayName("Deleta livro")
     void whenValidDelete_thenReturns204() throws Exception{ // deleta livro
-
         mockMvc.perform(delete("/v1/api/book/{id}",1L)
                 .contentType("aplication/json")
                 .content(objectMapper.writeValueAsString("BookDTO.json")))
