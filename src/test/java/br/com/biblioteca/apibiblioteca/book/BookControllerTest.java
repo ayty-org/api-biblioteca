@@ -7,6 +7,7 @@ import br.com.biblioteca.apibiblioteca.book.services.ListPageBook;
 import br.com.biblioteca.apibiblioteca.book.services.SaveBook;
 import br.com.biblioteca.apibiblioteca.book.services.UpdateBook;
 import br.com.biblioteca.apibiblioteca.book.v1.BookControllerV1;
+import org.junit.jupiter.api.Tag;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -37,9 +37,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Tag("Controller")
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = BookControllerV1.class)
-@DisplayName("Valida funcionalidade do Controller de Book")
+@DisplayName("Valida funcionalidade do Controller Book")
 public class BookControllerTest {
 
     @Autowired
@@ -64,8 +65,7 @@ public class BookControllerTest {
 
         when(getBook.find(1L)).thenReturn(createBook().id(1L).build());
 
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/api/book/{id}", 1L)
+        mockMvc.perform(get("/v1/api/book/{id}", 1L)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -84,8 +84,7 @@ public class BookControllerTest {
                 createBook().id(1L).build(), createBook().id(2L).build()
         ));
 
-        mockMvc.perform(MockMvcRequestBuilders
-                .get("/v1/api/book")
+        mockMvc.perform(get("/v1/api/book")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -111,6 +110,7 @@ public class BookControllerTest {
 
         mockMvc.perform(get("/v1/api/book/?page=0&size=2")
                 .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content[0].id", is(1)))
                 .andExpect(jsonPath("$.content[0].author", is("teste author")))
@@ -125,22 +125,18 @@ public class BookControllerTest {
         mockMvc.perform(post("/v1/api/book")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(readJson("bookDTO.json")))
+                .andDo(print())
                 .andExpect(status().isCreated());
     }
 
     @Test
     @DisplayName("Edita um livro")
     void whenValidUpdateBook_thenReturns204() throws Exception { //atualiza um livro
-        mockMvc.perform(put("/v1/api/book/{id}", 2L)
+        mockMvc.perform(put("/v1/api/book/{id}", 1L)
                 .content(readJson("bookUpdate.json"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().is(204))
-                .andExpect(jsonPath("$.id", is(2)))
-                .andExpect(jsonPath("$.content[0].author").value("A teste post loan 2"))
-                .andExpect(jsonPath("$.content[0].resume").value("bixo doido 2."))
-                .andExpect(jsonPath("$.content[0].isbn").value("56456456"))
-                .andExpect(jsonPath("$.content[0].title").value("A The Hitchhiker's Guide to the Galaxy 2"));
+                .andExpect(status().isNoContent());
     }
 
     @Test
@@ -148,7 +144,7 @@ public class BookControllerTest {
     void whenValidDelete_thenReturns204() throws Exception { // deleta livro
         mockMvc.perform(delete("/v1/api/book/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(204));
+                .andExpect(status().isNoContent());
     }
 
     public static String readJson(String file) throws Exception {

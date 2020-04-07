@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,8 +48,8 @@ public class UserAppControllerV1 {
     }
 
     @GetMapping(params = {"page", "size"}) //lista todas os usuários com paginação
-    public Page<UserAppDTO> findPage(@RequestParam Map<Integer, Integer> allParams) {
-        return UserAppDTO.fromPage(listPageUserApp.findPage(allParams.get(0), allParams.get(2)));
+    public Page<UserAppDTO> findPage(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        return UserAppDTO.fromPage(listPageUserApp.findPage(page, size));
     }
 
     @ResponseStatus(code = HttpStatus.CREATED)
