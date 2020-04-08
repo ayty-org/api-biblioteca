@@ -12,16 +12,19 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static br.com.biblioteca.apibiblioteca.Loan.builders.LoanBuilder.createLoan;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
 @DisplayName("Valida funcionalidade do serviço responsável por atualizar Loan")
-public class UpdateBookTest {
+public class UpdateLoanTest {
 
     @Mock
     private LoanRepository loanRepository;
@@ -36,7 +39,8 @@ public class UpdateBookTest {
     @DisplayName("Deve atualizar um Loan")
     void shouldUpdateLaon() {
 
-        //execução
+        when(loanRepository.findById(1L)).thenReturn(Optional.of(createLoan().id(1L).build()));
+
         updateLoan.update(createLoan().loanTime("teste update").build(), 1L);
 
         //preparação

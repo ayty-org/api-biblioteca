@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.springframework.data.domain.Page;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,7 @@ public class LoanDTO {
 
     private Long id;
 
-    @NotEmpty
+    @NotNull
     private UserApp userApp;
 
     @NotEmpty

@@ -53,8 +53,7 @@ public class DeleteBookTest {
         );
 
         deleteBook.delete(result.getId());
-
-        assertNull(result);
+        
     }
 
     @Test

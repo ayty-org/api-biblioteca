@@ -14,6 +14,7 @@ public class UpdateLoanImpl implements UpdateLoan {
 
     @Override
     public void update(Loan obj, Long id) {
+        System.out.println(id);
         Loan loan = loanRepository.findById(id).orElseThrow(BookNotFoundException::new);
 
         loan.setUserApp(obj.getUserApp());

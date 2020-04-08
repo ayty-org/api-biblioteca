@@ -18,9 +18,11 @@ import java.util.Optional;
 import static br.com.biblioteca.apibiblioteca.UserApp.builders.UserAppBuilder.createUserApp;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @Tag("service")
@@ -39,23 +41,23 @@ public class DeleteUserAppTest {
     @Test
     @DisplayName("Deve deletar um livro")
     void shouldUserAppDeleted() {
-        userAppRepository.save(createUserApp().build());
 
-        ArgumentCaptor<UserApp> captorBook = ArgumentCaptor.forClass(UserApp.class);
-        verify(userAppRepository).save(captorBook.capture());
+        userAppRepository.save(createUserApp().id(1L).build());
 
-        UserApp result = captorBook.getValue();
+        ArgumentCaptor<UserApp> captorUserApp = ArgumentCaptor.forClass(UserApp.class);
+        verify(userAppRepository).save(captorUserApp.capture());
+
+        UserApp result = captorUserApp.getValue();
 
         assertAll("UserApp",
+                () -> assertThat(result.getId(), is(1L)),
                 () -> assertThat(result.getName(), is("teste nome")),
                 () -> assertThat(result.getAge(), is(20)),
                 () -> assertThat(result.getFone(), is("teste fone"))
 
         );
-
         deleteUserApp.delete(result.getId());
 
-        assertNull(result);
     }
 
     @Test

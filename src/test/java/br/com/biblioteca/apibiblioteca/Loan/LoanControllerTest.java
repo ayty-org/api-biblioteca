@@ -134,9 +134,9 @@ public class LoanControllerTest {
     }
 
     @Test
-    @DisplayName("Sava um emprestimo")
+    @DisplayName("Salva um emprestimo")
     void whenValidSaveLoan_thenReturns201() throws Exception { //insere emprestimo
-        mockMvc.perform(post("/v1/api/laon")
+        mockMvc.perform(post("/v1/api/loan")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(readJson("loanDTO.json")))
                 .andDo(print())
@@ -146,7 +146,7 @@ public class LoanControllerTest {
     @Test
     @DisplayName("Edita um emprestimo")
     void whenValidUpdateLoan_thenReturnsLoan() throws Exception { //atualiza un emprestimo
-        mockMvc.perform(put("/v1/api/laon/{id}", 1L)
+        mockMvc.perform(put("/v1/api/loan/{id}", 1L)
                 .content(readJson("loanUpdate.json"))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
