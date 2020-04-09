@@ -16,7 +16,7 @@ public class ListPageBookImpl implements ListPageBook {
 
     @Override
     public Page<Book> findPage(Integer page, Integer size) {
-        Pageable pageRequest = PageRequest.of(page, size, Sort.Direction.ASC);
+        Pageable pageRequest = PageRequest.of(page, size, Sort.Direction.ASC,"id");
         return bookRepository.findAll(pageRequest);
     }
 }

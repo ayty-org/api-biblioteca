@@ -16,7 +16,7 @@ public class ListPageLoanImpl implements ListPageLoan {
 
     @Override
     public Page<Loan> findPage(Integer page, Integer size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC);
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC,"id");
         return loanRepository.findAll(pageRequest);
     }
 }
