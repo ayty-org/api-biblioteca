@@ -1,11 +1,11 @@
 package br.com.biblioteca.apibiblioteca.book;
 
-import br.com.biblioteca.apibiblioteca.book.services.DeleteBook;
-import br.com.biblioteca.apibiblioteca.book.services.GetBook;
-import br.com.biblioteca.apibiblioteca.book.services.ListBook;
-import br.com.biblioteca.apibiblioteca.book.services.ListPageBook;
-import br.com.biblioteca.apibiblioteca.book.services.SaveBook;
-import br.com.biblioteca.apibiblioteca.book.services.UpdateBook;
+import br.com.biblioteca.apibiblioteca.book.services.DeleteBookService;
+import br.com.biblioteca.apibiblioteca.book.services.GetBookService;
+import br.com.biblioteca.apibiblioteca.book.services.ListBookService;
+import br.com.biblioteca.apibiblioteca.book.services.ListPageBookService;
+import br.com.biblioteca.apibiblioteca.book.services.SaveBookService;
+import br.com.biblioteca.apibiblioteca.book.services.UpdateBookService;
 import br.com.biblioteca.apibiblioteca.book.v1.BookControllerV1;
 import org.junit.jupiter.api.Tag;
 import org.assertj.core.util.Lists;
@@ -47,23 +47,23 @@ public class BookControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private GetBook getBook;
+    private GetBookService getBookService;
     @MockBean
-    private ListBook listBook;
+    private ListBookService listBookService;
     @MockBean
-    private ListPageBook listPageBook;
+    private ListPageBookService listPageBookService;
     @MockBean
-    private SaveBook saveBook;
+    private SaveBookService saveBookService;
     @MockBean
-    private UpdateBook updateBook;
+    private UpdateBookService updateBookService;
     @MockBean
-    private DeleteBook deleteBook;
+    private DeleteBookService deleteBookService;
 
     @Test
     @DisplayName("Pesquisa livro por id")
     void whenValidGetIdBook_thenReturnsBook() throws Exception { //pesquisa por livro
 
-        when(getBook.find(1L)).thenReturn(createBook().id(1L).build());
+        when(getBookService.find(1L)).thenReturn(createBook().id(1L).build());
 
         mockMvc.perform(get("/v1/api/book/{id}", 1L)
                 .accept(MediaType.APPLICATION_JSON))
@@ -80,7 +80,7 @@ public class BookControllerTest {
     @DisplayName("Pesquisa lista de livros")
     void whenValidListBook_thenReturnsBook() throws Exception { //pesquisa todos os livro
 
-        when(listBook.findAll()).thenReturn(Lists.newArrayList(
+        when(listBookService.findAll()).thenReturn(Lists.newArrayList(
                 createBook().id(1L).build(), createBook().id(2L).build()
         ));
 
@@ -106,7 +106,7 @@ public class BookControllerTest {
     void whenValidListPageBook_thenReturnsBookPage() throws Exception { //pesquisa todos os livro
         Page<Book> bookPage = new PageImpl<>(Collections.singletonList(createBook().id(1L).build()));
 
-        when(listPageBook.findPage(0, 2)).thenReturn(bookPage);
+        when(listPageBookService.findPage(0, 2)).thenReturn(bookPage);
 
         mockMvc.perform(get("/v1/api/book/?page=0&size=2")
                 .contentType(MediaType.APPLICATION_JSON))

@@ -48,12 +48,6 @@ public class Loan implements Serializable {
 
     private String loanTime;
 
-    public Loan(UserApp userApp, List<Book> books, String loanTime) {
-        this.userApp = userApp;
-        this.books = books;
-        this.loanTime = loanTime;
-    }
-
     public static Loan to(LoanDTO loanDTO) {
         return Loan
                 .builder()

@@ -1,12 +1,12 @@
 package br.com.biblioteca.apibiblioteca.Loan;
 
 import br.com.biblioteca.apibiblioteca.loan.Loan;
-import br.com.biblioteca.apibiblioteca.loan.services.DeleteLoan;
-import br.com.biblioteca.apibiblioteca.loan.services.GetLoan;
-import br.com.biblioteca.apibiblioteca.loan.services.ListLoan;
-import br.com.biblioteca.apibiblioteca.loan.services.ListPageLoan;
-import br.com.biblioteca.apibiblioteca.loan.services.SaveLoan;
-import br.com.biblioteca.apibiblioteca.loan.services.UpdateLoan;
+import br.com.biblioteca.apibiblioteca.loan.services.DeleteLoanService;
+import br.com.biblioteca.apibiblioteca.loan.services.GetLoanService;
+import br.com.biblioteca.apibiblioteca.loan.services.ListLoanService;
+import br.com.biblioteca.apibiblioteca.loan.services.ListPageLoanService;
+import br.com.biblioteca.apibiblioteca.loan.services.SaveLoanService;
+import br.com.biblioteca.apibiblioteca.loan.services.UpdateLoanService;
 import br.com.biblioteca.apibiblioteca.loan.v1.LoanControllerV1;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
@@ -47,23 +47,23 @@ public class LoanControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private GetLoan getLoan;
+    private GetLoanService getLoanService;
     @MockBean
-    private ListLoan listLoan;
+    private ListLoanService listLoanService;
     @MockBean
-    private ListPageLoan listPageLoan;
+    private ListPageLoanService listPageLoanService;
     @MockBean
-    private SaveLoan saveLoan;
+    private SaveLoanService saveLoanService;
     @MockBean
-    private UpdateLoan updateLoan;
+    private UpdateLoanService updateLoanService;
     @MockBean
-    private DeleteLoan deleteLoan;
+    private DeleteLoanService deleteLoanService;
 
     @Test
     @DisplayName("Pesquisa emprestimos por id")
     void whenValidGetIdLoan_thenReturnsLoan() throws Exception { //pesquisa por Loan
 
-        when(getLoan.find(1L)).thenReturn(createLoan().id(1L).build());
+        when(getLoanService.find(1L)).thenReturn(createLoan().id(1L).build());
 
         mockMvc.perform(get("/v1/api/loan/{id}",1L)
                 .accept(MediaType.APPLICATION_JSON ))
@@ -83,7 +83,7 @@ public class LoanControllerTest {
     @DisplayName("Pesquisa lista de emprestimo")
     void whenValidListLoan_thenReturnsLoan() throws Exception { //pesquisa todos os Loans
 
-        when(listLoan.findAll()).thenReturn(Lists.newArrayList(
+        when(listLoanService.findAll()).thenReturn(Lists.newArrayList(
                 createLoan().id(1L).build(), createLoan().id(2L).build()
         ));
 
@@ -117,7 +117,7 @@ public class LoanControllerTest {
 
         Page<Loan> loanPage = new PageImpl<>(Collections.singletonList(createLoan().id(1L).build()));
 
-        when(listPageLoan.findPage(0,2)).thenReturn(loanPage);
+        when(listPageLoanService.findPage(0,2)).thenReturn(loanPage);
 
         mockMvc.perform(get("/v1/api/loan/?page=0&size=2")
                 .accept(MediaType.APPLICATION_JSON ))

@@ -1,12 +1,12 @@
 package br.com.biblioteca.apibiblioteca.UserApp;
 
 import br.com.biblioteca.apibiblioteca.user.UserApp;
-import br.com.biblioteca.apibiblioteca.user.services.DeleteUserApp;
-import br.com.biblioteca.apibiblioteca.user.services.GetUserApp;
-import br.com.biblioteca.apibiblioteca.user.services.ListPageUserApp;
-import br.com.biblioteca.apibiblioteca.user.services.ListUserApp;
-import br.com.biblioteca.apibiblioteca.user.services.SaveUserApp;
-import br.com.biblioteca.apibiblioteca.user.services.UpdateUserApp;
+import br.com.biblioteca.apibiblioteca.user.services.DeleteUserAppService;
+import br.com.biblioteca.apibiblioteca.user.services.GetUserAppService;
+import br.com.biblioteca.apibiblioteca.user.services.ListPageUserAppService;
+import br.com.biblioteca.apibiblioteca.user.services.ListUserAppService;
+import br.com.biblioteca.apibiblioteca.user.services.SaveUserAppService;
+import br.com.biblioteca.apibiblioteca.user.services.UpdateUserAppService;
 import br.com.biblioteca.apibiblioteca.user.v1.UserAppControllerV1;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.util.Lists;
@@ -50,23 +50,23 @@ public class UserAppControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private GetUserApp getUserApp;
+    private GetUserAppService getUserAppService;
     @MockBean
-    private ListUserApp listUserApp;
+    private ListUserAppService listUserAppService;
     @MockBean
-    private ListPageUserApp listPageUserApp;
+    private ListPageUserAppService listPageUserAppService;
     @MockBean
-    private SaveUserApp saveUserApp;
+    private SaveUserAppService saveUserAppService;
     @MockBean
-    private UpdateUserApp updateUserApp;
+    private UpdateUserAppService updateUserAppService;
     @MockBean
-    private DeleteUserApp deleteUserApp;
+    private DeleteUserAppService deleteUserAppService;
 
     @Test
     @DisplayName("Pesquisa usuário por id")
     void whenValidGetIdUserApp_thenReturnsUserApp() throws Exception { //pesquisa por UserApp
 
-        when(getUserApp.find(1L)).thenReturn(createUserApp().id(1L).build());
+        when(getUserAppService.find(1L)).thenReturn(createUserApp().id(1L).build());
 
         mockMvc.perform(get("/v1/api/user/{id}",1L)
                 .accept(MediaType.APPLICATION_JSON ))
@@ -82,7 +82,7 @@ public class UserAppControllerTest {
     @DisplayName("Pesquisa lista de usuários")
     void whenValidListUserApp_thenReturnsUserApp() throws Exception { //pesquisa todos os UserApp
 
-        when(listUserApp.findAll()).thenReturn(Lists.newArrayList(
+        when(listUserAppService.findAll()).thenReturn(Lists.newArrayList(
                 createUserApp().id(1L).build(), createUserApp().id(2L).build()
         ));
 
@@ -107,7 +107,7 @@ public class UserAppControllerTest {
     void whenValidListPageUserApp_thenReturnsUserAppPage() throws Exception { //pesquisa todos os UserApp com paginapção
         Page<UserApp> userAppPage = new PageImpl<>(Collections.singletonList(createUserApp().id(1L).build()));
 
-        when(listPageUserApp.findPage(0,2)).thenReturn(userAppPage);
+        when(listPageUserAppService.findPage(0,2)).thenReturn(userAppPage);
 
         mockMvc.perform(get("/v1/api/user/?page=0&size=2")
                 .accept(MediaType.APPLICATION_JSON ))
